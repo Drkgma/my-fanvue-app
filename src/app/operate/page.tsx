@@ -57,8 +57,17 @@ export default function OperatePage() {
   const [result, setResult] = useState("");
 
   const load = async () => {
-    const res = await fetch("/api/ops/status", { cache: "no-store" });
-    setStatus(await res.json());
+    try {
+      const res = await fetch("/api/ops/status", { cache: "no-store" });
+      const body = (await res.json()) as Status;
+      setStatus(body);
+    } catch (error) {
+      setStatus({
+        configured: false,
+        signedIn: false,
+        blockers: [error instanceof Error ? error.message : "Could not load operator snapshot"],
+      });
+    }
   };
 
   useEffect(() => {

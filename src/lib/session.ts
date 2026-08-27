@@ -21,7 +21,7 @@ export async function setSession(payload: SessionPayload) {
     .sign(secretKey);
 
   const cookieStore = await cookies();
-  cookieStore.set(env.SESSION_COOKIE_NAME, jwt, {
+  cookieStore.set(env.SESSION_COOKIE_NAME ?? "fanvue_oauth", jwt, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -31,10 +31,10 @@ export async function setSession(payload: SessionPayload) {
 }
 
 export async function getSession(): Promise<SessionPayload | null> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(env.SESSION_COOKIE_NAME)?.value;
-  if (!token) return null;
   try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get(env.SESSION_COOKIE_NAME ?? "fanvue_oauth")?.value;
+    if (!token) return null;
     const { payload } = await jwtVerify(token, secretKey);
     return payload as unknown as SessionPayload;
   } catch {
@@ -44,7 +44,7 @@ export async function getSession(): Promise<SessionPayload | null> {
 
 export async function clearSession() {
   const cookieStore = await cookies();
-  cookieStore.delete(env.SESSION_COOKIE_NAME);
+  cookieStore.delete(env.SESSION_COOKIE_NAME ?? "fanvue_oauth");
 }
 
 

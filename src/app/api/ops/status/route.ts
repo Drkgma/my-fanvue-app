@@ -7,7 +7,12 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const configured = Boolean(env.OAUTH_CLIENT_ID && env.OAUTH_CLIENT_SECRET && env.OAUTH_REDIRECT_URI);
-  const token = await getAccessToken();
+  let token: string | null = null;
+  try {
+    token = configured ? await getAccessToken() : null;
+  } catch {
+    token = null;
+  }
 
   if (!configured || !token) {
     return NextResponse.json({
