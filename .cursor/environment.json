@@ -1,0 +1,18 @@
+{
+  "name": "Fanvue Phase 0",
+  "install": "bash .cursor/install.sh",
+  "start": "bash .cursor/start.sh",
+  "terminals": [
+    {
+      "name": "next-dev",
+      "command": "pnpm dev",
+      "description": "Next.js Phase 0 desk on http://localhost:3000"
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 3000
+    }
+  ]
+}

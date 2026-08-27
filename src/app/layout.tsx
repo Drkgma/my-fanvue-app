@@ -13,10 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fanvue App Starter",
-  description: "Minimal Fanvue App example.",
+  title: "Fanvue Phase 0 desk",
+  description: "Get from 1 to 10 subscribers: auth, content bank, teasers.",
   icons: {
-    icon: "/logo192.png",
+    icon: "/fanvue.svg",
   },
 };
 
