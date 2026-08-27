@@ -1,0 +1,104 @@
+---
+description: Fanvue Growth Ladder phases 0–5, promotion criteria, realistic 3-month targets for a Phase 0/1 account, and how to refuse $1M/get-rich-quick requests.
+alwaysApply: false
+---
+
+# Growth Ladder
+
+Use this when the user talks about growth, revenue, scaling, phases, “what should we build,” or timelines. Combine with `00-operating-system.mdc` (always on).
+
+## How to place the account
+
+| Phase | Evidence | Typical size |
+|---|---|---|
+| **0 Foundation** | OAuth/page not proven; no posting rhythm; repo is still the starter | 0–1 sub |
+| **1 First converts** | Login works; bio/promo live; posting several times/week; welcome used | 0–20 subs / first $ |
+| **2 Repeatable** | Lists + vault labels in use; welcome path; some PPV sold | ~10–50 |
+| **3 Monetization** | Chat revenue is measurable; catalog exists; re-engage happens | ~50–200 |
+| **4 Traffic** | At least one channel produces weekly new subs on purpose | ~200–1,000 |
+| **5 Scale** | Team or real automation; AnalyticsAgent has something to analyze | 1,000+ |
+
+**This repo default: Phase 0.** Promote only when evidence in the table is true — not when the user is impatient.
+
+Missing files (`SETUP-STATUS.md`, n8n, Telegram, growth reports) mean those systems **do not exist**. Stay Phase 0. If they appear later, re-detect.
+
+## Phase 0 — Foundation (NOW)
+
+**Goal:** The page and login are real; the creator can post and reply without software theater.
+
+**Build:**
+
+- Fanvue OAuth (`read:self` until chat sending is real): `.env.local`, redirect URI, “Login with Fanvue” → `/users/me`
+- Bio + promo (short bio; default 14-day free trial for new subs unless they already convert well)
+- 7-day manual content plan (ContentAgent lite)
+- Welcome + reply templates (ChatMate lite, not a sender)
+
+**Do not build:** schedulers, auto-chat, PPV engines, traffic bots, analytics, n8n, Telegram.
+
+**Exit to Phase 1 when:** login has worked at least once, the public page is not a blank starter, and they have posted more than a one-off.
+
+## Phase 1 — First converts (ONE AHEAD — smallest slice only)
+
+**Goal:** Strangers can find the page and some of them pay or convert a trial.
+
+**Build (only after Phase 0 is moving):**
+
+- **One** traffic source (e.g. Instagram SFW teasers). If they want Reels policy help, the clearance-desk work lives on a **sibling branch**, not on `main` — pull it only if asked.
+- 3-item PPV / bundle menu with prices and vault names a human can find
+- A few Fanvue lists: New subscribers, Time wasters, maybe one spender list. Not a 9-list empire on day one.
+
+**Do not build:** 5-network traffic, Reddit+X+TikTok+IG at once, chatter staffing, custom CRM.
+
+**Exit to Phase 2 when:** ~10+ paying or consistently converting trials, and they actually use lists/welcome.
+
+## Phase 2 — Repeatable chat + catalog
+
+Welcome sequences that match lists, vault taxonomy (SFW / selfies / named bundles / voice notes), light PPV cadence. ChatMate may use chat scopes **if** OAuth is proven and they want sending — still 24-hour rule: one workflow, not a bot farm.
+
+## Phase 3 — Monetization systems
+
+MoneyBot: tip menu, PPV catalog, rebill/re-engage, customs policy. AnalyticsAgent **lite** (a weekly sheet: posts, subs, $) — not a data warehouse.
+
+## Phase 4 — Traffic engine
+
+TrafficAgent: more than one channel, clearance rules for IG, posting cadence that does not get the teaser account banned. Still no $1M model.
+
+## Phase 5 — Scale automation
+
+Full 5-agent stack, human chatters if volume needs it, AnalyticsAgent that changes the other four. **Do not start here.**
+
+## Realistic 3-month plan (Phase 0/1 start)
+
+Write plans that fit this envelope. Do not “stretch” it into six figures.
+
+### Month 1 — Phase 0 → 1
+
+- **Targets:** 0–25 subs (many free-trial), **$0–$300**, ≥4–7 posts/week, welcome sent by hand
+- **Build:** OAuth, page, ContentAgent lite, ChatMate templates
+- **Refuse:** MoneyBot, TrafficAgent stack, n8n
+
+### Month 2 — Phase 1
+
+- **Targets:** 15–60 subs, **$100–$1,000**, one traffic loop that ran every week
+- **Build:** one traffic channel, 3 PPV items, 2–3 lists
+- **Refuse:** multi-channel ads, auto-DM spam, analytics product
+
+### Month 3 — Phase 1 → 2
+
+- **Targets:** 40–150 subs, **$400–$3,000** typical; **~$5,000 is already an outlier** for a new page
+- **Build:** vault labels, re-engage templates, ChatMate sending only if chat API + volume justify it
+- **Refuse:** $1M roadmap, 5-agent platform, hiring a “sales floor”
+
+Compounding is real; **lottery outcomes are not a plan**. A beginner page that hits $10k/month in 90 days is rare and still 100× away from $1M/month.
+
+## $1M math (use in pushback)
+
+- $1,000,000 / 30 days ≈ $33k/day.
+- At $20–$50 revenue per paying fan per month (optimistic blended, not whale fanfic), you need on the order of **20,000–50,000 paying fans**, or a tiny number of extreme whales you do not have.
+- Phase 0 with ~1 subscriber is not that business. Three months of good work produces **process + small dollars**, not a million.
+
+If they said “$1,000,000 million,” treat it as $1M (or larger) and still refuse.
+
+## Promotion is earned
+
+Do not skip phases because the user is excited. If they insist on Phase 4 work in Phase 0, ship the Phase 0 artifact that unblocks them (usually login or this week’s posts) and explicitly decline the rest.

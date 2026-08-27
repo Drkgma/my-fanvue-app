@@ -1,0 +1,79 @@
+---
+description: Architecture for the Fanvue Next.js OAuth starter — env, PKCE, session, API calls, secrets, and what not to invent. Apply when editing app code, OAuth, or proposing integrations.
+globs: src/**/*.ts,src/**/*.tsx,.env.example,README.md,package.json
+alwaysApply: false
+---
+
+# Architecture
+
+This codebase is a **small Fanvue OAuth app**, not a platform. Change it like a maintainer of the starter.
+
+## Layout (main)
+
+```
+src/env.ts                         # t3 env + zod; missing OAuth vars fail at load
+src/lib/oauth.ts                   # PKCE S256, authorize URL, token exchange/refresh
+src/lib/session.ts                 # jose JWT in httpOnly cookie (SESSION_COOKIE_NAME)
+src/lib/fanvue.ts                  # GET {API_BASE_URL}/users/me with refresh
+src/app/page.tsx                   # Login / logout / dump current user JSON
+src/app/api/oauth/login/route.ts
+src/app/api/oauth/callback/route.ts
+src/app/api/oauth/logout/route.ts
+src/app/callback/route.ts
+.env.example                       # placeholders only
+```
+
+Defaults: `OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com`, `API_BASE_URL=https://api.fanvue.com`. Do not “simplify” those.
+
+System scopes are always appended: `openid offline_access offline`. `OAUTH_SCOPES` must **exactly** match the Fanvue developer app (starter: `read:self`).
+
+## Rules for code changes
+
+- Follow existing patterns: App Router route handlers, `jose` sessions, PKCE, `getCurrentUser()`.
+- New Fanvue calls: same Bearer fetch style as `src/lib/fanvue.ts`. Handle 401/refresh. Don’t add an SDK unless the user is in a phase that needs it **today**.
+- Do not weaken env validation to “make demo easier” unless a specific Cloud Agent / local boot problem requires it — and never commit real secrets as the fix.
+- HTTPS local redirect: see `README.md` (portless or mkcert). Fanvue will not complete OAuth on a mismatched redirect URI.
+- TypeScript, pnpm (`packageManager` in `package.json`). Don’t switch package managers.
+- No drive-by lint refactors. The starter may already lint unclean.
+- Do not add extra markdown docs. Cursor instructions are `AGENTS.md` + `.cursor/rules/`.
+
+## Secrets
+
+- Never commit `.env.local`, tokens, client secrets, or session secrets.
+- Never print access tokens in UI, logs, or PR bodies. The homepage JSON is `/users/me` profile data — keep tokens server-side.
+- `SESSION_SECRET` ≥ 16 characters (env schema message mentions 32; don’t lower the floor).
+
+## Fanvue MCP
+
+Cursor may expose a `fanvue` MCP namespace. It **requires authentication**. If tools are empty / `needsAuth`, do not pretend you listed creators or chats. Point the user at MCP auth, or use https://api.fanvue.com/docs and this OAuth app.
+
+When authenticated, prefer MCP + official API over guessed endpoints.
+
+## What is not here (do not invent)
+
+| Thing | Status on `main` |
+|---|---|
+| n8n | Not present |
+| Telegram | Not present |
+| `SETUP-STATUS.md` | Not present |
+| Database / Supabase | Not present (README mentions it as optional future) |
+| Clearance desk / playbooks / prompt builder | Sibling PR only |
+| `.cursor/environment.json` | Sibling PR only |
+
+If you add an integration, it must pass **phase gate + 24-hour rule**, use env vars (not committed secrets), and stay one slice wide.
+
+## OAuth scope policy
+
+| Need | Scope |
+|---|---|
+| Prove login / identity | `read:self` |
+| Read chats (Phase 2+) | only when ChatMate will actually read |
+| Send messages | only when they will send for real, same day |
+
+Do not request a kitchen-sink scope list “so we’re ready.”
+
+## Tests / verification
+
+There is no test suite on `main`. For OAuth-related changes: `pnpm build`, and if a server can boot, hit `/` and `/api/oauth/login` (expect a redirect to `auth.fanvue.com` when env is set). Do not claim Fanvue login works without credentials.
+
+Browser-verify UI changes when tools exist. This instruction PR is markdown-only — no app behavior change.
