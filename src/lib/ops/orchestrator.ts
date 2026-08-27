@@ -7,11 +7,13 @@ import { cooldownStatus } from "@/lib/ops/cooldown";
 import { parseGrantedScopes, type SessionTokens } from "@/lib/ops/fanvue-client";
 import { evaluateGuardrail } from "@/lib/ops/guardrails";
 import { agentModeForPhase, detectPhase } from "@/lib/ops/phase";
+import { buildTodayPlan } from "@/lib/ops/plan";
 import { loadState, saveState } from "@/lib/ops/store";
 import {
   IMPLEMENTATION_ORDER,
   type AgentId,
   type AgentRunResult,
+  type DailyMoneyPlan,
   type FanvueMe,
   type OpsState,
   type Refusal,
@@ -32,6 +34,7 @@ export type TickReport = {
   results: AgentRunResult[];
   refused: Refusal[];
   waitingForLogin: boolean;
+  todayPlan: DailyMoneyPlan;
 };
 
 export async function runTick(input: TickInput): Promise<{ state: OpsState; report: TickReport }> {
@@ -132,9 +135,19 @@ export async function runTick(input: TickInput): Promise<{ state: OpsState; repo
     }
   }
 
+  const todayPlan = buildTodayPlan({
+    state,
+    phase: detected.phase,
+    subscriberCount: detected.subscriberCount,
+    waitingForLogin: !input.user,
+    user: input.user,
+    now,
+  });
+
   state = {
     ...state,
     lastTickAt: nowIso,
+    todayPlan,
     refused: [...state.refused, ...tickRefused].slice(-50),
   };
   await saveState(state);
@@ -149,6 +162,7 @@ export async function runTick(input: TickInput): Promise<{ state: OpsState; repo
       results,
       refused: tickRefused,
       waitingForLogin: !input.user,
+      todayPlan,
     },
   };
 }
@@ -166,7 +180,7 @@ export function applyDraftAction(
     return {
       ...state,
       contentDrafts: state.contentDrafts.map((d) =>
-        d.id === action.id ? { ...d, status: action.type === "dismiss" ? "dismissed" : "ready" } : d,
+        d.id === action.id ? { ...d, status: action.type === "dismiss" ? "dismissed" : "queued" } : d,
       ),
     };
   }

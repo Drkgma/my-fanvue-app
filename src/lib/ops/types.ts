@@ -55,14 +55,14 @@ export type ContentDraft = {
   day: number;
   title: string;
   caption: string;
-  placement: "sfw-teaser" | "fanvue-only";
-  status: "draft" | "ready" | "dismissed";
+  placement: "sfw-teaser" | "fanvue-only" | "ppv";
+  status: "draft" | "ready" | "queued" | "dismissed";
   createdAt: string;
 };
 
 export type ChatDraft = {
   id: string;
-  kind: "welcome" | "check-in" | "witty" | "invitational" | "re-engage";
+  kind: "welcome" | "looker" | "check-in" | "witty" | "invitational" | "re-engage";
   title: string;
   body: string;
   chatId?: string;
@@ -70,12 +70,35 @@ export type ChatDraft = {
   createdAt: string;
 };
 
+export type MoneyKind = "subscription" | "ppv" | "tip";
+
 export type MoneySuggestion = {
   id: string;
+  kind: MoneyKind;
   name: string;
   priceUsd: number;
   note: string;
   createdAt: string;
+};
+
+export type DailyPlanItem = {
+  id: string;
+  step: number;
+  title: string;
+  detail: string;
+  owner: AgentId | "you";
+  status: "blocked" | "do_today" | "ready" | "waiting";
+  copyText?: string;
+};
+
+export type DailyMoneyPlan = {
+  date: string;
+  phase: Phase;
+  mode: "demo" | "live";
+  headline: string;
+  why: string;
+  expectedThisWeek: string;
+  items: DailyPlanItem[];
 };
 
 export type TrafficReminder = {
@@ -129,6 +152,7 @@ export type OpsState = {
   trafficReminders: TrafficReminder[];
   analyticsLog: AnalyticsEvent[];
   refused: Refusal[];
+  todayPlan: DailyMoneyPlan | null;
 };
 
 export const EMPTY_STATE: OpsState = {
@@ -144,6 +168,7 @@ export const EMPTY_STATE: OpsState = {
   trafficReminders: [],
   analyticsLog: [],
   refused: [],
+  todayPlan: null,
 };
 
 export const COOLDOWN_MS = 24 * 60 * 60 * 1000;

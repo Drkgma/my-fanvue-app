@@ -84,7 +84,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                   <Link className="underline" href="/ops">
                     ops dashboard
                   </Link>{" "}
-                  still runs Phase 0 drafts against local fixtures. Nothing posts or DMs without login.
+                  still runs a full Phase 0 money plan (drafts, $6.99 ladder, chat templates) against local fixtures. Nothing posts or DMs without login.
                 </p>
               </div>
             )}

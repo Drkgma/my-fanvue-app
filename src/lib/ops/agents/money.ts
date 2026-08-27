@@ -1,4 +1,4 @@
-import { seedMoneyMenu } from "@/lib/ops/fixtures";
+import { MONEY_LADDER_IDS, seedMoneyMenu } from "@/lib/ops/fixtures";
 import { agentModeForPhase } from "@/lib/ops/phase";
 import type { AgentRunResult, FanvueMe, OpsState, Phase } from "@/lib/ops/types";
 
@@ -8,6 +8,7 @@ export function runMoneyBot(input: {
   user: FanvueMe | null;
   nowIso: string;
 }): { state: OpsState; result: AgentRunResult } {
+  void input.user;
   const mode = agentModeForPhase("money", input.phase);
   if (mode === "off") {
     return {
@@ -25,21 +26,21 @@ export function runMoneyBot(input: {
 
   let state = input.state;
   let draftsCreated = 0;
-  if (state.moneySuggestions.length === 0) {
+  const hasLadder = MONEY_LADDER_IDS.every((id) => state.moneySuggestions.some((s) => s.id === id));
+  if (!hasLadder) {
     state = { ...state, moneySuggestions: seedMoneyMenu(input.nowIso) };
     draftsCreated = state.moneySuggestions.length;
   }
 
-  const skipped = input.user ? undefined : "waiting_for_login";
   return {
     state,
     result: {
       agent: "money",
       enabled: true,
       mode,
-      skipped,
+      skipped: undefined,
       summary:
-        "MoneyBot lite: 3-item PPV/tip menu only. No dynamic pricing, no broadcasts, no $1M targets. Send offers by hand if someone is already chatting.",
+        "MoneyBot lite: beginner ladder — $6.99 sub + trial, $5 tip, $9 first PPV. No broadcasts, no $1M pricing. You send offers by hand in existing chats.",
       draftsCreated,
     },
   };

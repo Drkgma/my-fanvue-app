@@ -43,6 +43,7 @@ export async function loadState(): Promise<OpsState> {
         trafficReminders: parsed.trafficReminders ?? [],
         analyticsLog: parsed.analyticsLog ?? [],
         refused: parsed.refused ?? [],
+        todayPlan: parsed.todayPlan ?? null,
       };
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code;

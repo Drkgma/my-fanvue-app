@@ -23,7 +23,7 @@ Encoded in `IMPLEMENTATION_ORDER` (`src/lib/ops/types.ts`) and `runTick`.
 |---|---|---|
 | ContentAgent | 7-day captions; optional `GET /posts` if `read:post` | Auto-publish, content factories |
 | ChatMate | Templates + draft queue; optional `GET /creators/{id}/chats` if `read:chat` | Auto-send, mass DM |
-| MoneyBot | 3-item PPV/tip suggestions | Broadcasts, dynamic $1M pricing |
+| MoneyBot | Beginner ladder: $6.99 sub + trial, $5 tip, $9 first PPV | Broadcasts, dynamic $1M pricing |
 | TrafficAgent | Compliant promo checklist | Scraping, ads, spam |
 | AnalyticsAgent | Daily local snapshot; `GET /users/me` counts; skip insights without scope | Vanity $1M dashboards |
 

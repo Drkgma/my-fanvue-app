@@ -25,7 +25,7 @@ export default async function OpsPage({
   const session = await getSessionTokens();
   let state = await loadState();
   let report = null;
-  if (!state.lastTickAt) {
+  if (!state.lastTickAt || !state.todayPlan) {
     const ticked = await runTick({ user, session });
     state = ticked.state;
     report = ticked.report;

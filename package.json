@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "node --experimental-strip-types --test src/lib/ops/*.test.ts",
     "ops:status": "node scripts/ops-status.mjs",
-    "ops:tick": "curl -sS -X POST http://localhost:3000/api/ops/tick"
+    "ops:tick": "node scripts/ops-cycle.mjs",
+    "ops:cycle": "node scripts/ops-cycle.mjs"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.13.8",

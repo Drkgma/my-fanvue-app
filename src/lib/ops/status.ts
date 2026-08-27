@@ -70,6 +70,7 @@ export async function buildOpsStatus(input: {
     cooldown: cooldownStatus(state, now),
     automations,
     lastTickAt: state.lastTickAt,
+    todayPlan: state.todayPlan,
     counts: {
       contentDrafts: state.contentDrafts.filter((d) => d.status !== "dismissed").length,
       chatDrafts: state.chatDrafts.filter((d) => d.status !== "dismissed").length,

@@ -47,11 +47,25 @@ export function seedContentPlan(nowIso: string): ContentDraft[] {
         "What you posted, that DMs are open, and one thing coming next week. If the trial is on, mention it once — not in every sentence.",
       placement: "fanvue-only",
     },
+    {
+      day: 0,
+      title: "PPV concept: first photo set ($9)",
+      caption:
+        "The set I mentioned — six photos. Unlock when you want it. No countdown, no pressure.",
+      placement: "ppv",
+    },
+    {
+      day: 0,
+      title: "PPV concept: short clip if you already filmed one ($12)",
+      caption:
+        "One short clip from this week. Honest length. Only send this in a chat that’s already going — never as a blast.",
+      placement: "ppv",
+    },
   ];
 
-  return days.map((d) => ({
+  return days.map((d, i) => ({
     ...d,
-    id: `content-day-${d.day}`,
+    id: d.placement === "ppv" ? `content-ppv-${i}` : `content-day-${d.day}`,
     status: "draft",
     createdAt: nowIso,
   }));
@@ -65,6 +79,11 @@ export function seedChatTemplates(nowIso: string): ChatDraft[] {
       body: "Hey — thanks for being here. I’m actually around, so say hi and tell me how you found the page.",
     },
     {
+      kind: "looker",
+      title: "Unpaid looker (followed / peeked, not subscribed)",
+      body: "Hey — saw you drop by. Trial’s open if you want to hang out inside. No pressure either way; I’ll still post.",
+    },
+    {
       kind: "check-in",
       title: "Quiet fan check-in",
       body: "You’ve been here a bit — anything you want to see more of this week?",
@@ -76,8 +95,8 @@ export function seedChatTemplates(nowIso: string): ChatDraft[] {
     },
     {
       kind: "invitational",
-      title: "Soft invite",
-      body: "If you want the set I mentioned, it’s in the wall. No rush — I’ll still answer either way.",
+      title: "Soft invite (only after they already chatted)",
+      body: "If you want the set I mentioned, it’s $9 in the wall. No rush — I’ll still answer either way.",
     },
     {
       kind: "re-engage",
@@ -93,31 +112,45 @@ export function seedChatTemplates(nowIso: string): ChatDraft[] {
   }));
 }
 
+/** Beginner ladder: sub + first PPV + tip menu. Not celebrity pricing. */
 export function seedMoneyMenu(nowIso: string): MoneySuggestion[] {
   return [
     {
-      id: "ppv-photos",
-      name: "Photo set",
+      id: "sub-monthly",
+      kind: "subscription",
+      name: "Monthly sub + 14-day trial",
+      priceUsd: 6.99,
+      note: "Phase 0/1 default: cheap enough that a curious fan tries it. Leave the 14-day trial on unless you already convert without it.",
+      createdAt: nowIso,
+    },
+    {
+      id: "tip-hi",
+      kind: "tip",
+      name: "Tip menu: say hi",
+      priceUsd: 5,
+      note: "Low-friction tip. Mention it in chat only after they message you — never as a wall blast.",
+      createdAt: nowIso,
+    },
+    {
+      id: "ppv-first",
+      kind: "ppv",
+      name: "First PPV: 6-photo set",
       priceUsd: 9,
-      note: "Phase 1 menu: a small named set you can actually deliver today.",
+      note: "One named set you can deliver today. Send only in an existing conversation.",
       createdAt: nowIso,
     },
     {
-      id: "ppv-video",
-      name: "Short video",
-      priceUsd: 19,
-      note: "One clip, honest length. Do not price like a celebrity page.",
-      createdAt: nowIso,
-    },
-    {
-      id: "ppv-bundle",
-      name: "Bundle (set + clip)",
-      priceUsd: 29,
-      note: "Only offer this if both pieces already exist in your vault.",
+      id: "tip-pick",
+      kind: "tip",
+      name: "Tip menu: pick next post",
+      priceUsd: 15,
+      note: "Optional second tip. Skip it if you don’t want custom requests yet.",
       createdAt: nowIso,
     },
   ];
 }
+
+export const MONEY_LADDER_IDS = ["sub-monthly", "tip-hi", "ppv-first", "tip-pick"] as const;
 
 export function seedTrafficChecklist(nowIso: string): TrafficReminder[] {
   return [
@@ -135,6 +168,15 @@ export function seedTrafficChecklist(nowIso: string): TrafficReminder[] {
       title: "One existing channel, weekly (Phase 1)",
       detail:
         "If you already have Instagram/X/etc., post one SFW teaser a week with link in bio. No hashtag stuffing, no comment spam, no scraping, no bought engagement.",
+      compliant: true,
+      status: "open",
+      createdAt: nowIso,
+    },
+    {
+      id: "traffic-where-to-post",
+      title: "Where to post / what to say",
+      detail:
+        "Fanvue wall: daily. Existing SFW social: one teaser, “new page — link in bio,” no price list in the caption. Reddit/forums: only if the community allows creator links; read the rules first. Nowhere: bots, mass DMs, comment spam.",
       compliant: true,
       status: "open",
       createdAt: nowIso,

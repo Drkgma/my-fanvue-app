@@ -30,23 +30,32 @@ export async function runContentAgent(input: {
   let skipped: AgentRunResult["skipped"];
   let extra = "";
 
-  if (state.contentDrafts.filter((d) => d.status !== "dismissed").length === 0) {
+  const active = state.contentDrafts.filter((d) => d.status !== "dismissed");
+  const hasPpv = active.some((d) => d.placement === "ppv");
+  if (active.length === 0) {
     state = { ...state, contentDrafts: seedContentPlan(input.nowIso) };
     draftsCreated = state.contentDrafts.length;
+  } else if (!hasPpv) {
+    const add = seedContentPlan(input.nowIso).filter((d) => d.placement === "ppv");
+    state = { ...state, contentDrafts: [...state.contentDrafts, ...add] };
+    draftsCreated = add.length;
   }
 
   if (!input.user) {
     skipped = "waiting_for_login";
-    extra = " 7-day plan is local until Fanvue login. Will not publish.";
+    extra = " 7-day plan + PPV concepts saved locally. Copy into Fanvue by hand until login.";
   } else {
     const posts = await listPosts(input.session);
     if (posts.ok) {
-      extra = ` Live GET /posts returned ${posts.data.data?.length ?? 0} item(s). Drafts stay unpublished (no write:post in Phase 0/1).`;
+      extra = ` Live GET /posts returned ${posts.data.data?.length ?? 0} item(s). Ready drafts are a paste queue — no auto-publish in Phase 0/1.`;
     } else {
       skipped = posts.reason;
-      extra = ` ${posts.message}`;
+      extra = ` ${posts.message} Drafts remain a local paste queue.`;
     }
   }
+
+  const draftCount = state.contentDrafts.filter((d) => d.status === "draft").length;
+  const readyCount = state.contentDrafts.filter((d) => d.status === "ready" || d.status === "queued").length;
 
   return {
     state,
@@ -55,7 +64,7 @@ export async function runContentAgent(input: {
       enabled: true,
       mode,
       skipped,
-      summary: `ContentAgent ${mode}: ${state.contentDrafts.filter((d) => d.status === "draft").length} draft post ideas.${extra}`,
+      summary: `ContentAgent ${mode}: ${draftCount} drafts, ${readyCount} queued to paste.${extra}`,
       draftsCreated,
     },
   };

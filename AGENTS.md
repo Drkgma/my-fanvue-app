@@ -40,7 +40,8 @@ It is **not** an n8n farm, Telegram bot, or $1M/month machine.
 1. User registers `http://localhost:3000/api/oauth/callback` at https://fanvue.com/developers
 2. User clicks **Login with Fanvue**
 3. Until those two clicks: ops still demos on fixtures; jobs skip live APIs with `waiting_for_login`
-4. ContentAgent lite = 7-day plan. ChatMate lite = templates. MoneyBot = 3-item menu. Traffic = checklist. Analytics = local log.
+4. ContentAgent lite = 7-day plan + PPV concepts. ChatMate lite = welcome + unpaid looker. MoneyBot = sub + first PPV + tip ladder. Traffic = checklist. Analytics = local log.
+5. `/ops` always shows **Today’s money plan**. `pnpm ops:cycle` runs one daily tick.
 
 ## Refuse
 
@@ -64,6 +65,7 @@ It is **not** an n8n farm, Telegram bot, or $1M/month machine.
 ```bash
 pnpm install
 pnpm dev              # http://localhost:3000
+pnpm ops:cycle        # one daily tick (needs pnpm dev)
 pnpm ops:status       # env keys present? (no values)
 pnpm test
 pnpm lint

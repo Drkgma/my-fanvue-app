@@ -30,9 +30,18 @@ export async function runChatMate(input: {
   let skipped: AgentRunResult["skipped"];
   let extra = " Auto-send is off. Mass DMs are refused.";
 
-  if (state.chatDrafts.filter((d) => d.status !== "dismissed").length === 0) {
-    state = { ...state, chatDrafts: seedChatTemplates(input.nowIso) };
-    draftsCreated = state.chatDrafts.length;
+  const active = state.chatDrafts.filter((d) => d.status !== "dismissed");
+  const hasLooker = active.some((d) => d.kind === "looker");
+  if (active.length === 0 || !hasLooker) {
+    const seeded = seedChatTemplates(input.nowIso);
+    if (active.length === 0) {
+      state = { ...state, chatDrafts: seeded };
+      draftsCreated = seeded.length;
+    } else {
+      const add = seeded.filter((d) => d.kind === "looker");
+      state = { ...state, chatDrafts: [...active, ...add] };
+      draftsCreated = add.length;
+    }
   }
 
   if (!input.user) {
