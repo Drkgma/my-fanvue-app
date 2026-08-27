@@ -39,7 +39,19 @@ run_daily.bat
 disabled until you set `phase: 1` and `chat.enabled` / `money.enabled`.
 TrafficAgent always no-ops before phase 2.
 
-## ComfyUI / FLUX
+## Image gen (Phase 0)
 
-Generate images however you want. This agent does not run ComfyUI.
-Drop finished files into `content_bank/`.
+This agent does not run ComfyUI, Klein, Qwen, or Z-Image. There is no
+GPU on the Cloud Agent VM. A starter SFW bank was generated from the
+identity photo and copied into `content_bank/` (character) and
+`datasets/rooms/` (empty backgrounds).
+
+Prompt lists for a later GPU/ComfyUI run (one prompt per line, CR Prompt
+List compatible) live in `prompts/`. Re-stage new stills with:
+
+```
+python scripts/stage_bank.py /path/to/generated-images
+```
+
+Public teasers stay SFW. Do not drop empty rooms or PPV stills into
+`content_bank/` if you want ContentAgent to post follower teasers.
