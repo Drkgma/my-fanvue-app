@@ -1,0 +1,51 @@
+---
+description: Architecture for the Fanvue Next.js OAuth starter and ops runtime.
+globs: src/**/*.ts,src/**/*.tsx,.env.example,README.md,package.json
+alwaysApply: false
+---
+
+# Architecture
+
+Small Fanvue OAuth app + local JSON ops runtime. No surprise Redis, n8n, Telegram, or vector DBs.
+
+## Layout
+
+```
+src/env.ts                         # t3 env + zod
+src/lib/oauth.ts                   # PKCE, authorize, token exchange
+src/lib/session.ts                 # jose JWT cookie
+src/lib/fanvue.ts                  # GET /users/me + API version header
+src/lib/ops/*                      # phase, guardrails, cooldown, orchestrator, agents
+src/app/ops                        # dashboard
+src/app/api/ops/{status,tick,actions,state}
+src/app/api/oauth/*                # login / callback / logout
+```
+
+Defaults: `OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com`, `API_BASE_URL=https://api.fanvue.com`.
+API version header: `X-Fanvue-API-Version: 2025-06-26`.
+
+System scopes always appended: `openid offline_access offline`. `OAUTH_SCOPES` must match the Fanvue developer app (starter: `read:self`).
+
+## Fanvue calls
+
+Wrap real endpoints only. Skip (do not invent success) when unauthenticated or 401/403:
+
+- `GET /users/me` (`read:self`) — identity + subscriber counts
+- `GET /posts` (`read:post`)
+- `GET /creators/{uuid}/chats` (`read:chat`)
+- `GET /creators/{uuid}/subscribers` (`read:creator` + `read:fan`)
+- `GET /creators/{uuid}/insights/subscribers` (`read:insights`)
+
+Do not POST messages or posts in Phase 0/1. Guardrails refuse it.
+
+## Ops state
+
+`.data/ops-state.json` (gitignored). Fine for local/Cloud Agent. Vercel cron without a disk is best-effort; do not add a database until Phase 3+ and the 24-hour rule still holds.
+
+## Secrets
+
+Never commit `.env.local`. Never print access tokens in UI. Homepage JSON is `/users/me` profile data only.
+
+## Tests / verification
+
+`pnpm test`, `pnpm lint`, `pnpm build`. Hit `/`, `/ops`, `/api/ops/status`. Login redirects to `auth.fanvue.com`. Do not claim Fanvue login works until the user registers the redirect URI and clicks Login.

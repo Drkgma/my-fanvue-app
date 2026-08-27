@@ -1,10 +1,45 @@
 # Fanvue App Starter (Next.js App Router)
 
+Phase 0/1 creator ops live **in this app** (not n8n/Telegram): `/ops` dashboard, five lite agents, 24-hour cooldown, and a daily cron tick. Unauthenticated runs use local fixtures and skip live Fanvue writes.
+
 ## Requirements
 
 - pnpm
 - Node 18+
 - An existing Fanvue App from [Fanvue Developer Area](https://fanvue.com/developers/apps) (client id/secret)
+
+## Run locally
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open http://localhost:3000 (login) and http://localhost:3000/ops (automation dashboard).
+
+```bash
+pnpm ops:status   # which env keys are present (never prints values)
+pnpm test
+```
+
+**You still have to do two Fanvue clicks this environment cannot fake:**
+
+1. Register redirect URI `http://localhost:3000/api/oauth/callback` at [fanvue.com/developers](https://fanvue.com/developers)
+2. Click **Login with Fanvue**
+
+Until then, ops jobs no-op live APIs with `waiting_for_login`. They do not crash.
+
+## Creator ops
+
+| Piece | Where |
+|---|---|
+| Setup / status | `/ops`, `/setup`, `GET /api/ops/status`, `pnpm ops:status` |
+| Orchestrator | `POST /api/ops/tick` (also Vercel cron `0 14 * * *`) |
+| Agents | Content, ChatMate, Money, Traffic, Analytics — lite / phase-gated |
+| 24-hour rule | `src/lib/ops/cooldown.ts` |
+| Guardrails | refuse mass-DM, auto-publish, $1M fantasy |
+
+Default phase is **0** (1 subscriber if logged out). Agents allowed: current phase + one ahead.
 
 ## Setup
 
