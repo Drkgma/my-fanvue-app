@@ -2,7 +2,7 @@
 
 Generated media stays on disk and is gitignored.
 
-- `identity/` — face-source and body-source sheets (not uploaded)
+- `identity/` — face-source, body-source, and `body-refs/` extra sheets (not uploaded)
 - `rooms/` — empty-room stills used as background references
 - `archive-v1/` — first face-only teaser pass
 - `../content_bank/` — character teasers ContentAgent will upload

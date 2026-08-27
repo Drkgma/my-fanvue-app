@@ -7,10 +7,12 @@ any image tool. Prefix every character prompt with the text in
 Identity stills (gitignored):
 
 - `datasets/identity/face-source.png` — face lock
-- `datasets/identity/body-source.webp` — body lock
+- `datasets/identity/body-source.webp` — primary body lock
+- `datasets/identity/body-refs/` — extra body sheets (private)
 
-Public teasers combine both: same face, hourglass body, fitted black
-t-shirt and dark jeans. The body source itself is not uploaded.
+Public teasers combine face + hourglass body in fully clothed outfits
+(t-shirt and jeans, midi dress, sundress, evening gown). Identity
+sheets themselves are not uploaded.
 
 ## What this agent can and cannot do
 
@@ -30,8 +32,8 @@ two identity stills above.
 Phase 0 posts go to `followers-and-subscribers`. Keep them SFW:
 plain shirts, jeans, lifestyle rooms.
 
-Lingerie, thong, and nude recreations of the body sheet are blocked
-by the image tool here and must not go in `content_bank/`.
+Lingerie, thong, bikini, and nude recreations of the extra body sheets
+are blocked by the image tool here and must not go in `content_bank/`.
 
 ## After OAuth works
 

@@ -6,6 +6,6 @@ Only files in this folder are uploaded. Empty-room stills belong in
 `../datasets/rooms/`. Face and body identity sheets belong in
 `../datasets/identity/` — do not drop the body sheet here.
 
-Current local bank: 13 SFW stills that lock the first photo's face to
-the second photo's hourglass body (black t-shirt + jeans). Older
-face-only stills were moved to `../datasets/archive-v1/`.
+Current local bank: 21 SFW stills (face lock + hourglass body). Extra
+body sheets live in `../datasets/identity/body-refs/` and are not
+uploaded. Lingerie / thong / bikini recreations stay out of this folder.
