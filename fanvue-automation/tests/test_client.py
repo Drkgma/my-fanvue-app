@@ -1,9 +1,22 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fanvue_client import API_BASE, FanvueAuthError, FanvueClient, seed_tokens_from_env
 from tests.conftest import FakeResponse, FakeSession, make_client
+
+
+def test_prefer_longer_file_secrets(tmp_path: Path, monkeypatch) -> None:
+    from fanvue_client import prefer_longer_file_secrets
+
+    env_file = tmp_path / ".env.local"
+    env_file.write_text("OAUTH_CLIENT_SECRET=" + ("b" * 64) + "\n", encoding="utf-8")
+    monkeypatch.setattr("fanvue_client.REPO_ROOT", tmp_path)
+    monkeypatch.setattr("fanvue_client.ROOT", tmp_path / "fanvue-automation")
+    monkeypatch.setenv("OAUTH_CLIENT_SECRET", "a" * 12)
+    prefer_longer_file_secrets()
+    assert os.environ["OAUTH_CLIENT_SECRET"] == "b" * 64
 
 
 def test_missing_token_raises_auth_error(tmp_path: Path, monkeypatch) -> None:

@@ -5,7 +5,7 @@
   "terminals": [
     {
       "name": "next-dev",
-      "command": "pnpm dev -p 3456",
+      "command": "bash .cursor/dev.sh",
       "description": "Next.js Phase 0 desk on http://localhost:3456 (Fanvue redirect URI)"
     }
   ],

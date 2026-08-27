@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
-from dotenv import load_dotenv
+from dotenv import dotenv_values, load_dotenv
 
 API_BASE = "https://api.fanvue.com"
 API_VERSION = "2025-06-26"
@@ -30,10 +30,32 @@ PHASE0_SCOPES = (
     "read:self read:chat write:chat read:post write:post "
     "read:media write:media read:creator write:creator"
 )
+_FILE_WINS_IF_LONGER = (
+    "OAUTH_CLIENT_SECRET",
+    "OAUTH_CLIENT_ID",
+    "FANVUE_TOKEN",
+    "FANVUE_REFRESH_TOKEN",
+)
 
 load_dotenv(REPO_ROOT / ".env.local")
 load_dotenv(REPO_ROOT / ".env")
 load_dotenv(ROOT / ".env")
+
+
+def prefer_longer_file_secrets() -> None:
+    """Cursor may inject a truncated OAUTH_CLIENT_SECRET. Prefer a longer file value."""
+    for path in (REPO_ROOT / ".env.local", REPO_ROOT / ".env", ROOT / ".env"):
+        if not path.exists():
+            continue
+        values = dotenv_values(path)
+        for key in _FILE_WINS_IF_LONGER:
+            file_val = (values.get(key) or "").strip()
+            env_val = (os.getenv(key) or "").strip()
+            if file_val and (not env_val or len(file_val) > len(env_val)):
+                os.environ[key] = file_val
+
+
+prefer_longer_file_secrets()
 
 
 class FanvueAuthError(RuntimeError):
