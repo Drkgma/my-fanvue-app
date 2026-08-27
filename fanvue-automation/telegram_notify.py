@@ -6,7 +6,7 @@ import os
 from typing import Any
 
 import requests
-from dotenv import load_dotenv
+from dotenv import dotenv_values, load_dotenv
 
 from config_loader import ROOT
 
@@ -17,12 +17,40 @@ load_dotenv(ROOT / ".env")
 API = "https://api.telegram.org"
 
 
+def _file_env() -> dict[str, str]:
+    values: dict[str, str] = {}
+    for path in (ROOT.parent / ".env.local", ROOT.parent / ".env", ROOT / ".env"):
+        if path.exists():
+            values.update({k: (v or "") for k, v in dotenv_values(path).items() if k})
+    return values
+
+
 def _token() -> str:
-    return (os.getenv("TELEGRAM_BOT_TOKEN") or "").strip()
+    return (os.getenv("TELEGRAM_BOT_TOKEN") or _file_env().get("TELEGRAM_BOT_TOKEN") or "").strip()
+
+
+def _bot_id() -> str:
+    token = _token()
+    if not token:
+        return ""
+    try:
+        body = requests.get(f"{API}/bot{token}/getMe", timeout=15).json()
+        return str(((body.get("result") or {}).get("id") or ""))
+    except requests.RequestException:
+        return ""
 
 
 def _chat_id() -> str:
-    return (os.getenv("TELEGRAM_CHAT_ID") or "").strip()
+    """Prefer a private user chat. Ignore a chat id that is the bot itself."""
+    bot_id = _bot_id()
+    candidates = [
+        (_file_env().get("TELEGRAM_CHAT_ID") or "").strip(),
+        (os.getenv("TELEGRAM_CHAT_ID") or "").strip(),
+    ]
+    for candidate in candidates:
+        if candidate and candidate != bot_id:
+            return candidate
+    return discover_chat_id() or ""
 
 
 def configured() -> bool:
