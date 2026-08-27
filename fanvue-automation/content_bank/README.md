@@ -6,6 +6,8 @@ Only files in this folder are uploaded. Empty-room stills belong in
 `../datasets/rooms/`. Face and body identity sheets belong in
 `../datasets/identity/` — do not drop the body sheet here.
 
-Current local bank: 21 SFW stills (face lock + hourglass body). Extra
-body sheets live in `../datasets/identity/body-refs/` and are not
-uploaded. Lingerie / thong / bikini recreations stay out of this folder.
+Current local bank: 25 SFW stills (face lock + hourglass body), including
+glam turtleneck, silk blouse, and coat looks. Extra body sheets live in
+`../datasets/identity/body-refs/` and are not uploaded. Lingerie / thong /
+bikini / nude recreations stay out of this folder. Do not add other
+creators' watermarked photos here.
