@@ -160,9 +160,9 @@ export default async function Home({
           <h2 className="font-semibold">Auth + local agents</h2>
           {!isAuthed ? (
             <p className="text-sm opacity-70">
-              Login first. In the Fanvue developer app, register{" "}
-              <code className="text-xs">http://localhost:3000/api/oauth/callback</code> and request
-              the Phase 0 scopes listed in <code className="text-xs">.env.example</code>.
+              Login first. This Funny Kite app must use{" "}
+              <code className="text-xs">http://localhost:3456/callback</code> (already registered).
+              Open the desk on port 3456, then Save tokens.
             </p>
           ) : (
             <>

@@ -25,12 +25,12 @@ DEFAULTS = {
         "read:self read:chat write:chat read:post write:post "
         "read:media write:media read:creator write:creator"
     ),
-    "OAUTH_REDIRECT_URI": "http://localhost:3000/api/oauth/callback",
+    "OAUTH_REDIRECT_URI": "http://localhost:3456/callback",
     "OAUTH_ISSUER_BASE_URL": "https://auth.fanvue.com",
     "API_BASE_URL": "https://api.fanvue.com",
     "SESSION_COOKIE_NAME": "fvsession",
     "SESSION_SECRET": "dev-session-secret-change-me-please",
-    "BASE_URL": "http://localhost:3000",
+    "BASE_URL": "http://localhost:3456",
     "TELEGRAM_BOT_TOKEN": "",
     "TELEGRAM_CHAT_ID": "",
 }
@@ -57,8 +57,14 @@ merged.update({k: v for k, v in existing.items() if v})
 
 for key in DEFAULTS:
     env_val = os.environ.get(key, "").strip()
-    if env_val and is_real(key, env_val):
-        merged[key] = env_val
+    if not env_val or not is_real(key, env_val):
+        continue
+    # Cursor secrets sometimes store a truncated client secret. Keep a longer
+    # live value already on disk.
+    if key == "OAUTH_CLIENT_SECRET" and is_real(key, merged.get(key, "")):
+        if len(env_val) < len(merged[key]) and len(merged[key]) >= 32:
+            continue
+    merged[key] = env_val
 
 if not is_real("SESSION_SECRET", merged["SESSION_SECRET"]):
     merged["SESSION_SECRET"] = secrets.token_urlsafe(32)

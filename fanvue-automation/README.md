@@ -10,8 +10,8 @@ home page and drop it in this folder (gitignored).
 ## This week (Phase 0)
 
 1. Register redirect URIs on the Fanvue app:
-   - `http://localhost:3000/api/oauth/callback`
-   - `http://localhost:8765/callback` (optional Python login)
+   - `http://localhost:3456/callback` (Funny Kite n8n app — required)
+   - `http://localhost:3000/api/oauth/callback` (optional extra)
 2. Request scopes: `read:self read:chat write:chat read:post write:post read:media write:media read:creator write:creator`
 3. Copy `.env.example` → `.env.local` in the repo root and fill client id/secret.
 4. `pnpm dev`, click **Login with Fanvue**, then **Save tokens for local agents**.

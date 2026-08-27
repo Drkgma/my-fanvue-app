@@ -21,8 +21,8 @@ oauth:
     - read:creator
     - write:creator
   redirect_uris:
+    - http://localhost:3456/callback
     - http://localhost:3000/api/oauth/callback
-    - http://localhost:8765/callback
 
 content:
   bank_dir: content_bank

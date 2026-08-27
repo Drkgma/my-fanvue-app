@@ -5,14 +5,14 @@
   "terminals": [
     {
       "name": "next-dev",
-      "command": "pnpm dev",
-      "description": "Next.js Phase 0 desk on http://localhost:3000"
+      "command": "pnpm dev -p 3456",
+      "description": "Next.js Phase 0 desk on http://localhost:3456 (Fanvue redirect URI)"
     }
   ],
   "ports": [
     {
       "name": "web",
-      "port": 3000
+      "port": 3456
     }
   ]
 }
