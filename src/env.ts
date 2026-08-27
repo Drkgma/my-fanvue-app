@@ -8,7 +8,12 @@ export const env = createEnv({
     OAUTH_CLIENT_SECRET: z.string().min(1).optional(),
     OAUTH_ISSUER_BASE_URL: z.url().default("https://auth.fanvue.com"),
     OAUTH_REDIRECT_URI: z.url().optional(),
-    OAUTH_SCOPES: z.string().optional().default("read:self"),
+    OAUTH_SCOPES: z
+      .string()
+      .optional()
+      .default(
+        "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post",
+      ),
     OAUTH_RESPONSE_MODE: z.enum(["query", "form_post"]).optional(),
     OAUTH_PROMPT: z.string().optional(),
     BASE_URL: z.url().optional(),

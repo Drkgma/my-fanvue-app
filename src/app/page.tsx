@@ -5,6 +5,11 @@ export const dynamic = "force-dynamic";
 
 const TOOLS = [
   {
+    href: "/operate",
+    title: "Operate this page",
+    body: "Seed SOP lists and vault folders, siphon top spenders, preview unread chats. Does not auto-send.",
+  },
+  {
     href: "/clearance",
     title: "Reel Clearance Desk",
     body: "Run a Reel against the Instagram policy pack. Removal, downrank, or clear — with source IDs.",
@@ -47,6 +52,7 @@ export default async function Home({
           <h1 className="mt-4 text-3xl font-semibold">Creator ops</h1>
           <p className="mt-2 max-w-xl text-sm text-zinc-400">
             Clear Instagram Reels against current Meta policy, then run the Fanvue page the way chatters need it.
+            {isAuthed ? " You are signed in — open Operate to seed lists and siphon spenders." : ""}
           </p>
         </div>
         {isAuthed ? (
@@ -64,7 +70,7 @@ export default async function Home({
         <p className="text-sm text-red-400">{errorDescriptionParam || errorParam}</p>
       ) : null}
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2">
         {TOOLS.map((tool) => (
           <Link
             key={tool.href}
@@ -83,7 +89,7 @@ export default async function Home({
         </pre>
       ) : (
         <p className="text-sm text-zinc-500">
-          Fanvue login is optional for the desk and playbooks. It is required only if you want live /users/me data.
+          Fanvue login is optional for the desk and playbooks. It is required to operate the live account.
         </p>
       )}
     </div>

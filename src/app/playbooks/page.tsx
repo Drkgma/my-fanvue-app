@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const LISTS = [
   { name: "NEW SUBSCRIBERS ($0 - $49)", use: "Fresh subs. Chatters open with the welcome path, not a hard close." },
   { name: "RELATIONSHIP BUILDERS ($50 - $499)", use: "Warm spenders. Voice notes and bundles before customs." },
@@ -13,13 +15,13 @@ const LISTS = [
 const VAULT = [
   "SFW",
   "Selfies",
-  "Bundle 1 – named look",
-  "Bundle 2 – named look",
+  "Bundle 1 - White Pyjama",
+  "Bundle 2 - Pink Lingerie",
   "Solo",
   "Sextapes",
-  "Voice notes – check-ins",
-  "Voice notes – flirty",
-  "Voice notes – re-engage",
+  "Voice notes - check-ins",
+  "Voice notes - flirty",
+  "Voice notes - re-engage",
 ];
 
 const VOICE = {
@@ -65,7 +67,11 @@ export default function PlaybooksPage() {
         <p className="mt-2 max-w-3xl text-sm text-zinc-400">
           Internal ops for lists, first impression, vault, and voice notes. Chatters should live in lists; the vault
           should be boringly labeled. Instagram clearance stays on the Clearance Desk — do not mix those rules into
-          Fanvue chat copy.
+          Fanvue chat copy. Apply the lists and folders live from{" "}
+          <Link href="/operate" className="text-[#49f264] underline">
+            Operate
+          </Link>
+          .
         </p>
       </div>
 

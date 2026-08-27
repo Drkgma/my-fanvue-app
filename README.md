@@ -96,7 +96,7 @@ https://[your-app-name-here].dev:3001/api/oauth/callback
    - Development: `http://localhost:3000/api/oauth/callback`
    - Production: `https://YOUR_DOMAIN/api/oauth/callback`
 4. Configure scopes
-   - For this starter, you need: `read:self`
+   - For Operate: `read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post`
    - The scopes you set in your `.env` must exactly match what you select in the Fanvue developer UI for your app
    - Note: The app automatically includes required system scopes (`openid`, `offline_access`, `offline`) in addition to what you set in `OAUTH_SCOPES`
 
@@ -104,7 +104,7 @@ Required variables
 
 - `OAUTH_CLIENT_ID`: From your Fanvue app
 - `OAUTH_CLIENT_SECRET`: From your Fanvue app
-- `OAUTH_SCOPES`: App scopes selected in the Fanvue UI (e.g. `read:self`)
+- `OAUTH_SCOPES`: App scopes selected in the Fanvue UI (see Operate scopes below)
 - `OAUTH_REDIRECT_URI`: Full URL to `/api/oauth/callback` for your environment
 - `SESSION_SECRET`: A random string of at least 16 characters
 - `SESSION_COOKIE_NAME` (default: `fanvue_oauth`)
@@ -119,7 +119,7 @@ Example `.env.local` (development)
 ```bash
 OAUTH_CLIENT_ID=YOUR_CLIENT_ID
 OAUTH_CLIENT_SECRET=YOUR_CLIENT_SECRET
-OAUTH_SCOPES=read:self
+OAUTH_SCOPES="read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post"
 OAUTH_REDIRECT_URI=http://localhost:3000/api/oauth/callback
 SESSION_SECRET=use-a-random-16-char-secret
 OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com
@@ -131,7 +131,7 @@ SESSION_COOKIE_NAME=fanvue_oauth
 
 - Set the same environment variables in your hosting provider for production
 - Ensure the Fanvue app has the production Redirect URI configured: `https://YOUR_DOMAIN/api/oauth/callback`
-- Ensure `OAUTH_SCOPES` exactly matches your selected scopes (e.g. `read:self`)
+- Ensure `OAUTH_SCOPES` exactly matches your selected scopes
 - Build and run
 
 ```bash
@@ -149,8 +149,14 @@ If you need a database, [Supabase](https://supabase.com/) should have you covere
 Usage
 
 - Visit `/` and click “Login with Fanvue”
-- After OAuth, your Fanvue current user JSON is shown
+- After OAuth you land on `/operate`: seed SOP lists and vault folders, siphon the top 10 spenders, optionally create a 14-day new-subscriber trial. Inbox is read-only; messages are not auto-sent.
 - Click “Logout” to clear the session
+
+Operate scopes (must match the Fanvue app)
+
+```
+read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post
+```
 
 Docs
 

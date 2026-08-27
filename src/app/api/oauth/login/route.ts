@@ -4,6 +4,10 @@ import { cookies } from "next/headers";
 import { env } from "@/env";
 
 export async function GET(request: Request) {
+  if (!env.OAUTH_CLIENT_ID || !env.OAUTH_CLIENT_SECRET || !env.OAUTH_REDIRECT_URI) {
+    return NextResponse.redirect(new URL("/operate", request.url));
+  }
+
   const { verifier, challenge } = generatePkce();
   const state = crypto.randomUUID();
 
