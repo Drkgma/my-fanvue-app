@@ -16,7 +16,12 @@ home page and drop it in this folder (gitignored).
 3. Copy `.env.example` → `.env.local` in the repo root and fill client id/secret.
 4. `pnpm dev`, click **Login with Fanvue**, then **Save tokens for local agents**.
 5. Put up to 20 images in `content_bank/` (SFW teasers are enough to start).
-6. `python run.py content` then `python run.py status`.
+6. `python run.py telegram` then `python run.py content` then `python run.py status`.
+
+Telegram: set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in gitignored
+`fanvue-automation/.env`. `python run.py telegram` discovers the chat id
+after you tap /start on @drkgma78bot. Status, content, and daily runs
+send a scoreboard there. Never commit the bot token.
 
 Do not enable ChatMate, MoneyBot, TrafficAgent, ads, or extra personas
 until auth works and those 5 teasers are live.

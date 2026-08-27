@@ -31,6 +31,8 @@ DEFAULTS = {
     "SESSION_COOKIE_NAME": "fvsession",
     "SESSION_SECRET": "dev-session-secret-change-me-please",
     "BASE_URL": "http://localhost:3000",
+    "TELEGRAM_BOT_TOKEN": "",
+    "TELEGRAM_CHAT_ID": "",
 }
 
 
@@ -73,6 +75,10 @@ lines = [
     f"SESSION_SECRET={merged['SESSION_SECRET']}",
     f"BASE_URL={merged['BASE_URL']}",
 ]
+if merged.get("TELEGRAM_BOT_TOKEN"):
+    lines.append(f"TELEGRAM_BOT_TOKEN={merged['TELEGRAM_BOT_TOKEN']}")
+if merged.get("TELEGRAM_CHAT_ID"):
+    lines.append(f"TELEGRAM_CHAT_ID={merged['TELEGRAM_CHAT_ID']}")
 PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 PATH.chmod(0o600)
 
