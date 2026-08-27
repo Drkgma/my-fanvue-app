@@ -75,7 +75,8 @@ export async function exchangeCodeForToken({
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Token exchange failed: ${res.status} ${text}`);
+    const { sanitizeTokenError } = await import("@/lib/oauth-errors");
+    throw new Error(`Token exchange failed: ${res.status} ${sanitizeTokenError(text)}`);
   }
   return (await res.json()) as {
     access_token: string;

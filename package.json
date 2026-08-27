@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --test src/lib/ops/*.test.ts",
+    "ops:status": "node scripts/ops-status.mjs",
+    "ops:tick": "node scripts/ops-cycle.mjs",
+    "ops:cycle": "node scripts/ops-cycle.mjs"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.13.8",

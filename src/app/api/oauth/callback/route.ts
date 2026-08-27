@@ -22,11 +22,11 @@ export async function GET(request: Request) {
     const search = new URLSearchParams();
     search.set("error", providerError);
     if (providerErrorDescription) search.set("error_description", providerErrorDescription);
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?${search.toString()}`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?${search.toString()}`, request.url));
   }
 
   if (!code || !state || !storedState || !verifier || state !== storedState) {
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_state_mismatch`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?error=oauth_state_mismatch`, request.url));
   }
 
   const redirectUri = env.OAUTH_REDIRECT_URI;
@@ -46,9 +46,17 @@ export async function GET(request: Request) {
       expiresAt: Date.now() + token.expires_in * 1000,
     });
 
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops`, request.url));
   } catch (e) {
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_token_exchange_failed`, request.url));
+    const search = new URLSearchParams();
+    search.set("error", "oauth_token_exchange_failed");
+    const message = e instanceof Error ? e.message : "";
+    if (/redirect/i.test(message)) {
+      search.set("error_description", "redirect_uri mismatch or unregistered redirect URI");
+    } else if (message) {
+      search.set("error_description", message.slice(0, 180));
+    }
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?${search.toString()}`, request.url));
   }
 }
 
@@ -71,11 +79,11 @@ export async function POST(request: Request) {
     const search = new URLSearchParams();
     search.set("error", error);
     if (errorDescription) search.set("error_description", errorDescription);
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?${search.toString()}`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?${search.toString()}`, request.url));
   }
 
   if (!code || !state || !storedState || !verifier || state !== storedState) {
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_state_mismatch`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?error=oauth_state_mismatch`, request.url));
   }
 
   const redirectUri = env.OAUTH_REDIRECT_URI ?? `${url.origin}/api/oauth/callback`;
@@ -92,9 +100,17 @@ export async function POST(request: Request) {
       scope: token.scope,
       expiresAt: Date.now() + token.expires_in * 1000,
     });
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops`, request.url));
   } catch (e) {
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_token_exchange_failed`, request.url));
+    const search = new URLSearchParams();
+    search.set("error", "oauth_token_exchange_failed");
+    const message = e instanceof Error ? e.message : "";
+    if (/redirect/i.test(message)) {
+      search.set("error_description", "redirect_uri mismatch or unregistered redirect URI");
+    } else if (message) {
+      search.set("error_description", message.slice(0, 180));
+    }
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?${search.toString()}`, request.url));
   }
 }
 

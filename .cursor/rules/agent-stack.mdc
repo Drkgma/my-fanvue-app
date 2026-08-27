@@ -1,0 +1,44 @@
+---
+description: The 5 AI agent stack, phase allowlist, and implementation order. Apply when building automations or “agents.”
+alwaysApply: false
+---
+
+# The 5 AI Agent Stack
+
+These are **roles**. The `/ops` runtime registers all five as **phase-gated lite jobs**. Live send/publish stays off until the phase table allows it.
+
+## Implementation order (mandatory)
+
+1. **ContentAgent**
+2. **ChatMate**
+3. **MoneyBot**
+4. **TrafficAgent**
+5. **AnalyticsAgent**
+
+Encoded in `IMPLEMENTATION_ORDER` (`src/lib/ops/types.ts`) and `runTick`.
+
+## What each may do here
+
+| Agent | Phase 0/1 (this repo) | Forbidden |
+|---|---|---|
+| ContentAgent | 7-day captions; optional `GET /posts` if `read:post` | Auto-publish, content factories |
+| ChatMate | Templates + draft queue; optional `GET /creators/{id}/chats` if `read:chat` | Auto-send, mass DM |
+| MoneyBot | Beginner ladder: $6.99 sub + trial, $5 tip, $9 first PPV | Broadcasts, dynamic $1M pricing |
+| TrafficAgent | Compliant promo checklist | Scraping, ads, spam |
+| AnalyticsAgent | Daily local snapshot; `GET /users/me` counts; skip insights without scope | Vanity $1M dashboards |
+
+Unauthenticated ticks **must not crash**. They skip live APIs with `waiting_for_login` and keep the dashboard demoable via fixtures.
+
+## Mapping requests
+
+| User says | You do |
+|---|---|
+| “Write captions” | ContentAgent lite |
+| “Auto-reply to all fans” | Drafts + refuse auto-send |
+| “Maximize ARPU / $1M” | Refuse; offer 3-item menu |
+| “Get viral everywhere” | One checklist channel; refuse the rest |
+| “Stand up all 5 as senders” | Refuse live send; keep lite jobs |
+
+## n8n / Telegram
+
+Not in this repo. Do not add them.

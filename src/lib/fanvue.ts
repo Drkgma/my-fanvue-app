@@ -1,8 +1,17 @@
 import { env } from "@/env";
 import { getSession, setSession } from "@/lib/session";
 import { refreshAccessToken } from "@/lib/oauth";
+import { FANVUE_API_VERSION, type FanvueMe } from "@/lib/ops/types";
+import { asMe } from "@/lib/ops/fanvue-client";
+import type { SessionTokens } from "@/lib/ops/fanvue-client";
 
-export async function getCurrentUser() {
+export async function getSessionTokens(): Promise<SessionTokens | null> {
+  const session = await getSession();
+  if (!session?.accessToken) return null;
+  return { accessToken: session.accessToken, scope: session.scope };
+}
+
+export async function getCurrentUser(): Promise<FanvueMe | null> {
   let session = await getSession();
   if (!session) return null;
 
@@ -25,11 +34,13 @@ export async function getCurrentUser() {
     const res = await fetch(`${env.API_BASE_URL}/users/me`, {
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
+        "X-Fanvue-API-Version": FANVUE_API_VERSION,
+        Accept: "application/json",
       },
       cache: "no-store",
     });
     if (!res.ok) return null;
-    return res.json();
+    return asMe(await res.json());
   } catch (error) {
     console.log("error", error);
     return null;

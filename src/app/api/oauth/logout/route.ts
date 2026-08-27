@@ -4,5 +4,5 @@ import { env } from "@/env";
 
 export async function POST(request: Request) {
   await clearSession();
-  return NextResponse.redirect(new URL(`${env.BASE_URL}/`, request.url));
+  return NextResponse.redirect(new URL(`${env.BASE_URL}/ops`, request.url));
 }

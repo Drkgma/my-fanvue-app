@@ -1,0 +1,43 @@
+---
+description: Fanvue Growth Ladder phases 0–5, promotion criteria, realistic 3-month targets, $1M refusal.
+alwaysApply: false
+---
+
+# Growth Ladder
+
+## How to place the account
+
+| Phase | Evidence | Typical size |
+|---|---|---|
+| **0 Foundation** | OAuth not proven or ~0–1 sub | 0–1 sub |
+| **1 First converts** | Login works; posting several times/week | 0–20 |
+| **2 Repeatable** | Lists + vault in use; some PPV sold | ~10–50 |
+| **3 Monetization** | Chat revenue measurable | ~50–200 |
+| **4 Traffic** | One channel produces weekly new subs | ~200–1,000 |
+| **5 Scale** | Team or real automation | 1,000+ |
+
+Code: `phaseFromSubscriberCount` in `src/lib/ops/phase.ts`. Unauthenticated default: **1 sub / Phase 0**.
+
+## Phase 0 — NOW
+
+OAuth, bio, 7-day manual content plan, welcome templates. Do not auto-post or auto-DM.
+
+## Phase 1 — ONE AHEAD (smallest slice)
+
+One traffic checklist, 3-item PPV menu, 2–3 lists. No ads, no multi-channel spam.
+
+## Phases 2–5
+
+Repeatable chat + catalog, then monetization systems, then traffic engine, then scale. **Do not start here.**
+
+## Realistic 3-month plan (Phase 0 start)
+
+- Month 1: 0–25 subs, $0–$300
+- Month 2: 15–60 subs, $100–$1,000
+- Month 3: 40–150 subs, $400–$3,000 typical; ~$5k is an outlier
+
+**$1M in 3 months is a hallucination.** $1M/month implies on the order of 20k–50k paying fans at beginner ARPU, or whales this page does not have.
+
+## Promotion is earned
+
+Do not skip phases because the user is excited. Ship the Phase 0 artifact (usually login or this week’s posts) and decline the rest.
