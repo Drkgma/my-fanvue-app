@@ -61,3 +61,24 @@ def test_content_agent_uploads_and_posts_once(tmp_path: Path, monkeypatch) -> No
     assert second["uploaded"] == []
     assert second["posted"] == []
     assert len(second["skipped"]) == 2
+
+
+def test_list_bank_images_honors_launch_files(tmp_path: Path, monkeypatch) -> None:
+    bank = tmp_path / "bank"
+    bank.mkdir()
+    (bank / "zzz.png").write_bytes(b"z")
+    (bank / "aaa.png").write_bytes(b"a")
+    (bank / "mid.png").write_bytes(b"m")
+    monkeypatch.setattr(
+        content_agent,
+        "load_config",
+        lambda: {
+            "content": {
+                "bank_dir": str(bank),
+                "launch_files": ["mid.png", "zzz.png"],
+            }
+        },
+    )
+    names = [path.name for path in content_agent.list_bank_images()]
+    assert names[:2] == ["mid.png", "zzz.png"]
+    assert names[2] == "aaa.png"

@@ -28,14 +28,17 @@ def _bank_dir(config: dict[str, Any]) -> Path:
 
 
 def list_bank_images(config: dict[str, Any] | None = None) -> list[Path]:
-    """Return image files in the content bank, sorted by name."""
+    """Return image files in the content bank. Launch files (if set) come first."""
     cfg = config or load_config()
     folder = _bank_dir(cfg)
     if not folder.exists():
         return []
-    return sorted(
+    images = [
         path for path in folder.iterdir() if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
-    )
+    ]
+    priority = [str(name) for name in (cfg.get("content") or {}).get("launch_files") or []]
+    rank = {name: index for index, name in enumerate(priority)}
+    return sorted(images, key=lambda path: (rank.get(path.name, len(rank)), path.name))
 
 
 def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> dict[str, Any]:
