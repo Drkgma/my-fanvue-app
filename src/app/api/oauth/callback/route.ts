@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?error=oauth_state_mismatch`, request.url));
   }
 
-  const redirectUri = env.OAUTH_REDIRECT_URI;
+  const redirectUri = env.OAUTH_REDIRECT_URI ?? `${url.origin}/callback`;
 
   try {
     const token = await exchangeCodeForToken({
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL(`${env.BASE_URL}/ops?error=oauth_state_mismatch`, request.url));
   }
 
-  const redirectUri = env.OAUTH_REDIRECT_URI ?? `${url.origin}/api/oauth/callback`;
+  const redirectUri = env.OAUTH_REDIRECT_URI ?? `${url.origin}/callback`;
   try {
     const token = await exchangeCodeForToken({
       code,

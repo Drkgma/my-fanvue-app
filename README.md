@@ -15,7 +15,7 @@ pnpm install
 pnpm dev
 ```
 
-Open http://localhost:3000 (login) and http://localhost:3000/ops (automation dashboard).
+Open http://localhost:3456 (login) and http://localhost:3456/ops (automation dashboard).
 
 ```bash
 pnpm ops:status   # which env keys are present (never prints values)
@@ -24,7 +24,7 @@ pnpm test
 
 **You still have to do two Fanvue clicks this environment cannot fake:**
 
-1. Register redirect URI `http://localhost:3000/api/oauth/callback` at [fanvue.com/developers](https://fanvue.com/developers)
+1. Register redirect URI `http://localhost:3456/callback` at [fanvue.com/developers](https://fanvue.com/developers)
 2. Click **Login with Fanvue**
 
 Until then, ops jobs no-op live APIs with `waiting_for_login`. They do not crash. **`/ops` still shows a complete Phase 0 money plan** (drafts, offer ladder, chat templates) in demo mode.
@@ -36,7 +36,7 @@ pnpm install
 pnpm dev
 ```
 
-Open http://localhost:3000/ops
+Open http://localhost:3456/ops
 
 1. Read **Today’s money plan** (generated even without login).
 2. Copy Day N caption into Fanvue by hand.
@@ -149,8 +149,8 @@ https://[your-app-name-here].dev:3001/api/oauth/callback
 1. Visit [Fanvue Developer Area](https://fanvue.com/developers)
 2. Create a new App to obtain your Client ID and Client Secret
 3. Configure a Redirect URI
-   - Development: `http://localhost:3000/api/oauth/callback`
-   - Production: `https://YOUR_DOMAIN/api/oauth/callback`
+   - Development: `http://localhost:3456/callback`
+   - Production: `https://YOUR_DOMAIN/callback`
 4. Configure scopes
    - For this starter, you need: `read:self`
    - The scopes you set in your `.env` must exactly match what you select in the Fanvue developer UI for your app
@@ -161,7 +161,7 @@ Required variables
 - `OAUTH_CLIENT_ID`: From your Fanvue app
 - `OAUTH_CLIENT_SECRET`: From your Fanvue app
 - `OAUTH_SCOPES`: App scopes selected in the Fanvue UI (e.g. `read:self`)
-- `OAUTH_REDIRECT_URI`: Full URL to `/api/oauth/callback` for your environment
+- `OAUTH_REDIRECT_URI`: Full URL to `/callback` for your environment
 - `SESSION_SECRET`: A random string of at least 16 characters
 - `SESSION_COOKIE_NAME` (default: `fanvue_oauth`)
 
@@ -176,7 +176,7 @@ Example `.env.local` (development)
 OAUTH_CLIENT_ID=YOUR_CLIENT_ID
 OAUTH_CLIENT_SECRET=YOUR_CLIENT_SECRET
 OAUTH_SCOPES=read:self
-OAUTH_REDIRECT_URI=http://localhost:3000/api/oauth/callback
+OAUTH_REDIRECT_URI=http://localhost:3456/callback
 SESSION_SECRET=use-a-random-16-char-secret
 OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com
 API_BASE_URL=https://api.fanvue.com
@@ -186,7 +186,7 @@ SESSION_COOKIE_NAME=fanvue_oauth
 ## Production deployment
 
 - Set the same environment variables in your hosting provider for production
-- Ensure the Fanvue app has the production Redirect URI configured: `https://YOUR_DOMAIN/api/oauth/callback`
+- Ensure the Fanvue app has the production Redirect URI configured: `https://YOUR_DOMAIN/callback`
 - Ensure `OAUTH_SCOPES` exactly matches your selected scopes (e.g. `read:self`)
 - Build and run
 

@@ -42,5 +42,5 @@ for (const k of required) {
 }
 console.log(`CRON_SECRET: ${kv.CRON_SECRET ? "present" : "optional/missing"}`);
 console.log(`oauth_user_login: not checked here — open /ops or GET /api/ops/status`);
-console.log(`redirect_uri_to_register: ${kv.OAUTH_REDIRECT_URI || "http://localhost:3000/api/oauth/callback"}`);
+console.log(`redirect_uri_to_register: ${kv.OAUTH_REDIRECT_URI || "http://localhost:3456/callback"}`);
 if (missing) process.exitCode = 1;

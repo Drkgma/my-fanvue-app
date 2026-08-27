@@ -7,5 +7,5 @@ test("unregistered redirect URI gets a clear hint", () => {
   assert.ok(info);
   assert.equal(info.redirectUriUnregistered, true);
   assert.match(info.hint, /fanvue.com\/developers/);
-  assert.match(info.hint, /localhost:3000\/api\/oauth\/callback/);
+  assert.match(info.hint, /localhost:3456\/callback/);
 });

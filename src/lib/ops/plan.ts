@@ -43,7 +43,7 @@ export function buildTodayPlan(input: {
       step: step++,
       title: "Unblock Fanvue login (you, not the app)",
       detail:
-        "Register http://localhost:3000/api/oauth/callback at fanvue.com/developers, then click Login with Fanvue. Until that matches, this dashboard stays in demo mode: drafts save locally and nothing is sent.",
+        "Register http://localhost:3456/callback at fanvue.com/developers, then click Login with Fanvue. Until that matches, this dashboard stays in demo mode: drafts save locally and nothing is sent.",
       owner: "you",
       status: "blocked",
     });

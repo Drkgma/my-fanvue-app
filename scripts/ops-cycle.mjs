@@ -19,7 +19,7 @@ function parseEnv(text) {
 
 const file = resolve(process.cwd(), ".env.local");
 const kv = existsSync(file) ? parseEnv(readFileSync(file, "utf8")) : {};
-const base = (process.env.BASE_URL || kv.BASE_URL || "http://localhost:3000").replace(/\/$/, "");
+const base = (process.env.BASE_URL || kv.BASE_URL || "http://localhost:3456").replace(/\/$/, "");
 const cron = process.env.CRON_SECRET || kv.CRON_SECRET || "";
 
 const headers = { "content-type": "application/json" };

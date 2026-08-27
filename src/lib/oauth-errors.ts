@@ -6,7 +6,7 @@ export type OauthErrorInfo = {
 };
 
 const REDIRECT_HINT =
-  "Register this exact Redirect URI in the Fanvue Developer Area (https://fanvue.com/developers): http://localhost:3000/api/oauth/callback — then click Login with Fanvue again.";
+  "Register this exact Redirect URI in the Fanvue Developer Area (https://fanvue.com/developers): http://localhost:3456/callback — then click Login with Fanvue again.";
 
 export function explainOauthError(
   error?: string,

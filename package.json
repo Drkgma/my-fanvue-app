@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3456",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3456",
     "lint": "eslint",
     "test": "node --experimental-strip-types --test src/lib/ops/*.test.ts",
     "ops:status": "node scripts/ops-status.mjs",

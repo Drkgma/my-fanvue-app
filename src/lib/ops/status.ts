@@ -91,7 +91,7 @@ export async function buildOpsStatus(input: {
     humanStepsRemaining: input.user
       ? []
       : [
-          "Add redirect URI http://localhost:3000/api/oauth/callback at https://fanvue.com/developers",
+          "Add redirect URI http://localhost:3456/callback at https://fanvue.com/developers",
           "Click Login with Fanvue",
         ],
   };

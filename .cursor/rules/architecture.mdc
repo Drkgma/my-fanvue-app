@@ -19,6 +19,7 @@ src/lib/ops/*                      # phase, guardrails, cooldown, orchestrator, 
 src/app/ops                        # dashboard
 src/app/api/ops/{status,tick,actions,state}
 src/app/api/oauth/*                # login / callback / logout
+src/app/callback                   # registered local Redirect URI: GET /callback on :3456
 ```
 
 Defaults: `OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com`, `API_BASE_URL=https://api.fanvue.com`.
