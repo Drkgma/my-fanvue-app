@@ -1,5 +1,7 @@
 # Fanvue App Starter (Next.js App Router)
 
+Cursor agent instructions: [`AGENTS.md`](./AGENTS.md) and [`.cursor/rules/`](./.cursor/rules/). This is a Phase 0 OAuth starter — not a scaled automation stack.
+
 ## Requirements
 
 - pnpm

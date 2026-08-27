@@ -1,0 +1,92 @@
+---
+description: The 5 AI agent stack (ContentAgent, ChatMate, MoneyBot, TrafficAgent, AnalyticsAgent), what each may do per phase, and implementation order. Use when building features, automations, prompts, or “agents.”
+alwaysApply: false
+---
+
+# The 5 AI Agent Stack
+
+These are **roles**, not five production services to scaffold today. In Phase 0 they are checklists and copy. Wire APIs only when the phase and the 24-hour rule allow.
+
+## Implementation order (mandatory)
+
+1. **ContentAgent** (lite first)
+2. **ChatMate** (templates first, senders later)
+3. **MoneyBot**
+4. **TrafficAgent** (one channel in Phase 1; many in Phase 4)
+5. **AnalyticsAgent** (needs data — last)
+
+Never implement 3–5 because they sound profitable. Never implement all five in one PR.
+
+## 1. ContentAgent
+
+**Job:** Make it easy to publish the next piece of content on Fanvue (and later, SFW teasers elsewhere).
+
+| Phase | Allowed | Forbidden |
+|---|---|---|
+| 0 | 7-day plan, captions, on-page first impression, SFW vs Fanvue-only split | Auto-posters, 30-day content factories, multi-platform schedulers |
+| 1 | Repeatable weekly batch; optional IG teaser captions | Scraping, mass unique-video pipelines |
+| 2+ | Vault naming, bundle sets, prompt helpers for the look they already have | Deepfake/underage/anything illegal; IG-unsafe teasers if they use Instagram |
+
+On this repo, ContentAgent lite is markdown/checklists or a tiny UI **only if** it helps them post tomorrow. Prefer paste-ready copy over new app surfaces.
+
+## 2. ChatMate
+
+**Job:** Help the creator (or later, chatters) answer fans without sounding like a bot farm.
+
+| Phase | Allowed | Forbidden |
+|---|---|---|
+| 0 | Welcome, check-in, witty, invitational, re-engage **templates** | Auto-send, webhooks, “AI boyfriend” loops, chat write-scopes |
+| 1 | Same templates used on real fans; 2–3 lists | Mass unsolicited PPV spam |
+| 2+ | Scoped chat API, list-aware first messages | Ignoring Time Wasters vs spenders; graphic dumps in git |
+
+Do not add `read:chat` / write chat scopes until login works and they are ready to send. Match scopes in `.env` to the Fanvue developer UI.
+
+Sibling playbooks (lists, vault, voice-note banks) live on `cursor/reel-clearance-desk-d060`, **not** on `main`. Reuse ideas as copy if asked; don’t silently merge that PR.
+
+## 3. MoneyBot
+
+**Job:** Turn attention into PPV, tips, bundles, customs — after there are people to sell to.
+
+- **Phase 0:** refuse (except a handwritten 3-price menu if they already have buyers sitting in chat).
+- **Phase 1:** 3-item menu + honest prices. No dynamic pricing engine.
+- **Phase 2–3:** catalog, tip menu, re-engage offers, customs rules.
+- **Never:** fake scarcity, non-consensual content, or charging for content they cannot deliver.
+
+## 4. TrafficAgent
+
+**Job:** Bring **new** people to Fanvue from **one** place at a time.
+
+- **Phase 0:** refuse paid ads and multi-channel. Off-platform mentions in the 7-day plan are enough (“post one SFW teaser if you already have IG”).
+- **Phase 1:** one channel, weekly. Instagram teasers must stay recommendation-safe if they care about Reels reach (see sibling clearance desk).
+- **Phase 4:** more channels, still no spam, still no $1M model.
+
+Traffic without a finished Fanvue page is wasted. Fix Phase 0 first.
+
+## 5. AnalyticsAgent
+
+**Job:** Say what to do next week using **real** numbers.
+
+- **Phase 0–1:** a manual weekly note: posts made, new subs, $ , what they replied to. Spreadsheet or a message. No product.
+- **Phase 3+:** simple snapshots from Fanvue API **after** OAuth scopes exist.
+- **Forbidden early:** warehouses, LLM-judge eval farms, vanity dashboards with projected $1M.
+
+## Mapping requests to agents
+
+| User says | You do |
+|---|---|
+| “Write my captions / what do I post” | ContentAgent lite |
+| “Auto-reply to all fans” | ChatMate templates + refuse auto-send in Phase 0 |
+| “Maximize ARPU / build a sales bot” | If Phase 0: refuse; offer 3-item menu as Phase 1 slice |
+| “Get me viral on every platform” | One channel after page exists; refuse the rest |
+| “Dashboard my millions” | Refuse; weekly three-number note if anything |
+| “Stand up all 5 agents” | Refuse; implement order 1→2 only |
+
+## n8n / Telegram (not in this repo)
+
+Do not create n8n JSON or Telegram bots because a generic Fanvue-automation guide mentioned them. They are **not** on `main`.
+
+If the user later adds them:
+
+- Still phase-gated and 24-hour: **one** workflow, **one** trigger (e.g. “new sub → remind creator to send welcome”).
+- Telegram is an ops ping, not a second Fanvue. No token in git.
+- Remaining “click Execute workflow in n8n” or “complete Fanvue OAuth” tasks are only real if a `SETUP-STATUS.md` (or equivalent) says so. **Today it does not exist** — don’t tell them to click workflows that aren’t here.
