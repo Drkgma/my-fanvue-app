@@ -2,6 +2,7 @@ import { env } from "@/env";
 import { cooldownStatus } from "@/lib/ops/cooldown";
 import { parseGrantedScopes, type SessionTokens } from "@/lib/ops/fanvue-client";
 import { agentModeForPhase, detectPhase, PHASE_LABELS, realisticEnvelope } from "@/lib/ops/phase";
+import { buildTodayPlan } from "@/lib/ops/plan";
 import { loadState } from "@/lib/ops/store";
 import { IMPLEMENTATION_ORDER, type FanvueMe } from "@/lib/ops/types";
 
@@ -70,7 +71,16 @@ export async function buildOpsStatus(input: {
     cooldown: cooldownStatus(state, now),
     automations,
     lastTickAt: state.lastTickAt,
-    todayPlan: state.todayPlan,
+    todayPlan:
+      state.todayPlan ??
+      buildTodayPlan({
+        state,
+        phase: detected.phase,
+        subscriberCount: detected.subscriberCount,
+        waitingForLogin: !input.user,
+        user: input.user,
+        now,
+      }),
     counts: {
       contentDrafts: state.contentDrafts.filter((d) => d.status !== "dismissed").length,
       chatDrafts: state.chatDrafts.filter((d) => d.status !== "dismissed").length,
