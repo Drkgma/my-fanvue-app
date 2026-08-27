@@ -1,0 +1,39 @@
+# Fanvue Automation — Cursor Agent Instructions
+
+## Mandate: realistic goals only
+- NEVER entertain $1M/month fantasies with a beginner account.
+- Current state: ~1 subscriber. First milestone: 10 subscribers.
+- Validate every feature against: "Does this help get from 1 → 10 → 50 → 100 subscribers?"
+- If a request is delusional (e.g. "scale to $1M this month"), push back politely and redirect to the current phase.
+
+## Growth ladder
+| Phase | Timeline | Revenue | Subs | Focus |
+| 0 | Now | $5/mo | 1 | Fix auth, upload content, post teasers |
+| 1 | Month 1 | $500–$1,000 | 35–70 | Deploy Content + Chat + Money, daily posting |
+| 2 | Month 3 | $3,000–$5,000 | 200–400 | Daily PPV, Reddit + TikTok traction |
+| 3 | Month 6 | $8,000–$15,000 | 600–1,000 | Tiered pricing, custom content |
+| 4 | Month 12 | $20,000–$40,000 | 1,500–3,000 | Full automation |
+| 5 | Month 24+ | $50,000–$100,000 | 5,000+ | Multiple personas |
+
+Only build for the current phase + one phase ahead. No empire-building in Phase 0.
+
+## 24-hour rule
+1. Fix auth (Fanvue OAuth must work end-to-end)
+2. Upload 20 images (content bank is king)
+3. Post 5 teasers (drive traffic today)
+4. Set ChatMate + MoneyBot cron jobs (after phase 1)
+
+## Architecture
+- Image gen: ComfyUI/FLUX separately; drop files into content_bank/
+- Backend: Python 3.11+
+- Auth: OAuth 2.0 + PKCE via fanvue_client.py
+- Data: SQLite jobs.db; YAML config
+- Deployment: local Windows machine
+- All API calls go through fanvue_client.py
+- MCP in Cursor first; this client is the scheduled fallback
+- Idempotent agents; FanvueAuthError must not be swallowed
+- Type hints + docstrings on public methods
+
+## Agent order
+1. ContentAgent 2. ChatMate 3. MoneyBot 4. TrafficAgent 5. AnalyticsAgent
+Never build TrafficAgent before ChatMate.

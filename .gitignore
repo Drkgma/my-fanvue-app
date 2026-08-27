@@ -40,3 +40,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Fanvue local automation (never commit tokens, the job db, or logs)
+fanvue-automation/tokens.json
+fanvue-automation/jobs.db
+fanvue-automation/logs/*.log
+fanvue-automation/content_bank/*
+!fanvue-automation/content_bank/.gitkeep
+!fanvue-automation/content_bank/README.md
+__pycache__/
+.pytest_cache/
+*.pyc

@@ -1,0 +1,47 @@
+---
+description: Fanvue automation — realistic Phase 0/1 goals only
+alwaysApply: true
+---
+
+# Fanvue automation
+
+Current state: about **1 subscriber**. First milestone: **10 subscribers**.
+Never plan around $1M/month or a 90-day empire. Build for the current phase
+plus one phase ahead.
+
+Read `config.yaml` for `phase`. If missing, assume Phase 0.
+
+## Growth ladder (do not skip)
+
+| Phase | Focus | Subs target |
+| 0 Now | Auth, upload content, post teasers | 1 → 10 |
+| 1 Month 1 | ContentAgent + ChatMate + MoneyBot, daily posts | 35–70 |
+| 2 Month 3 | Daily PPV, Reddit/TikTok teasers | 200–400 |
+| 3 Month 6 | Tiered pricing, custom content | 600–1,000 |
+| 4–5 | Full automation, extra personas | 1,500+ |
+
+Phase 0 revenue target is **$5/mo**, not $1,000,000.
+
+## 24-hour priority
+
+1. Fix Fanvue OAuth end-to-end
+2. Upload up to 20 images into the vault
+3. Post 5 teasers (`followers-and-subscribers`)
+4. Enable ChatMate + MoneyBot only after phase is 1
+
+## Agents (Python, `fanvue-automation/`)
+
+1. ContentAgent — first
+2. ChatMate — DMs convert; do not build TrafficAgent before this
+3. MoneyBot — PPV / welcome messages; no mass PPV under 5 subs
+4. TrafficAgent — phase 2+
+5. AnalyticsAgent — scoreboard only in phase 0 (subs, followers, posts)
+
+All API calls go through `fanvue_client.py`. Agents are idempotent.
+Log to `fanvue-automation/logs/YYYY-MM-DD_agentname.log`.
+Keep `run_daily.bat` / `run_all.bat` (Windows cmd, not Python).
+
+## Forbidden
+
+Paid ads before organic traction, NFT/merch/SaaS-for-others, swallowing
+auth errors, or deleting `.bat` files.

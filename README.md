@@ -1,5 +1,9 @@
 # Fanvue App Starter (Next.js App Router)
 
+Phase 0 goal: **1 → 10 subscribers**. Login, upload a content bank, post 5 teasers. Do not plan a $1M month from this account.
+
+Local Python agents live in [`fanvue-automation/`](./fanvue-automation/README.md). After OAuth, use the home page to save `tokens.json`, drop images in `fanvue-automation/content_bank/`, then `python run.py content`.
+
 ## Requirements
 
 - pnpm

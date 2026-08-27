@@ -17,7 +17,7 @@ export const env = createEnv({
     SESSION_COOKIE_NAME: z.string().default("fanvue_oauth"),
     SESSION_SECRET: z
       .string()
-      .min(16, { message: "SESSION_SECRET must be at least 32 characters" }),
+      .min(16, { message: "SESSION_SECRET must be at least 16 characters" }),
     API_BASE_URL: z.url().default("https://api.fanvue.com"),
   },
   runtimeEnv: {
