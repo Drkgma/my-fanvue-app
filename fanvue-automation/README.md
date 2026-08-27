@@ -42,9 +42,10 @@ TrafficAgent always no-ops before phase 2.
 ## Image gen (Phase 0)
 
 This agent does not run ComfyUI, Klein, Qwen, or Z-Image. There is no
-GPU on the Cloud Agent VM. A starter SFW bank was generated from the
-identity photo and copied into `content_bank/` (character) and
-`datasets/rooms/` (empty backgrounds).
+GPU on the Cloud Agent VM. Public teasers lock the face sheet to the
+body sheet (fitted t-shirt + jeans) and live in `content_bank/`. Empty
+rooms live in `datasets/rooms/`. Identity sheets live in
+`datasets/identity/` and are never uploaded.
 
 Prompt lists for a later GPU/ComfyUI run (one prompt per line, CR Prompt
 List compatible) live in `prompts/`. Re-stage new stills with:

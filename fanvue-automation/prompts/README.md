@@ -4,6 +4,14 @@ Use these with a ComfyUI CR Prompt List node later, or paste them into
 any image tool. Prefix every character prompt with the text in
 `identity.txt`.
 
+Identity stills (gitignored):
+
+- `datasets/identity/face-source.png` — face lock
+- `datasets/identity/body-source.webp` — body lock
+
+Public teasers combine both: same face, hourglass body, fitted black
+t-shirt and dark jeans. The body source itself is not uploaded.
+
 ## What this agent can and cannot do
 
 This Cloud Agent VM has no NVIDIA GPU. It cannot download or run:
@@ -14,21 +22,16 @@ This Cloud Agent VM has no NVIDIA GPU. It cannot download or run:
 - Klein character LoRA training
 
 Those weights are tens of gigabytes and need a local GPU or RunPod.
-When you have a GPU box, point ComfyUI at the same prompt files and
-the identity still in `content_bank/00-identity-source.png`.
-
-Here, stills were generated with Cursor image gen from that identity
-photo, then staged into `content_bank/` (character) and
-`datasets/rooms/` (empty rooms).
+When you have a GPU box, point ComfyUI at the prompt files plus the
+two identity stills above.
 
 ## Public teasers vs later PPV
 
 Phase 0 posts go to `followers-and-subscribers`. Keep them SFW:
-plain shirts, lifestyle rooms, face-consistent portraits.
+plain shirts, jeans, lifestyle rooms.
 
-Tube-top, lingerie, and nude prompts were blocked by the image tool
-on this agent. Do not try to route around that with face-swap onto
-content you do not own.
+Lingerie, thong, and nude recreations of the body sheet are blocked
+by the image tool here and must not go in `content_bank/`.
 
 ## After OAuth works
 

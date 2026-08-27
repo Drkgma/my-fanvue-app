@@ -1,1 +1,5 @@
-Same adult woman every time. Heart-shaped face, pale complexion, large dark brown eyes, long dark eyelashes, arched eyebrows, small straight nose, full lips, small beauty mark on her left cheek, long straight brown hair with honey-blonde highlights, wispy bangs. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no extra fingers, no minors.
+Same adult woman every time.
+
+Face (from face-source): heart-shaped face, pale complexion, large dark brown eyes, long dark eyelashes, arched eyebrows, small straight nose, full lips, small beauty mark on her left cheek, long straight brown hair with honey-blonde highlights, wispy bangs.
+
+Body (from body-source): hourglass figure, slim waist, wide hips, toned legs. For public teasers she wears a fitted black short-sleeve t-shirt and dark high-waist jeans. Do not generate lingerie, thongs, nudes, or extra fingers. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no minors.

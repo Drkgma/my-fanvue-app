@@ -2,13 +2,10 @@
 
 Generated media stays on disk and is gitignored.
 
+- `identity/` — face-source and body-source sheets (not uploaded)
 - `rooms/` — empty-room stills used as background references
+- `archive-v1/` — first face-only teaser pass
 - `../content_bank/` — character teasers ContentAgent will upload
 
-This environment has no GPU. Klein / Qwen / Z-Image ComfyUI graphs
-cannot run here. The starter stills were generated with Cursor image
-gen from the identity photo, then copied into these folders.
-
-Public Fanvue teasers stay SFW (plain shirts, lifestyle rooms). Suggestive
-or nude prompts are blocked by the image tool on this agent and should
-not be posted to `followers-and-subscribers` anyway.
+Public Fanvue teasers stay SFW (fitted t-shirt + jeans, lifestyle rooms).
+The body identity sheet is a private reference only.
