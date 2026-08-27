@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fanvue_client import API_BASE, FanvueAuthError, FanvueClient
+from fanvue_client import API_BASE, FanvueAuthError, FanvueClient, seed_tokens_from_env
 from tests.conftest import FakeResponse, FakeSession, make_client
 
 
@@ -14,6 +14,30 @@ def test_missing_token_raises_auth_error(tmp_path: Path, monkeypatch) -> None:
         raise AssertionError("expected FanvueAuthError")
     except FanvueAuthError as exc:
         assert "Login" in str(exc) or "token" in str(exc).lower()
+
+
+def test_seed_tokens_from_env_writes_file(tmp_path: Path, monkeypatch) -> None:
+    dest = tmp_path / "tokens.json"
+    monkeypatch.setenv("FANVUE_TOKEN", "access-from-secret")
+    monkeypatch.setenv("FANVUE_REFRESH_TOKEN", "refresh-from-secret")
+    monkeypatch.setenv("FANVUE_TOKEN_EXPIRES_AT", "1700000000")
+    written = seed_tokens_from_env(dest)
+    assert written == dest
+    payload = dest.read_text(encoding="utf-8")
+    assert "access-from-secret" in payload
+    assert "refresh-from-secret" in payload
+    client = FanvueClient(token_path=dest)
+    monkeypatch.delenv("FANVUE_TOKEN", raising=False)
+    client._load_tokens()
+    assert client._tokens["access_token"] == "access-from-secret"
+
+
+def test_seed_tokens_from_env_skips_without_secret(tmp_path: Path, monkeypatch) -> None:
+    dest = tmp_path / "tokens.json"
+    monkeypatch.delenv("FANVUE_TOKEN", raising=False)
+    monkeypatch.delenv("FANVUE_REFRESH_TOKEN", raising=False)
+    assert seed_tokens_from_env(dest) is None
+    assert not dest.exists()
 
 
 def test_get_account_sends_version_header(tmp_path: Path) -> None:

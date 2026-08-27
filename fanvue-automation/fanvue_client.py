@@ -61,6 +61,32 @@ def generate_pkce() -> tuple[str, str]:
     return verifier, challenge
 
 
+def seed_tokens_from_env(token_path: Path | None = None) -> Path | None:
+    """Write tokens.json from FANVUE_TOKEN secrets. Returns the path if written."""
+    access = (os.getenv("FANVUE_TOKEN") or "").strip()
+    if not access:
+        return None
+    path = Path(token_path) if token_path else TOKEN_PATH
+    expires_raw = (os.getenv("FANVUE_TOKEN_EXPIRES_AT") or "0").strip()
+    try:
+        expires_at = int(expires_raw or "0")
+    except ValueError:
+        expires_at = 0
+    payload = {
+        "access_token": access,
+        "refresh_token": (os.getenv("FANVUE_REFRESH_TOKEN") or "").strip() or None,
+        "token_type": "Bearer",
+        "expires_at": expires_at,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    try:
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+    return path
+
+
 def _load_env_credentials() -> dict[str, str]:
     client_id = os.getenv("OAUTH_CLIENT_ID") or os.getenv("FANVUE_CLIENT_ID") or ""
     client_secret = os.getenv("OAUTH_CLIENT_SECRET") or os.getenv("FANVUE_CLIENT_SECRET") or ""
