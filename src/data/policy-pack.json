@@ -1,0 +1,877 @@
+{
+  "policy_version": "2026-08-27",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Community Standards (unified for Facebook, Instagram, Messenger and Threads)",
+      "url": "https://transparency.meta.com/policies/community-standards/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S2",
+      "title": "Adult Nudity and Sexual Activity",
+      "url": "https://transparency.meta.com/policies/community-standards/adult-nudity-sexual-activity/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-08-29",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S3",
+      "title": "Adult Sexual Solicitation and Sexually Explicit Language",
+      "url": "https://transparency.meta.com/policies/community-standards/sexual-solicitation/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-05-14",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S4",
+      "title": "Adult Sexual Exploitation",
+      "url": "https://transparency.meta.com/policies/community-standards/sexual-exploitation-adults/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2026-03-04",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S5",
+      "title": "Child Sexual Exploitation, Abuse, and Nudity",
+      "url": "https://transparency.meta.com/policies/community-standards/child-sexual-exploitation-abuse-nudity/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-07-31",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S6",
+      "title": "Spam",
+      "url": "https://transparency.meta.com/policies/community-standards/spam/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2024-06-27",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S7",
+      "title": "Inauthentic Behavior",
+      "url": "https://transparency.meta.com/policies/community-standards/inauthentic-behavior/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-12-11",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S8",
+      "title": "Recommendations on Instagram",
+      "url": "https://www.facebook.com/help/instagram/313829416281232",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S9",
+      "title": "What Creators Need To Know About Instagram Recommendations",
+      "url": "https://creators.instagram.com/blog/instagram-recommendations-eligibility-tips-creators",
+      "publisher": "Instagram for Creators",
+      "last_updated": "2023-04-25",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S10",
+      "title": "Helping Creators Find New Audiences (recommendations and originality)",
+      "url": "https://creators.instagram.com/blog/recommendations-and-originality",
+      "publisher": "Instagram for Creators",
+      "last_updated": "2024-04-30",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S11",
+      "title": "Types of content we demote (Content Distribution Guidelines)",
+      "url": "https://transparency.meta.com/features/approach-to-ranking/types-of-content-we-demote",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-07-02",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S12",
+      "title": "Content Distribution Guidelines: Changes, corrections, and adjustments",
+      "url": "https://transparency.meta.com/features/approach-to-ranking/cdgs-changes-corrections/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-07-02",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S13",
+      "title": "Labeling AI Content",
+      "url": "https://transparency.meta.com/governance/tracking-impact/labeling-ai-content",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-02-19",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S14",
+      "title": "Labeling AI-Generated Images on Facebook, Instagram and Threads",
+      "url": "https://about.fb.com/news/2024/02/labeling-ai-generated-images-on-facebook-instagram-and-threads/",
+      "publisher": "Meta Newsroom",
+      "last_updated": "2024-02",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S15",
+      "title": "Misinformation (including Manipulated Media / AI disclosure)",
+      "url": "https://transparency.meta.com/policies/community-standards/misinformation",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-04-07",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S16",
+      "title": "Helping Teens See Age-Appropriate Content",
+      "url": "https://transparency.meta.com/policies/age-appropriate-content/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2026-05-13",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S17",
+      "title": "Instagram Content Monetization Policies",
+      "url": "https://help.instagram.com/2635536099905516",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S18",
+      "title": "Instagram Partner Monetization Policies",
+      "url": "https://www.facebook.com/help/instagram/512371932629820",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S19",
+      "title": "Access to the licensed music library on Instagram",
+      "url": "https://www.facebook.com/help/instagram/402084904469945",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S20",
+      "title": "About branded content on Instagram",
+      "url": "https://www.facebook.com/help/instagram/128845584325492",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S21",
+      "title": "Get started with branded content on Instagram",
+      "url": "https://www.facebook.com/help/instagram/1123581461537025",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S22",
+      "title": "Everything you need to know about original content",
+      "url": "https://creators.instagram.com/original-content-guidelines",
+      "publisher": "Instagram for Creators",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S23",
+      "title": "Instagram Ranking Explained",
+      "url": "https://about.instagram.com/blog/announcements/instagram-ranking-explained",
+      "publisher": "About Instagram (Adam Mosseri)",
+      "last_updated": "2023-05-31",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S24",
+      "title": "Recent updates",
+      "url": "https://transparency.meta.com/recent-updates/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S25",
+      "title": "Community Standards Enforcement Report — Adult Nudity and Sexual Activity",
+      "url": "https://transparency.meta.com/reports/community-standards-enforcement/adult-nudity-and-sexual-activity/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S26",
+      "title": "Account Integrity",
+      "url": "https://transparency.meta.com/policies/community-standards/account-integrity",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2026-05-28",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S27",
+      "title": "Advertising Standard: Adult Sexual Solicitation and Sexually Explicit Language",
+      "url": "https://transparency.meta.com/policies/ad-standards/objectionable-content/adult-sexual-solicitation-and-sexually-explicit-language/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "2025-05-14",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S28",
+      "title": "Instagram chief reveals reason why OnlyFans stars' accounts are being deleted",
+      "url": "https://www.themirror.com/entertainment/instagram-chief-reveals-reason-onlyfans-1805326",
+      "publisher": "The Mirror US",
+      "last_updated": "2026",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S29",
+      "title": "AI Generated Video in Iran-Israel conflict (Oversight Board case / Meta response on AI disclosure penalties)",
+      "url": "https://transparency.meta.com/oversight/oversight-board-cases/ai-generated-video-in-iran-israel-conflict/",
+      "publisher": "Meta Transparency Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S30",
+      "title": "Set audience restrictions for branded content on Instagram",
+      "url": "https://help.instagram.com/521368460486230/",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S31",
+      "title": "How Meta Is Preparing for the 2026 US Midterm Elections (AI info label restated)",
+      "url": "https://about.fb.com/news/2026/02/meta-prepares-for-2026-us-midterms/",
+      "publisher": "Meta Newsroom",
+      "last_updated": "2026-02",
+      "retrieved": "2026-08-27"
+    },
+    {
+      "id": "S32",
+      "title": "How to use the paid partnership label to tag organic branded content on Instagram",
+      "url": "https://help.instagram.com/1109894795810258/",
+      "publisher": "Instagram Help Center",
+      "last_updated": "",
+      "retrieved": "2026-08-27"
+    }
+  ],
+  "hard_stops": [
+    {
+      "id": "HS1",
+      "rule": "Any sexualization, sexual solicitation, nudity, or sexual activity involving a minor — real or non-real, including AI-generated, fictional, dolls, or art with a human likeness. Meta reports apparent child exploitation to NCMEC.",
+      "detection_signals": [
+        "Subject appears under 18",
+        "School, playground, or other minor-coded context combined with sexual framing",
+        "AI/fictional depiction of a child with sexual elements, staged environment, sexualized costume, or focus on genitals/anus",
+        "Soliciting nude or sexualized imagery of children"
+      ],
+      "consequence": "legal_referral",
+      "source_ids": ["S5"]
+    },
+    {
+      "id": "HS2",
+      "rule": "Photorealistic or digital adult nudity: visible genitalia (including when obscured only by pubic hair or digital overlays), visible anuses and/or close-ups of visible buttocks, visible female nipples except breastfeeding or protest.",
+      "detection_signals": [
+        "Visible genitalia or anus",
+        "Nipple visible on adult female breast outside named exceptions",
+        "Close-up of visible buttocks",
+        "Nudity covered only by a digital overlay or sticker that still depicts the prohibited body part"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S2", "S16"]
+    },
+    {
+      "id": "HS3",
+      "rule": "Photorealistic or digital adult sexual activity, including explicit and implicit intercourse/oral sex/stimulation, impending sexual activity, erections, by-products of sexual activity, sex toys in mouth, stimulation of visible nipples, and squeezing female breasts (grabbing with curved fingers showing marks and shape change), plus extended audio of sexual activity.",
+      "detection_signals": [
+        "Mouth or genitals in contact with genitals or anus",
+        "Sex-toy insertion or placement on genitals",
+        "Positions suggesting contact is about to start",
+        "Moaning/sex-act audio as the extended soundtrack"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S2"]
+    },
+    {
+      "id": "HS4",
+      "rule": "Non-consensual intimate imagery, sextortion, creepshots/upskirts, secretly taken sexualized imagery, and promoting 'nudify' or AI kissing apps that offer to make NCII.",
+      "detection_signals": [
+        "Threat to expose intimate images",
+        "AI undress / nudify app promotion",
+        "Secretly taken focus on breasts, groin, buttocks, or thighs shared to mock or sexualize",
+        "Vengeful context around (near) nude or sexually suggestive imagery"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S4"]
+    },
+    {
+      "id": "HS5",
+      "rule": "Offering, asking, or providing methods of contact for prostitution or paid sexual encounters (escort, erotic massage, sex chats, fetish/domination services) including slang plus price, availability, location, or contact info.",
+      "detection_signals": [
+        "Price or transaction signal next to a sexual encounter offer",
+        "Escort / sex-chat / domination-for-pay language",
+        "Contact method attached to a sexual-services offer"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S3", "S16"]
+    },
+    {
+      "id": "HS6",
+      "rule": "Asking for, offering, or providing methods of contact to acquire pornographic material, or posting usernames or links to pornographic websites. Also sexual solicitation of nude imagery, sex videos, erotic dancing/stripping, or sex chats.",
+      "detection_signals": [
+        "Direct porn site URL or username",
+        "Ask/offer for nudes or sex videos",
+        "Call to message for explicit content"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S3"]
+    },
+    {
+      "id": "HS7",
+      "rule": "Sexually explicit language in graphic detail about genitals, states of sexual arousal (e.g. wetness or erection), or sexual encounters — unless humorous, satirical, or sexual cursing.",
+      "detection_signals": [
+        "Graphic genital description",
+        "Graphic arousal description",
+        "Graphic sexual-encounter narration in a non-humorous caption or voiceover"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S3"]
+    },
+    {
+      "id": "HS8",
+      "rule": "Using inauthentic assets to deceive Meta or users about identity/origin, or to evade Community Standards enforcement. Repeated or severe Community Standards violations can disable the account.",
+      "detection_signals": [
+        "Ban-evasion accounts after a prior disable",
+        "Networks of fake assets under common control",
+        "Repeated Community Standards strikes"
+      ],
+      "consequence": "account_ban",
+      "source_ids": ["S7", "S26"]
+    },
+    {
+      "id": "HS9",
+      "rule": "Cloaking (showing integrity systems different off-platform content than users see), misleading links, like/share-gating exclusive content, and other deceptive URL tactics.",
+      "detection_signals": [
+        "Landing page that swaps after a click/captcha",
+        "Link that promises SFW and delivers something substantially different",
+        "Must-like-to-unlock exclusive content"
+      ],
+      "consequence": "content_removal",
+      "source_ids": ["S6"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "adult_nudity",
+      "name": "Adult nudity and sexual activity",
+      "what_the_policy_says": "Meta restricts nudity and sexual activity because some people are sensitive to it. The policy removes real photos/videos AND AI- or computer-generated imagery of nudity and sexual activity, 'regardless of whether it looks photorealistic'. Named exceptions exist for protest, breastfeeding, post-mastectomy, real-world art, and some medical/health/awareness contexts, often with 18+ limits and sensitive labels. Default is to remove sexual imagery to prevent non-consensual or underage sharing.",
+      "removal_triggers": [
+        "Visible genitalia, including when obscured only by pubic hair or digital overlays",
+        "Visible anuses and/or close-ups of visible buttocks",
+        "Visible female nipples except breastfeeding or act of protest",
+        "Crotch/breast/buttocks videos recorded without the person's awareness",
+        "Explicit, implicit, or impending sexual activity as defined in the policy",
+        "Erections; by-products of sexual activity; sex toys in mouth; stimulation of visible nipples; squeezing female breasts as defined",
+        "Extended audio of sexual activity",
+        "AI-generated nudity or sexual activity of the same kinds"
+      ],
+      "downrank_triggers": [
+        "Not framed as a recommendation-ineligible category on this page; the 18+ age-gate is a separate visibility limit, not the Explore/Reels downrank list",
+        "Near-nudity (nudity covered only by digital overlay or opaque object) and some see-through clothing is limited to 18+ rather than removed",
+        "Imagery where crotch, buttocks, or female breast(s) are the focus is limited to 18+",
+        "Sexual or erotic dancing, simulating sexual activity, genital/masturbation/intercourse gestures, and logos/screenshots/clips of known porn sites are limited to 18+"
+      ],
+      "clearly_allowed": [
+        "Breastfeeding",
+        "Nudity in an act of protest (female nipples)",
+        "Post-mastectomy scarring (may be labeled/age-restricted)",
+        "Real-world art depicting nudity (photographs of paintings, sculptures, etc.), sometimes labeled and age-restricted",
+        "Some medical/health/awareness depictions with labels and/or 18+ limits as specified"
+      ],
+      "grey_zone": [
+        "Meta does not publish a numeric skin-to-clothing ratio or a list of garments (bikini vs lingerie). 'See-through clothing' is named for 18+ limits; 'revealing' is not defined on this page.",
+        "Close-ups of clothed buttocks are not the same as 'close-ups of visible buttocks' (the latter is removal). Whether a tight clothed close-up is 18+ 'focus of the image' is a judgment call Meta does not quantify.",
+        "Squeezing breasts is removed only when defined as a grabbing motion with curved fingers that shows both marks and clear shape change — other contact is unspecified.",
+        "Changelog dates exist (including 2025-08-29, 2025-06-27, 2025-05-15) but the retrieved HTML did not include the entry text for those dates."
+      ],
+      "confidence": "high",
+      "source_ids": ["S2", "S16"]
+    },
+    {
+      "id": "sexual_solicitation",
+      "name": "Adult sexual solicitation and sexually explicit language",
+      "what_the_policy_says": "Meta allows discussion of sexual violence, sex-worker rights, and sex-work regulation, and does not prohibit discussing sexual practices. It removes content that facilitates sexual encounters or commercial sexual services, or that asks for/offers pornographic or sexual content. Graphic sexual language is removed except humor, satire, or sexual cursing. Several adjacent categories are not removed but are limited to adults 18+.",
+      "removal_triggers": [
+        "Prostitution: sexual encounters for money or anything of value, including escort, erotic massage, sex chats, fetish/domination services",
+        "Slang for prostitution combined with availability, price, transaction signal, location, or contact information",
+        "Sexual solicitation plus a price or other transaction signal",
+        "Depicting or mentioning sexual encounters or partners with a price or in-kind transaction signal",
+        "Offering/asking/providing contact methods for sexual intercourse, stimulation, oral sex, fetishes, sex chats, erotic massage, erotic dancing or stripping, or sharing of nudes/sex videos",
+        "Asking for, offering, or providing contact methods to acquire pornographic material",
+        "Usernames or links to pornographic websites",
+        "Graphic detail about genitals, arousal states, or sexual encounters (non-humorous)"
+      ],
+      "downrank_triggers": [
+        "This Community Standard primarily uses removal and 18+ restriction, not the recommendation-ineligible list",
+        "18+ only: discussing sexual practices or experiences; usernames, links to, or logos of Adult Subscription Websites; humorous/satirical explicit language including sexual metaphors; sexually suggestive language that refers to sexual encounters"
+      ],
+      "clearly_allowed": [
+        "Sex-worker rights advocacy and discussion of sex-work regulation",
+        "Discussing sexual practices (may still be 18+ under Health & Wellness)",
+        "Condemnation, educational, awareness-raising, or news-reporting contexts for otherwise covered content",
+        "Humorous, satirical, or sexual-cursing uses of otherwise explicit language (explicit humorous/satirical language is still 18+)"
+      ],
+      "grey_zone": [
+        "Meta names 'Adult Subscription Websites' for 18+ restriction but does not publish a list of domains. Whether Fanvue, OnlyFans, or a link-in-bio aggregator counts is not defined in the retrieved policy text.",
+        "A bio URL with no sexual caption is not explicitly a removal line; it is explicitly an 18+ line if it is a username/link/logo of an Adult Subscription Website.",
+        "Where adult-subscription promotion becomes 'methods of contact to acquire pornographic material' vs 18+ 'links to Adult Subscription Websites' is not drawn as a bright line.",
+        "Ads standard (S27) additionally forbids ads that discuss sexual practices even without solicitation; organic policy is narrower."
+      ],
+      "confidence": "high",
+      "source_ids": ["S3", "S27"]
+    },
+    {
+      "id": "suggestive_borderline",
+      "name": "Sexually suggestive / borderline content (stays up, not recommended)",
+      "what_the_policy_says": "Recommendation Guidelines are a higher bar than Community Standards because recommendations go to people who did not choose to follow the account. Sexually explicit or suggestive content is allowed on-platform (if it is not otherwise violating) but 'may not be eligible for recommendations'. Instagram's illustrative example is 'pictures of people in see-through clothing'. A 2024 creator-blog restatement adds 'revealing clothing'. Facebook Content Distribution Guidelines separately say personalized ranking may reduce 'borderline' content such as 'a photo of a person posing in a sexually suggestive manner'. Meta is deliberately non-numeric here.",
+      "removal_triggers": [
+        "None on this tier by definition — if it is removed it belongs in adult_nudity or sexual_solicitation",
+        "Repeated recommendation-guideline or Community Standards violations can make the entire account ineligible for recommendation for a period of time; that is still not a content takedown"
+      ],
+      "downrank_triggers": [
+        "Content that may be sexually explicit or suggestive, such as pictures of people in see-through clothing (S8, S9)",
+        "Pictures of people in see-through or revealing clothing (S10 wording; 'revealing' is not defined)",
+        "Near nudity such as nudity covered by digital overlay (named as hidden from teens; also 18+ under S2)",
+        "A photo zoomed in on someone's buttocks (named as hidden from teens)",
+        "Sexually suggestive language describing sexual encounters, including sexual metaphors (named as hidden from teens; 18+ under S3)",
+        "Content that promotes adult products and services (recommendation-ineligible category) (S8, S10)",
+        "Borderline example used in CDG personalized ranking: a photo of a person posing in a sexually suggestive manner (S11)",
+        "Profile photo or bio that goes against Recommendation Guidelines can make the whole account ineligible for a period of time (S9)",
+        "Implicitly sexual photos/videos are additionally avoided in teen recommendations (S16)"
+      ],
+      "clearly_allowed": [
+        "Content can remain on the profile and be distributed to followers even when it is recommendation-ineligible (S8, S9)",
+        "Public Creator/Business accounts are the ones Instagram will recommend at all (S9)",
+        "Account Status is the first-party place to see samples of ineligible content and to appeal (S9, S23)"
+      ],
+      "grey_zone": [
+        "No published threshold for cleavage, bikini vs lingerie, pose, camera angle, or skin percentage. 'See-through' is the only garment example in the Help Center list; 'revealing' appears in the April 2024 creator blog without definition.",
+        "Whether swimwear is 'clear' for Explore/Reels is not stated. This pack does not invent a bikini-safe / lingerie-unsafe line as Meta policy.",
+        "July 2025 CDG changelog removed the standalone 'Content Borderline to the Community Standards' demotion guideline because Meta now uses personalized ranking for that type — global demotion vs per-user suppression is therefore mixed and under-specified for Reels.",
+        "Sensitive Content Control lets viewers see more or less of this material; that is a viewer setting, not a creator clearance threshold."
+      ],
+      "confidence": "high",
+      "source_ids": ["S8", "S9", "S10", "S11", "S12", "S16", "S23"]
+    },
+    {
+      "id": "minor_safety",
+      "name": "Child sexual exploitation, abuse, nudity, and teen-facing distribution",
+      "what_the_policy_says": "Zero-tolerance removal for sexual exploitation or endangerment of children, including non-real depictions with a human likeness (art, AI, fiction, dolls). Child nudity definitions include, for minors, no clothes from neck to knee even if genitalia or female nipples are not showing. Instagram also hides additional suggestive content from teens and will not recommend accounts that regularly share age-inappropriate content. Suspicious adults are not recommended to teens and vice versa.",
+      "removal_triggers": [
+        "Any sexual content, solicitation, or sexualization involving real or non-real children",
+        "Child nudity as defined, including neck-to-knee unclothed minors",
+        "Inappropriate interactions with children, including sexualized conversations in DMs",
+        "Sextortion of real children",
+        "Groups/Pages/profiles dedicated to sexualizing children"
+      ],
+      "downrank_triggers": [
+        "Accounts that regularly share age-inappropriate content are not recommended to teens (S8, S16)",
+        "Teens are additionally not shown/recommended implicitly sexual photos or videos (S16)",
+        "Teen 13+ default hides near-nudity, buttocks close-ups, and sexually suggestive language even when the same post remains visible to adults who follow the account"
+      ],
+      "clearly_allowed": [
+        "Non-sexual child nudity in real-world art, or non-real imagery for health purposes, as specified",
+        "News-agency famine/genocide/war-crime child-nudity imagery may remain with a warning label unless the caption/context itself violates"
+      ],
+      "grey_zone": [
+        "Meta does not publish the exact age-estimation method used on AI personas. Any youthful-looking adult character is an operational risk Meta does not quantify.",
+        "School-uniform or 'barely 18' aesthetics are not named; they are still an extreme CSEAN adjacency and should be treated as a hard stop in clearance practice."
+      ],
+      "confidence": "high",
+      "source_ids": ["S5", "S8", "S16"]
+    },
+    {
+      "id": "synthetic_media",
+      "name": "AI-generated and manipulated media",
+      "what_the_policy_says": "Community Standards apply to all content including AI-generated content. Nudity/sexual-activity rules expressly cover AI- and computer-generated imagery regardless of photorealism. Separately, Meta labels detected or disclosed AI content with an 'AI Info' label (replacing earlier 'Made with AI' / 'Imagined with AI' product copy). People are required to use Meta's AI-disclosure tool when posting organic photorealistic video or realistic-sounding audio that was digitally created or altered. Detection uses industry-standard C2PA and IPTC 'AI generated' indicators plus self-disclosure. A more prominent label may be added when content creates a particularly high risk of materially deceiving the public on a matter of public importance.",
+      "removal_triggers": [
+        "AI content is removed when it violates any other Community Standard (nudity, solicitation, CSEAN, NCII, etc.) — there is no AI exemption",
+        "Promoting apps that produce NCII ('nudify') is removed under Adult Sexual Exploitation even with no image attached"
+      ],
+      "downrank_triggers": [
+        "Retrieved Meta documents do not state that an 'AI Info' label by itself makes content recommendation-ineligible",
+        "Photorealistic AI video still has to clear Recommendation Guidelines (suggestive clothing, adult products, unoriginal/low-quality, watermarks) like any other reel"
+      ],
+      "clearly_allowed": [
+        "Photorealistic AI images/video/audio that do not otherwise violate Community Standards, with required disclosure for photorealistic video and realistic-sounding audio",
+        "Benign edits (crop, shorten, add music) are distinguished from misleading manipulation in the Manipulated Media section"
+      ],
+      "grey_zone": [
+        "Penalty for failing to disclose is stated ('we may apply penalties') but Meta told the Oversight Board it is 'exploring ways to improve the application of any potential penalties at scale and will assess how we can best share details about these penalties externally'. No public strike schedule was retrieved.",
+        "Instagram does not require real-name identity the way Facebook does; a synthetic persona is not automatically 'inauthentic behavior' under the retrieved CIB definition, which targets networks of fake assets used to deceive or evade. Where a fully synthetic influencer crosses into inauthenticity is not specified.",
+        "Secondary blogs in 2026 describe an optional account-level 'AI Creator' label. That product was not confirmed on a Meta primary page retrieved this session, so it is omitted from requirements.",
+        "People can strip invisible markers; Meta says it is building classifiers for unlabeled AI. Detection coverage is incomplete by Meta's own admission (S14)."
+      ],
+      "confidence": "high",
+      "source_ids": ["S1", "S2", "S13", "S14", "S15", "S29", "S31"]
+    },
+    {
+      "id": "spam_inauthentic",
+      "name": "Spam and inauthentic behaviour",
+      "what_the_policy_says": "Spam policy targets content designed to deceive, mislead, or overwhelm users to artificially increase viewership: high-frequency posting/engaging, buying/selling assets or engagement, engagement-gated content, and deceptive URLs including cloaking. Cross-promotion that is not paid to a third party is allowed. Inauthentic Behavior targets networks of inauthentic assets used to deceive Meta/users about identity or origin, or to evade enforcement; Coordinated Inauthentic Behavior is the sophisticated false-identity subset. These are content- and ideology-agnostic.",
+      "removal_triggers": [
+        "Very high-frequency posting/sharing/engaging or asset creation, manual or automated; lower frequencies may still be restricted when other spam or inauthenticity signals are present",
+        "Buying/selling/exchanging accounts, groups, pages, admin roles, or engagement (likes, views, follows, hashtag use)",
+        "Cash or cash-equivalent giveaways in exchange for engagement",
+        "Requiring a like/share before promised content is visible (like/share-gating)",
+        "Cloaking, misleading links, deceptive redirects, landing-page impersonation, clickjacking/pop-under traps",
+        "Selling content for value except clearly identified Branded Content",
+        "Inauthentic assets used to deceive about identity/origin or to evade enforcement"
+      ],
+      "downrank_triggers": [
+        "Long captions unrelated to the underlying content and coordinated comment networks intended to artificially drive engagement (recommendation-ineligible) (S8)",
+        "Clickbait or engagement bait as content users broadly dislike (S10)",
+        "Accounts that repeatedly engaged in misleading practices to build followings, such as purchasing likes, are not recommended (S8)",
+        "CDG still lists engagement bait and clickbait-link demotions on Facebook Feed (S11)"
+      ],
+      "clearly_allowed": [
+        "Cross-promotion not triggered by payment to a third party",
+        "Transferring admin/moderation based on interest rather than exchange of value",
+        "Clearly identified Branded Content"
+      ],
+      "grey_zone": [
+        "No numeric posts-per-hour threshold is published.",
+        "Whether a Fanvue/OnlyFans bio link is 'misleading' depends on whether the destination substantially matches what the Instagram surface promised — not defined for adult-subscription pages specifically.",
+        "July 2025 CDG update removed Inauthentic Sharing, Pages Predicted to be Spam, and several other Feed demotion guidelines; Instagram recommendation rules were not restated in that changelog."
+      ],
+      "confidence": "high",
+      "source_ids": ["S6", "S7", "S8", "S10", "S11", "S12"]
+    },
+    {
+      "id": "music_ip",
+      "name": "Instagram music and intellectual property",
+      "what_the_policy_says": "The licensed Instagram music library is 'intended for personal, non-commercial use'. Certain business accounts and certain post types are blocked from that library so it is not used commercially. Meta Sound Collection (stated as over 14,000 royalty-free songs and sounds) 'can be used for commercial purposes like ads'. Original-content guidelines are separate from IP policies; creators remain responsible for permissions. Meta also forbids using music in a manner that violates Meta's music licensing agreements (Using Meta Intellectual Property and Licenses).",
+      "removal_triggers": [
+        "Third-party intellectual property infringement (separate Community Standard; page not fully extracted this session beyond the hub listing)",
+        "Using music in a manner that violates Meta's music licensing agreements"
+      ],
+      "downrank_triggers": [
+        "Not stated as a recommendation-ineligible category by itself",
+        "Muted reels are made less visible in Reels ranking (S23) — a common outcome when unlicensed audio is stripped"
+      ],
+      "clearly_allowed": [
+        "Personal, non-commercial use of the licensed in-app music library where the account/post type still has access",
+        "Commercial use of Meta Sound Collection in Reels and Stories, including ads"
+      ],
+      "grey_zone": [
+        "Meta does not, in the retrieved music-library article, define whether a Creator account promoting an off-platform paid subscription is 'commercial use'. Business accounts are the named restriction.",
+        "Branded/paid partnership posts using chart music are widely treated as commercial by secondary legal commentary; that bright line is not quoted in S19.",
+        "Country/region availability of licensed tracks varies and is not enumerated."
+      ],
+      "confidence": "high",
+      "source_ids": ["S19", "S22"]
+    },
+    {
+      "id": "off_platform_promotion",
+      "name": "Off-platform subscription and adult-site promotion",
+      "what_the_policy_says": "Two different instruments apply. (1) Community Standard on sexual solicitation: usernames, links to, or logos of Adult Subscription Websites are limited to adults 18+ — not listed as a removal line. Links to pornographic websites, and asks/offers for pornographic material, are removal. (2) Recommendation Guidelines: content that promotes 'adult products and services' may be recommendation-ineligible. Adam Mosseri, speaking to The Mirror US, said OnlyFans creators being deleted were 'promoting explicit content' and 'you can't promote, you can't solicit', while also saying 'you can certainly be on Instagram'. A bio or profile photo that itself violates Recommendation Guidelines can take the whole account out of recommendations for a period of time.",
+      "removal_triggers": [
+        "Usernames or links to pornographic websites (S3)",
+        "Asking/offering methods of contact to acquire pornographic material (S3)",
+        "Sexual-encounter or porn offers combined with price, availability, or contact methods (S3)",
+        "Cloaked or misleading URLs that show integrity systems a different destination than users see (S6)"
+      ],
+      "downrank_triggers": [
+        "Promotion of adult products and services (S8, S10)",
+        "Adult-subscription username/link/logo (18+ restriction under S3 — this is an age-gate, which may also collapse non-follower reach in practice, but Meta does not call it a Recommendation Guideline)",
+        "Profile bio or profile photo that goes against Recommendation Guidelines (account-level ineligibility for a period of time) (S9)",
+        "Sexually suggestive caption language referring to sexual encounters (18+ under S3; teen-hidden under S8/S16)"
+      ],
+      "clearly_allowed": [
+        "Being an adult-subscription creator on Instagram as such is not a named ban; Mosseri said creators can be on Instagram if they are not promoting explicit content or soliciting (S28, secondary)",
+        "Cross-promotion that is not paid to a third party is allowed under Spam (S6)",
+        "Discussion of sex-worker rights and regulation (S3)"
+      ],
+      "grey_zone": [
+        "Meta never defines 'Adult Subscription Websites' vs 'pornographic websites'. A SFW marketing site versus a paywalled explicit storefront is the entire practical difference and is unpublished.",
+        "Whether a generic link-in-bio tool that contains an adult-subscription button is treated as the adult-subscription link itself is unpublished.",
+        "Mosseri's 2026 comments are enforcement color, not a policy-text change. They do not add a new written prohibition on naming a platform.",
+        "This pack does not document workarounds for link detection. Destination honesty is required under the Spam cloaking rule."
+      ],
+      "confidence": "medium",
+      "source_ids": ["S3", "S6", "S8", "S9", "S10", "S28"]
+    },
+    {
+      "id": "recommendation_eligibility",
+      "name": "Recommendation eligibility (the downrank / 'shadowban' tier)",
+      "what_the_policy_says": "Instagram distinguishes removal (Community Standards) from recommendation ineligibility (Recommendation Guidelines plus original-content and ranking quality rules). Ineligible content can still reach followers. Eligible content for the 2024 originality ranking process is described as 'original, does not violate our community guidelines, has no visible watermarks and satisfies our recommendation guidelines'. Account Status is the official transparency surface. Meta acknowledges 'shadowbanning' concerns and says if anything makes content less visible, creators should be able to see it and appeal.",
+      "removal_triggers": [
+        "Not applicable — this category is the downrank tier",
+        "Recently or repeatedly posting Community Standards-violating content can make the entire account ineligible for recommendation in addition to the removals themselves (S9)"
+      ],
+      "downrank_triggers": [
+        "Sexually explicit or suggestive content, e.g. people in see-through clothing (S8) / see-through or revealing clothing (S10)",
+        "Violence such as people fighting",
+        "Self-harm, suicide, eating-disorder discussion and death/depression trivialization (beyond content that is already removed)",
+        "Regulated products: tobacco, vaping, adult products and services, pharmaceutical drugs",
+        "Weight-loss products/services and cosmetic surgeries (favorably depicted)",
+        "Unoriginal content largely repurposed with only minor, immaterial edits, without adding material value",
+        "Long captions unrelated to the underlying content; coordinated comment networks to fake engagement",
+        "Clickbait or engagement bait (S10)",
+        "False/misleading content rated by fact-checkers (where that program applies)",
+        "Visible watermarks; blurry or otherwise low-quality reels (S9, S23)",
+        "Low-resolution reels; muted reels; reels that contain borders; reels that are majority text; reels already posted on Instagram (S23)",
+        "Reels longer than 3 minutes are not eligible to be recommended (S9)",
+        "Non-public accounts are not recommended (S9)",
+        "Copies of original content are replaced in recommendations by the original when Instagram is confident of a match (S10)",
+        "Accounts that post 10 or more copies of others' Instagram content in 30 days without material enhancement are removed from recommendation surfaces until they drop below that rolling threshold (S10)",
+        "Account-level: recently violated Community Guidelines; repeatedly/recently shared not-recommendable content in name, username, profile photo, or bio; purchased likes; banned from ads (S8)"
+      ],
+      "clearly_allowed": [
+        "Original, vertical 9:16 high-resolution reels, 3 minutes or less, no borders, text not covering the majority of the screen, no watermarks, that satisfy Community Standards and Recommendation Guidelines (S9, S10, S23)",
+        "Material edits (meaningful commentary, parody, new voiceover, remix/reaction) are not treated as copies (S10, S22)",
+        "Sharing someone else's reel to your Story rather than reuploading it (S9)"
+      ],
+      "grey_zone": [
+        "Meta does not publish classifier thresholds, confidence scores, or how many suggestive posts trigger account-level ineligibility.",
+        "Political content is listed as recommendation-limited in S10 ('potentially related to things like laws, elections, or social topics') with a typo in the source ('thinks like'). Scope is vague.",
+        "Health/finance 'miracle cures' and payday-loan style models are listed in S10 as recommendation-ineligible; not the focus of this pack but they sit on the same list.",
+        "'Shadowban' is not a Meta term of art. Official equivalent is recommendation ineligibility / reduced distribution, visible in Account Status when the system has a sample to show — silent restrictions with empty Account Status are not documented as a distinct product."
+      ],
+      "confidence": "high",
+      "source_ids": ["S8", "S9", "S10", "S22", "S23"]
+    },
+    {
+      "id": "monetization",
+      "name": "Content and Partner Monetization Policies",
+      "what_the_policy_says": "Monetization is a third, stricter bar: content can remain on Instagram and even be recommended yet still be ineligible to earn. Partner Monetization Policies cover the account (eligible country, Community Standards, authentic engagement, established presence, payment terms). Content Monetization Policies cover the asset and the profile (including profile picture and description). Sexual or suggestive activity is a restricted monetization category, not a Community Standards clone.",
+      "removal_triggers": [
+        "Monetization ineligibility is not the same as content removal",
+        "Community Standards violations can additionally cause loss of monetization eligibility (S18)"
+      ],
+      "downrank_triggers": [
+        "Not a recommendation rule; listed here because creators conflate demonetization with shadowban",
+        "Restricted monetization for sexual subject matter: nudity, sexual activity, sexual poses, suggestive dancing, simulations of sexual activity, sex objects, suggestive language, revealing or absent items of clothing (S17)",
+        "Prohibited monetization formats: static videos, static image polls, slideshows, looping videos, text montages, embedded ads",
+        "Prohibited monetization behaviors: engagement bait; soliciting engagement via extreme behavior including disrobing or other sexual behavior",
+        "Unoriginal content cannot be monetized",
+        "Strong language, including sexual words and innuendos, may reduce or disable monetization"
+      ],
+      "clearly_allowed": [
+        "Original content that is not in a prohibited format and not in a restricted subject category, from an account that meets Partner Monetization Policies"
+      ],
+      "grey_zone": [
+        "'Revealing or absent items of clothing' is named for monetization and is still undefined (no garment list).",
+        "Suggestive dancing is named only in the monetization policy, not in Community Standards or the Recommendation Guidelines examples.",
+        "Profiles themselves must follow Content Monetization Policies — a suggestive avatar or bio can affect earnings even if feed posts are milder. No examples are given."
+      ],
+      "confidence": "high",
+      "source_ids": ["S17", "S18"]
+    },
+    {
+      "id": "branded_content",
+      "name": "Branded content and paid partnerships",
+      "what_the_policy_says": "Branded content is organic content for which the creator has been compensated (money or other value, including gifted products). Anyone — professional or personal account — must tag the business partner with the paid partnership label when there is an exchange of value. Affiliate links should use the Paid partnership label but do not need a partner tagged. Branded content must also comply with Branded Content Policies and eligibility requirements; restricted categories require audience/age restrictions. Branded content below the appropriate age minimum is removed.",
+      "removal_triggers": [
+        "Branded content that is not at an appropriate age minimum (S20, S30)",
+        "Posts that do not comply with prohibited/restricted branded-content categories (S30)"
+      ],
+      "downrank_triggers": [
+        "Not described as a recommendation-ineligible category by itself",
+        "Using chart music on a paid post may be outside the personal music license (see music_ip grey zone)"
+      ],
+      "clearly_allowed": [
+        "Disclosed paid partnerships using the in-app paid partnership label on Feed, Stories, Live, Reels, and broadcast channels (label tools are app-only per S21)",
+        "Affiliate-link posts that carry the Paid partnership label without a partner tag (S20)"
+      ],
+      "grey_zone": [
+        "The dedicated Branded Content Policies page on Transparency Center was not successfully retrieved this session (candidate URL 404'd). Requirements above are from Instagram Help articles.",
+        "Whether promoting one's own adult-subscription page is 'branded content' (self-promotion) vs 'adult products and services' vs 'adult subscription website link' is not mapped by Meta in the retrieved pages."
+      ],
+      "confidence": "medium",
+      "source_ids": ["S20", "S21", "S30", "S32", "S6"]
+    }
+  ],
+  "caption_rules": {
+    "prohibited": [
+      "Graphic descriptions of genitals, arousal states (e.g. wetness or erection), or sexual encounters outside humor/satire/sexual cursing (S3) — removal",
+      "Asking for or offering nudes, sex videos, sex chats, stripping, erotic dancing, or methods of contact for those (S3) — removal",
+      "Price, availability, location, or contact info combined with sexual-encounter offers or prostitution slang (S3) — removal",
+      "Usernames or links to pornographic websites in caption or text overlay (S3) — removal",
+      "Engagement bait that requires a like/share before promised content is visible (S6) — removal",
+      "Cash/cash-equivalent giveaways in exchange for likes or follows (S6) — removal",
+      "Soliciting engagement via disrobing or other sexual behavior if the post is monetized (S17) — monetization prohibition; may also be solicitation if it asks for sexual content"
+    ],
+    "risky": [
+      "Sexually suggestive language that refers to sexual encounters — stays up but 18+ (S3) and is a teen-hide / recommendation-adjacent signal (S8, S16)",
+      "Sexual metaphors, even in humor — 18+ (S3)",
+      "Usernames, links, or logos of Adult Subscription Websites — 18+ (S3), and 'adult products and services' may be recommendation-ineligible (S8)",
+      "Long captions unrelated to the video — recommendation-ineligible (S8)",
+      "Engagement bait / clickbait phrasing — recommendation-ineligible (S10) and cannot be monetized (S17)",
+      "Innuendo, sexual words, and crude gestures — restricted monetization (S17)",
+      "Hashtags and caption keywords are used for Search matching (S9); sexually coded tags can therefore affect discovery classification even when they are not a stated removal line"
+    ],
+    "off_platform_links": "A link, username, or logo of an Adult Subscription Website is explicitly limited to adults 18+ (S3). A link to a pornographic website is removed (S3). Asking for or offering pornographic material, or providing contact methods to get it, is removed (S3). Promotion of adult products and services is recommendation-ineligible (S8, S10). Cloaking the destination so integrity systems see different content than users is removed as Spam (S6). Meta does not publish a domain list or a safe-wording template. Cross-promotion that is not paid to a third party is otherwise allowed (S6). Affiliate links require the Paid partnership label (S20).",
+    "source_ids": ["S3", "S6", "S8", "S9", "S10", "S16", "S17", "S20"]
+  },
+  "ai_disclosure": {
+    "requirement": "Use Meta's AI-disclosure / label tool when posting organic photorealistic video or realistic-sounding audio that was digitally created or altered. Meta also auto-applies an 'AI Info' label when it detects industry-standard AI indicators (C2PA and IPTC 'AI generated' information) or when the uploader self-discloses. A more prominent label may be added if the content creates a particularly high risk of materially deceiving the public on a matter of public importance. Community Standards, including nudity and solicitation, apply to AI content the same as to camera-captured content.",
+    "applies_when": "Organic (non-ad) photorealistic video or realistic-sounding audio that was digitally created or altered. Images with industry-standard AI metadata are labeled when detected. Ads about social issues, elections, or politics have a separate advertiser self-disclosure rule (S31). Benign edits such as cropping, shortening, or adding music are described as often not the kind of manipulation the misleading-media label is aimed at (S15).",
+    "how_to_comply": "Disclose in the native composer using Meta's AI disclosure and label tool so the post receives the 'AI Info' label. Do not strip provenance metadata as a substitute for disclosure — Meta states it is also building classifiers for unlabeled AI and that stripping markers is an acknowledged adversarial problem (S14). Keep the character clearly adult. If the output depicts nudity or sexual activity, disclosure does not save it from removal (S2, S16).",
+    "penalty_for_omission": "Meta states 'we may apply penalties if they fail to do so' (S14, S15, S31). In the Oversight Board AI-video case, Meta said it is still exploring how to apply those penalties at scale and how to share penalty details externally (S29). No public matrix of strikes, reach loss, or account disables specifically for omitted AI labels was retrieved. Separately, unlabeled content that violates nudity, solicitation, or CSEAN is still removed under those policies.",
+    "source_ids": ["S1", "S2", "S13", "S14", "S15", "S16", "S29", "S31"]
+  },
+  "reach_factors": {
+    "boosts": [
+      "Original content you filmed or wholly created, or materially edited third-party media (S9, S10, S22)",
+      "Eligible reel: original, Community Standards-compliant, no visible watermarks, satisfies Recommendation Guidelines (S10)",
+      "Vertical 9:16 high-resolution, no borders, text not covering most of the screen (S9)",
+      "Length 3 minutes or less for recommendation eligibility (S9)",
+      "Hook in the first 3 seconds (S9) — stated as a best practice, not a classifier threshold",
+      "Public Creator or Business account (S9)",
+      "Keywords in handle, bio, and caption for Search (S9)",
+      "Watch-time, likes, comments, shares, saves, and audio-page opens as ranking predictions (S23)",
+      "Smaller-creator distribution input introduced in 2024 so follower count is not the only gateway to recommendations (S10)"
+    ],
+    "suppressors": [
+      "Recommendation Guidelines hits, especially sexually suggestive / see-through or revealing clothing, and adult products and services (S8, S10)",
+      "Profile photo or bio that itself fails Recommendation Guidelines — account-level ineligibility for a period of time (S9)",
+      "Visible watermarks; low-resolution, blurry, muted, letterboxed, majority-text, or already-posted-on-Instagram reels (S9, S23)",
+      "Unoriginal or aggregated reuploads; identical copies replaced by the original in recommendations (S10, S22)",
+      "10+ unoriginal copies of others' Instagram content in a rolling 30 days — account out of recommendations until below threshold (S10)",
+      "Engagement bait, clickbait, unrelated long captions, coordinated comment networks (S8, S10)",
+      "Recently or repeatedly removed Community Standards content (S8, S9)",
+      "Purchased likes / fake followings (S8)",
+      "Reels over 3 minutes (S9)",
+      "Private accounts (S9)",
+      "Borderline sexually suggestive posing may be personally demoted in Facebook Feed ranking; Instagram equivalent is unpublished beyond Recommendation Guidelines (S11)",
+      "18+ age-gating for adult-subscription links, near-nudity, sexual dancing, and suggestive sexual language (S2, S3) — not named as Explore suppression, but it removes the under-18 inventory"
+    ],
+    "source_ids": ["S2", "S3", "S8", "S9", "S10", "S11", "S22", "S23"]
+  },
+  "enforcement_observations": [
+    {
+      "claim": "Instagram head Adam Mosseri said OnlyFans-linked account deletions were for promoting explicit content and solicitation, not for being an OnlyFans creator as such: 'They're promoting explicit content... You can't promote, you can't solicit, so you can certainly be on Instagram, but obviously we have very clear rules about what is and what is not allowed on the platform.'",
+      "confidence": "medium",
+      "basis": "On-record quote reported by The Mirror US and restated by other outlets. Aligns with written S3 (solicitation / pornographic material) and S2 (nudity). Does not add a new published bright line for a bare bio URL.",
+      "source_ids": ["S28", "S3", "S2"]
+    },
+    {
+      "claim": "On Instagram, measured prevalence of adult nudity and sexual activity appeared to increase in late 2025 (from about 0.06%–0.07% to 0.09%–0.11%) because Meta changed reviewer training and review workflows, which changed how samples are labeled — not necessarily because more violating Reels were posted.",
+      "confidence": "high",
+      "basis": "Meta's own Community Standards Enforcement Report narrative for Instagram adult nudity.",
+      "source_ids": ["S25"]
+    },
+    {
+      "claim": "Creators use 'shadowban' for recommendation ineligibility. Meta's documented product is Account Status plus reduced distribution to non-followers. Mosseri's ranking post treats silent invisibility as a transparency problem the company claims to be fixing, not as a named penalty type.",
+      "confidence": "high",
+      "basis": "Primary Instagram ranking and recommendations posts. No Meta page retrieved this session uses 'shadowban' as a policy term.",
+      "source_ids": ["S8", "S9", "S23"]
+    },
+    {
+      "claim": "Watermarked Reels are a first-party, named suppressor. Instagram has experimented with notifying creators when a watermark is limiting reach.",
+      "confidence": "high",
+      "basis": "Mosseri ranking explainer and creator recommendations posts.",
+      "source_ids": ["S9", "S23", "S10"]
+    },
+    {
+      "claim": "Aggregator / repost accounts are systematically excluded from recommendations at a published numeric threshold: 10 or more unoriginal copies in 30 days, rolling, appealable in Account Status.",
+      "confidence": "high",
+      "basis": "April 30, 2024 Instagram for Creators post. Later original-content guidelines restate account-level originality without repeating the exact '10 in 30 days' figure, describing instead 'primarily' unoriginal in a 30-day window. Treat 10/30 as the last explicit number Meta published in the retrieved set.",
+      "source_ids": ["S10", "S22"]
+    },
+    {
+      "claim": "NGO/press accounts (e.g. Mashable quoting Meta) report adult and sex-worker-adjacent creators experiencing account disables they attribute to FOSTA/SESTA-era enforcement and AI moderation false positives. Meta's on-record response is that the same rules apply to everyone and appeals exist. This pack does not treat 'being an adult creator' as a written ban.",
+      "confidence": "low",
+      "basis": "Secondary press plus Meta's written policies. Full Mashable article body was not retrieved this session; included only as a pointer that enforcement complaints exist and that Meta denies group-based targeting.",
+      "source_ids": ["S28", "S3", "S26"]
+    }
+  ],
+  "changed_recently": [
+    {
+      "what": "Adult Sexual Exploitation Community Standard changelog shows an update on 2026-03-04 (also 2025-10-30). Retrieved page includes prohibitions on nudify/AI kissing apps and AI-generated NCII, but the HTML did not include the prose of those changelog entries.",
+      "when": "2026-03-04",
+      "impact": "Treat AI undress tools and AI-generated non-consensual intimate imagery as removal-tier. Exact delta vs prior text is unverified because changelog bodies were not in the retrieved HTML.",
+      "source_ids": ["S4"]
+    },
+    {
+      "what": "Age-appropriate / teen content page updated. Teens' default 13+ setting hides additional suggestive material (near-nudity, buttocks close-ups, sexually suggestive language) and avoids recommending implicitly sexual media. 'More Content' requires parental permission.",
+      "when": "2026-05-13",
+      "impact": "Even CLEAR-for-adults suggestive Reels have a smaller eligible audience. Does not by itself change adult Community Standards.",
+      "source_ids": ["S16"]
+    },
+    {
+      "what": "Account Integrity policy page dated 2026-05-28 restates proportional enforcement, strikes, and disables for repeated or severe violations.",
+      "when": "2026-05-28",
+      "impact": "Confirms removal can escalate to account disable. No adult-creator-specific change is quoted.",
+      "source_ids": ["S26"]
+    },
+    {
+      "what": "Content Distribution Guidelines: fourteen Feed demotion guidelines removed, including Ad Farms, Inauthentic Sharing, Unoriginal News Articles, Repeat Violators, and others. Borderline content remains a personalized-ranking example (sexually suggestive posing) rather than a global CDG line.",
+      "when": "2025-07-02",
+      "impact": "Facebook Feed demotion taxonomy shrank. Instagram Recommendation Guidelines were not rewritten in this changelog. Do not assume those fourteen categories stopped mattering on Reels.",
+      "source_ids": ["S11", "S12"]
+    },
+    {
+      "what": "Adult Nudity and Sexual Activity changelog dates in the last 12 months include 2025-08-29, 2025-06-27, and 2025-05-15. Entry bodies were not present in the retrieved HTML.",
+      "when": "2025-08-29",
+      "impact": "Unknown without the entry text. Flag for the next monthly re-run: open each changelog date on S2 and diff the policy lines.",
+      "source_ids": ["S2"]
+    },
+    {
+      "what": "Adult Sexual Solicitation changelog date 2025-05-14. Same date appears on the ads standard for this topic, which allows 18+ ads containing adult-subscription usernames/links/logos and sexually suggestive language, while forbidding ads that discuss sexual practices.",
+      "when": "2025-05-14",
+      "impact": "Organic 18+ treatment of adult-subscription links was already in S3 when retrieved. Ads are stricter on 'discussing sexual practices'.",
+      "source_ids": ["S3", "S27"]
+    },
+    {
+      "what": "Inauthentic Behavior changelog date 2025-12-11. Entry body not in retrieved HTML.",
+      "when": "2025-12-11",
+      "impact": "Unknown. Re-fetch changelog body next cycle.",
+      "source_ids": ["S7"]
+    },
+    {
+      "what": "CSEAN changelog dates 2025-07-31 and 2025-07-17. Policy as retrieved already covers non-real/AI children.",
+      "when": "2025-07-31",
+      "impact": "Entry bodies missing. Do not assume a relaxation; AI child depictions remain a hard stop.",
+      "source_ids": ["S5"]
+    },
+    {
+      "what": "Misinformation / manipulated-media changelog dates through 2025-04-07. AI disclosure requirement is in the live policy rationale.",
+      "when": "2025-04-07",
+      "impact": "Photorealistic video / realistic audio disclosure remains mandatory with unspecified penalties.",
+      "source_ids": ["S15"]
+    },
+    {
+      "what": "Meta unified Instagram Community Guidelines into Community Standards ('One set of Community Standards', announced as starting November 12 on the Recent Updates hub). The dedicated announcement URL retrieved as 404 this session; the live Community Standards hub states they apply to Instagram.",
+      "when": "November 12 (year not stated on the retrieved Recent Updates snippet)",
+      "impact": "Use Transparency Center Community Standards as the Instagram rulebook. Do not cite a separate Instagram Community Guidelines document as current.",
+      "source_ids": ["S1", "S24"]
+    },
+    {
+      "what": "H2 2025 / 2026 integrity reporting notes Instagram adult-nudity prevalence measurement moved after reviewer-training changes.",
+      "when": "H2 2025 report (published on the 2026 reporting cadence)",
+      "impact": "Enforcement measurement changed; not a written policy-line change.",
+      "source_ids": ["S24", "S25"]
+    }
+  ],
+  "open_questions": [
+    "What did the Adult Nudity changelog entries on 2025-05-15, 2025-06-27, and 2025-08-29 actually change? The dates appeared in the page chrome; the entry text did not.",
+    "What did Adult Sexual Exploitation change on 2025-10-30 and 2026-03-04 beyond the live text (nudify apps, AI NCII) that is already visible?",
+    "What is Meta's internal definition of 'Adult Subscription Websites' versus 'pornographic websites'? Which domains, including Fanvue and common link-in-bio hosts, sit in which bucket?",
+    "Is a bio link with no sexual call-to-action treated only as 18+ (S3) or also as recommendation-ineligible 'adult products and services' (S8)?",
+    "Does Instagram apply the Facebook CDG 'sexually suggestive posing' personalized demotion to Reels, or only the Recommendation Guidelines examples (see-through / revealing clothing)?",
+    "What is the unpublished threshold that turns repeated suggestive-but-allowed posts into account-level recommendation ineligibility?",
+    "What penalties are actually applied for skipping the AI disclosure tool on photorealistic video — label-only, reach loss, strike, or disable? Meta has not published the matrix (S29).",
+    "Was an account-level 'AI Creator' profile label shipped? Secondary 2026 blogs describe it; no Meta primary page retrieved this session confirmed it.",
+    "How does Instagram age-estimate AI-generated adult women, and what youthful styling (school, braces, 'barely legal' captions) triggers CSEAN classifiers?",
+    "For Creator accounts, is promoting a paid off-platform subscription 'commercial use' that voids the personal music library license, or does that restriction apply only to Business accounts and ads (S19)?",
+    "Where is the current canonical Branded Content Policies document? The Transparency Center candidate path 404'd; Help Center articles were used instead.",
+    "S10 lists political content as recommendation-limited in extremely broad language. Is that still live, and does it affect non-political lifestyle Reels tagged with civic hashtags?",
+    "Original-content guidelines now say 'primarily' unoriginal in 30 days; S10 said '10 or more times in the last 30 days'. Which number is enforced in Account Status in 2026?",
+    "Unified Community Standards announcement: confirm the calendar year of 'November 12' and whether any Instagram-only nuance besides identity and Groups was lost in the merge."
+  ]
+}

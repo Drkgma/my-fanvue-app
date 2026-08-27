@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AppShell } from "@/components/AppShell";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fanvue App Starter",
-  description: "Minimal Fanvue App example.",
+  title: "Creator ops — Reel Clearance Desk",
+  description: "Instagram Reel clearance, Fanvue playbooks, and SFW prompt builder.",
   icons: {
-    icon: "/logo192.png",
+    icon: "/fanvue.svg",
   },
 };
 
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
