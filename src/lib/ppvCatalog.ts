@@ -60,3 +60,40 @@ export function readPpvScripts(): PpvScriptPack[] {
     return [];
   }
 }
+
+export type PpvSellPack = {
+  id: string;
+  title: string;
+  blurb: string;
+  price_cents: number;
+  prefix: string;
+  min_pics: number;
+  min_videos: number;
+};
+
+/** $9 / $23 / $35 / $75 wall packs. */
+export function readPpvSellPacks(): PpvSellPack[] {
+  const dest = join(process.cwd(), "fanvue-automation", "ppv_packs.yaml");
+  try {
+    if (!existsSync(dest)) return [];
+    const raw = readFileSync(dest, "utf8");
+    const packs: PpvSellPack[] = [];
+    const blocks = raw.split(/\n  - id: /);
+    for (const block of blocks.slice(1)) {
+      const id = block.split("\n", 1)[0]?.trim();
+      if (!id) continue;
+      packs.push({
+        id,
+        title: /title:\s*(.+)/.exec(block)?.[1]?.trim() || id,
+        blurb: /blurb:\s*(.+)/.exec(block)?.[1]?.trim() || "",
+        price_cents: Number(/price_cents:\s*(\d+)/.exec(block)?.[1] || 300),
+        prefix: /prefix:\s*(.+)/.exec(block)?.[1]?.trim() || id,
+        min_pics: Number(/min_pics:\s*(\d+)/.exec(block)?.[1] || 1),
+        min_videos: Number(/min_videos:\s*(\d+)/.exec(block)?.[1] || 0),
+      });
+    }
+    return packs;
+  } catch {
+    return [];
+  }
+}

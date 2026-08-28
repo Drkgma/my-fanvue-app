@@ -4,7 +4,7 @@ import { GROWTH_LADDER, PHASE0_SCOPES, PLATFORM_RULES, TWENTY_FOUR_HOUR } from "
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
-import { readPpvCatalog, readPpvScripts } from "@/lib/ppvCatalog";
+import { readPpvCatalog, readPpvScripts, readPpvSellPacks } from "@/lib/ppvCatalog";
 import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
 
 export const dynamic = "force-dynamic";
@@ -45,6 +45,8 @@ export default async function Home({
   const publicUrl = progress?.public_url || "https://www.fanvue.com/funny-kite-83";
   const ppvCatalog = readPpvCatalog();
   const ppvScripts = readPpvScripts();
+  const sellPacks = readPpvSellPacks();
+  const sellLive = new Map((progress?.sell_packs || []).map((row) => [row.id, row]));
   const ppvReady = progress?.ppv_ready ?? 0;
   const ppvTotal = progress?.ppv_total ?? ppvCatalog.length;
   const starterReady = progress?.ppv_starter_ready ?? 0;
@@ -181,6 +183,38 @@ export default async function Home({
           {progress?.share_note ? (
             <p className="text-sm text-amber-800 dark:text-amber-200">{progress.share_note}</p>
           ) : null}
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">Tip menu — 4 packs</h2>
+          <p className="text-sm opacity-70">
+            One paid post per pack. Drop files as{" "}
+            <code className="text-xs">pack1-01.jpg</code>, <code className="text-xs">pack1-tease.mp4</code>,{" "}
+            <code className="text-xs">pack2-01.jpg</code>… Pack 1 is Instagram-sexy,
+            not nude. Packs 2–4 you film. This desk will not generate lingerie or nudes.
+          </p>
+          <ul className="space-y-2 text-sm">
+            {sellPacks.map((pack) => {
+              const live = sellLive.get(pack.id);
+              const ready = live?.ready === true;
+              return (
+                <li key={pack.id} className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+                  <p className="font-medium">
+                    {ready ? "✓" : "○"} {pack.title} · ${(pack.price_cents / 100).toFixed(0)}
+                  </p>
+                  <p className="opacity-70">{pack.blurb}</p>
+                  <p className="text-xs opacity-50">
+                    need {pack.min_pics}+ pics
+                    {pack.min_videos ? ` + ${pack.min_videos} video` : ""} · prefix{" "}
+                    <code>{pack.prefix}-</code>
+                    {live
+                      ? ` · have ${live.pic_count ?? 0} pics / ${live.video_count ?? 0} videos`
+                      : ""}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
         </section>
 
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">

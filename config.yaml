@@ -49,18 +49,22 @@ content:
 chat:
   enabled: false
   max_replies_per_run: 10
-  reply_template: >-
-    Hey {name} — thanks for writing. I have a menu (lingerie, shower clip,
-    bed stills, and more). Subscribe or tell me which one you want unlocked.
+  reply_template: |
+    Hey {name} — thanks for writing. Tip menu: Pack 1 $9 (2–4 pics + sexy
+    video, slutty for Instagram but not that slutty), Pack 2 $23 (lingerie),
+    Pack 3 $35 (lingerie + half nudes), Pack 4 $75 (only nudes).
+    Tell me which pack you want unlocked.
 
 money:
   enabled: false
   subscription_price_cents: 999
   min_subscribers_for_ppv: 5
   welcome:
-    new_follower: Thanks for following. Subscribe if you want the full sets, or ask for a PPV unlock from the menu.
-    new_subscriber: Welcome in. Menu is live — lingerie, shower, bed, and clips. Ask for a name.
-    first_message_reply: Hey — I have a paid menu. Tell me which still or clip you want unlocked.
+    new_follower: Thanks for following. Subscribe for the feed, or ask for Pack 1–4.
+    new_subscriber: >-
+      Welcome in. Tip menu: Pack 1 $9 (Instagram-sexy), Pack 2 $23 (lingerie),
+      Pack 3 $35 (lingerie + half nudes), Pack 4 $75 (only nudes). Ask for a pack.
+    first_message_reply: Hey — Pack 1 is $9, Pack 4 is $75 only nudes. Which one?
 
 traffic:
   enabled: false

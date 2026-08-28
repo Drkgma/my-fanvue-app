@@ -101,6 +101,7 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
         data["ppv_starter_ready"] = stock.get("starter_ready")
         data["ppv_starter_total"] = stock.get("starter_total")
         data["ppv_packs"] = stock.get("packs") or []
+        data["sell_packs"] = stock.get("sell_packs") or []
         if data["followers"] == 0:
             data["share_note"] = (
                 "0 followers: share the public page or nobody new can subscribe. "

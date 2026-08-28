@@ -74,6 +74,22 @@ def test_format_status_includes_ppv_catalog() -> None:
     assert "PPV posted this run: 0" in text
 
 
+def test_format_status_includes_tip_menu_packs() -> None:
+    text = format_status(
+        {
+            "handle": "funny-kite-83",
+            "sell_packs": [
+                {"id": "pack-1", "title": "Pack 1", "price_cents": 900, "ready": False},
+                {"id": "pack-2", "title": "Pack 2", "price_cents": 2300, "ready": False},
+                {"id": "pack-3", "title": "Pack 3", "price_cents": 3500, "ready": False},
+                {"id": "pack-4", "title": "Pack 4", "price_cents": 7500, "ready": False},
+            ],
+        }
+    )
+    assert "Tip menu: Pack 1 $9 need files" in text
+    assert "Pack 4 $75 need files" in text
+
+
 def test_send_skips_without_token(monkeypatch) -> None:
     monkeypatch.setattr("telegram_notify._token", lambda: "")
     monkeypatch.setattr("telegram_notify._chat_id", lambda: "1")

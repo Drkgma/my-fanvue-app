@@ -11,6 +11,7 @@ from config_loader import ROOT, load_config
 
 CATALOG_PATH = ROOT / "ppv_catalog.yaml"
 SCRIPTS_PATH = ROOT / "ppv_scripts.yaml"
+PACKS_PATH = ROOT / "ppv_packs.yaml"
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 VIDEO_SUFFIXES = {".mp4", ".mov", ".m4v", ".webm"}
 MEDIA_SUFFIXES = IMAGE_SUFFIXES | VIDEO_SUFFIXES
@@ -82,6 +83,70 @@ def load_scripts(path: Path | None = None) -> list[dict[str, Any]]:
     return out
 
 
+def load_sell_packs(path: Path | None = None) -> list[dict[str, Any]]:
+    """Four paid wall packs: $9 / $23 / $35 / $75."""
+    dest = path or PACKS_PATH
+    if not dest.exists():
+        return []
+    loaded = yaml.safe_load(dest.read_text(encoding="utf-8")) or {}
+    rows = loaded.get("packs") if isinstance(loaded, dict) else loaded
+    if not isinstance(rows, list):
+        return []
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict) or not row.get("id"):
+            continue
+        pack = dict(row)
+        pack["id"] = str(pack["id"])
+        pack["title"] = str(pack.get("title") or pack["id"])
+        pack["blurb"] = str(pack.get("blurb") or "")
+        pack["price_cents"] = max(300, int(pack.get("price_cents") or 300))
+        pack["prefix"] = str(pack.get("prefix") or pack["id"]).lower()
+        pack["min_pics"] = int(pack.get("min_pics") or 1)
+        pack["max_pics"] = int(pack.get("max_pics") or 8)
+        pack["min_videos"] = int(pack.get("min_videos") or 0)
+        pack["nsfw"] = str(pack.get("nsfw") or "tease")
+        pack["caption"] = str(pack.get("caption") or "unlock")
+        out.append(pack)
+    return out
+
+
+def _matches_prefix(path: Path, prefix: str) -> bool:
+    stem = path.stem.lower()
+    token = prefix.lower()
+    return stem == token or stem.startswith(f"{token}-") or stem.startswith(f"{token}_")
+
+
+def sell_pack_inventory(config: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Group dropped files by pack prefix. Ready when min pics/videos are present."""
+    files = list_ppv_files(config)
+    out: list[dict[str, Any]] = []
+    for pack in load_sell_packs():
+        pics: list[Path] = []
+        videos: list[Path] = []
+        for path in files:
+            if not _matches_prefix(path, pack["prefix"]):
+                continue
+            if media_type_for(path) == "video":
+                videos.append(path)
+            else:
+                pics.append(path)
+        pics = pics[: int(pack["max_pics"])]
+        ready = len(pics) >= int(pack["min_pics"]) and len(videos) >= int(pack["min_videos"])
+        out.append(
+            {
+                **pack,
+                "pics": pics,
+                "videos": videos,
+                "files": pics + videos,
+                "ready": ready,
+                "pic_count": len(pics),
+                "video_count": len(videos),
+            }
+        )
+    return out
+
+
 def load_catalog(path: Path | None = None) -> list[dict[str, Any]]:
     """Starter singles plus flattened script shots (all priced wall SKUs)."""
     items = load_starter(path)
@@ -142,7 +207,9 @@ def inventory(config: dict[str, Any] | None = None) -> dict[str, Any]:
             used.add(hit)
             ready.append({"item": item, "path": hit})
     missing = [item["id"] for item in items if item["id"] not in {row["item"]["id"] for row in ready}]
-    unmatched = [path.name for path in files if path not in used]
+    sell = sell_pack_inventory(config)
+    pack_files = {path for row in sell for path in row["files"]}
+    unmatched = [path.name for path in files if path not in used and path not in pack_files]
     packs: list[dict[str, Any]] = []
     ready_ids = {row["item"]["id"] for row in ready}
     for script in load_scripts():
@@ -167,6 +234,20 @@ def inventory(config: dict[str, Any] | None = None) -> dict[str, Any]:
         "starter_total": len(starter_ids),
         "starter_ready": sum(1 for sid in starter_ids if sid in ready_ids),
         "packs": packs,
+        "sell_packs": [
+            {
+                "id": row["id"],
+                "title": row["title"],
+                "price_cents": row["price_cents"],
+                "ready": row["ready"],
+                "pic_count": row["pic_count"],
+                "video_count": row["video_count"],
+                "min_pics": row["min_pics"],
+                "min_videos": row["min_videos"],
+                "blurb": row["blurb"],
+            }
+            for row in sell
+        ],
     }
 
 
@@ -194,17 +275,17 @@ def next_shoot_list(limit: int = 8, config: dict[str, Any] | None = None) -> lis
 
 
 def menu_text(items: list[dict[str, Any]] | None = None) -> str:
-    """Short DM/welcome menu. Starter singles + script pack titles."""
+    """Tip menu: the four packs first, then leftover singles."""
+    ladders = []
+    for pack in load_sell_packs():
+        ladders.append(f"{pack['title']} ${pack['price_cents'] / 100:.0f}")
+    parts = ["Tip menu: " + " · ".join(ladders)] if ladders else ["Menu:"]
     rows = items if items is not None else load_starter()
     pics = [row["label"] for row in rows if row.get("kind") == "pic"]
     videos = [row["label"] for row in rows if row.get("kind") == "video"]
-    parts = ["Menu:"]
     if pics:
-        parts.append("Pics — " + ", ".join(pics))
+        parts.append("Singles — " + ", ".join(pics[:6]))
     if videos:
-        parts.append("Clips — " + ", ".join(videos))
-    titles = [script["title"] for script in load_scripts()]
-    if titles:
-        parts.append("Scripts — " + ", ".join(titles))
-    parts.append("Ask for a name and I will send the unlock.")
+        parts.append("Clips — " + ", ".join(videos[:6]))
+    parts.append("Ask for Pack 1–4. I will not generate nudes.")
     return " ".join(parts)

@@ -87,6 +87,14 @@ def format_status(payload: dict[str, Any]) -> str:
         )
     if payload.get("ppv_posted") is not None:
         lines.append(f"PPV wall posts: {payload.get('ppv_posted')}")
+    sell = payload.get("sell_packs") or []
+    if sell:
+        bits = []
+        for pack in sell:
+            dollars = int(pack.get("price_cents") or 0) // 100
+            mark = "ready" if pack.get("ready") else "need files"
+            bits.append(f"{pack.get('title') or pack.get('id')} ${dollars} {mark}")
+        lines.append("Tip menu: " + "; ".join(bits))
     packs = payload.get("ppv_packs") or []
     if packs:
         done = sum(1 for pack in packs if pack.get("ready") == pack.get("total") and pack.get("total"))

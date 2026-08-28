@@ -18,7 +18,18 @@ export type ProgressSnapshot = {
   ppv_missing?: string[];
   ppv_starter_ready?: number;
   ppv_starter_total?: number;
-  ppv_packs?: { id?: string; title?: string; ready?: number; total?: number }[];
+  ppv_packs?: { id?: string; ready?: number; total?: number }[];
+  sell_packs?: {
+    id?: string;
+    title?: string;
+    price_cents?: number;
+    ready?: boolean;
+    pic_count?: number;
+    video_count?: number;
+    min_pics?: number;
+    min_videos?: number;
+    blurb?: string;
+  }[];
   next_milestone?: number;
   share_note?: string;
 };

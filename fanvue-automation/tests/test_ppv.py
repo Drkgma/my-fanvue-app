@@ -5,7 +5,7 @@ from typing import Any
 
 from agents import ppv_agent
 from jobs import JobQueue
-from ppv_catalog import inventory, load_catalog, load_scripts, load_starter, match_item, media_type_for, menu_text, next_shoot_list
+from ppv_catalog import inventory, load_catalog, load_scripts, load_sell_packs, load_starter, match_item, media_type_for, menu_text, next_shoot_list
 
 
 class StubClient:
@@ -137,6 +137,44 @@ def test_menu_text_lists_pics_and_clips() -> None:
     text = menu_text()
     assert "Lingerie" in text or "lingerie" in text.lower()
     assert "Shower" in text or "shower" in text.lower()
-    assert "Ask for a name" in text
-    assert "Chilling in bed" in text
-    assert "Chatter sales menu" in text
+    assert "Ask for Pack 1" in text
+    assert "$9" in text
+    assert "$75" in text
+
+
+def test_sell_packs_have_four_prices() -> None:
+    packs = load_sell_packs()
+    assert [row["id"] for row in packs] == ["pack-1", "pack-2", "pack-3", "pack-4"]
+    assert [row["price_cents"] for row in packs] == [900, 2300, 3500, 7500]
+    assert packs[0]["min_videos"] == 1
+    assert packs[0]["min_pics"] == 2
+    assert "Slutty for Instagram" in packs[0]["blurb"]
+    assert packs[1]["blurb"] == "Lingerie"
+    assert packs[2]["blurb"] == "Lingerie + Half nudes"
+    assert packs[3]["blurb"] == "Only nudes"
+
+
+def test_ppv_agent_posts_pack_bundle(tmp_path: Path, monkeypatch) -> None:
+    bank = tmp_path / "ppv"
+    bank.mkdir()
+    (bank / "pack1-01.jpg").write_bytes(b"a")
+    (bank / "pack1-02.jpg").write_bytes(b"b")
+    (bank / "pack1-tease.mp4").write_bytes(b"vid")
+    cfg = {
+        "content": {
+            "ppv_bank_dir": str(bank),
+            "max_ppv_per_run": 3,
+            "ppv_audience": "followers-and-subscribers",
+        }
+    }
+    monkeypatch.setattr(ppv_agent, "load_config", lambda: cfg)
+    monkeypatch.setattr("ppv_catalog.load_config", lambda: cfg)
+    monkeypatch.setattr(ppv_agent, "agent_allowed", lambda *args, **kwargs: (True, ""))
+    monkeypatch.setattr(ppv_agent, "get_logger", lambda name: __import__("logging").getLogger("test"))
+    client = StubClient()
+    first = ppv_agent.run(client=client, queue=JobQueue(tmp_path / "jobs.db"))
+    assert first["posted"][0]["sku"] == "pack-1"
+    assert first["posted"][0]["price_cents"] == 900
+    assert len(client.posts[0]["media_uuids"]) == 3
+    second = ppv_agent.run(client=StubClient(), queue=JobQueue(tmp_path / "jobs.db"))
+    assert second["posted"] == []

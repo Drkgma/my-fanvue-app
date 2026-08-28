@@ -30,7 +30,7 @@ export const PLATFORM_RULES = [
     id: "ppv",
     title: "PPV / scripts",
     detail:
-      "Paid clips: solo, riding, BJ, JOI. Film yourself. Chatters sell the menu after 5–10 subs.",
+      "Paid packs: $9 (2–4 pics + sexy video, Instagram-sexy), $23 lingerie, $35 lingerie + half nudes, $75 only nudes. Film packs 2–4 yourself. Chatters stay off until 10 subs.",
   },
   {
     id: "share",
