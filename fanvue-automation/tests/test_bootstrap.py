@@ -21,7 +21,7 @@ class StubClient:
         return {"price": cents}
 
     def get_account(self) -> dict[str, Any]:
-        return {"account": {"fans": {"subscribers": 0}}}
+        return {"account": {"fans": {"subscribers": 0}, "subscriptionPrice": self.price}}
 
 
 def test_bootstrap_installs_welcomes_in_phase_zero(tmp_path: Path, monkeypatch) -> None:

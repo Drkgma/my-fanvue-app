@@ -339,8 +339,12 @@ class FanvueClient:
         return self.request("PUT", f"/chats/automated-messages/{trigger}", json_body=body)
 
     def update_subscription_price(self, cents: int) -> dict[str, Any]:
-        """PATCH /users/me/subscription-price."""
-        return self.request("PATCH", "/users/me/subscription-price", json_body={"price": cents})
+        """PATCH /users/me/subscription-price. Amount is USD cents."""
+        return self.request(
+            "PATCH",
+            "/users/me/subscription-price",
+            json_body={"subscriptionPrice": int(cents), "forceOptIn": False},
+        )
 
     def _part_url(self, upload_id: str, part_number: int, creator_uuid: str | None) -> str:
         encoded = urllib.parse.quote(upload_id, safe="")

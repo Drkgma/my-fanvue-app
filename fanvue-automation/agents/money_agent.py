@@ -54,19 +54,31 @@ def install_account_setup(
                 raise
 
         if price_cents >= 100:
-            key = f"money:sub-price:{price_cents}"
-            if queue.claim("money", "price", key, {"cents": price_cents}):
-                try:
-                    result = client.update_subscription_price(price_cents)
-                    queue.mark_done(key, result if isinstance(result, dict) else {"ok": True})
-                    summary["price"] = price_cents
-                    log.info("subscription price set to %s cents", price_cents)
-                except (FanvueAuthError, FanvueApiError) as exc:
-                    queue.mark_error(key, str(exc))
-                    log.error("price update failed: %s", exc)
-                    raise
-            else:
+            current = 0
+            try:
+                account = client.get_account()
+                current = int(((account.get("account") or {}).get("subscriptionPrice") or 0))
+            except (FanvueAuthError, FanvueApiError, TypeError, ValueError):
+                current = 0
+            if current == price_cents:
                 summary["price"] = price_cents
+            else:
+                key = f"money:sub-price:{price_cents}"
+                claimed = queue.claim("money", "price", key, {"cents": price_cents})
+                if not claimed:
+                    claimed = queue.retry_error(key)
+                if claimed:
+                    try:
+                        result = client.update_subscription_price(price_cents)
+                        queue.mark_done(key, result if isinstance(result, dict) else {"ok": True})
+                        summary["price"] = price_cents
+                        log.info("subscription price set to %s cents", price_cents)
+                    except (FanvueAuthError, FanvueApiError) as exc:
+                        queue.mark_error(key, str(exc))
+                        log.error("price update failed: %s", exc)
+                        raise
+                else:
+                    summary["price"] = price_cents
         return summary
     finally:
         if owned_queue:
