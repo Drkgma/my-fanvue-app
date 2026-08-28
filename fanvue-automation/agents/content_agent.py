@@ -81,9 +81,11 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 continue
             if uploaded_this_run >= max_uploads:
                 break
-            if not queue.claim("content", "upload", upload_key, {"file": str(path)}):
-                summary["skipped"].append(str(path.name))
-                continue
+            claimed = queue.claim("content", "upload", upload_key, {"file": str(path)})
+            if not claimed:
+                if not queue.retry_error(upload_key):
+                    summary["skipped"].append(str(path.name))
+                    continue
             try:
                 media_uuid = client.upload_file(path)
                 client.wait_until_media_ready(media_uuid)
@@ -96,6 +98,16 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 queue.mark_error(upload_key, str(exc))
                 log.error("upload failed for %s: %s", path.name, exc)
                 raise
+
+        seen = {uuid for uuid, _ in ready_media}
+        for row in queue.done_results("content", "upload"):
+            media_uuid = str(row.get("media_uuid") or "")
+            if not media_uuid or media_uuid in seen:
+                continue
+            if queue.has_done(f"content:teaser:{media_uuid}"):
+                continue
+            ready_media.append((media_uuid, Path(str(row.get("file") or media_uuid))))
+            seen.add(media_uuid)
 
         posted = 0
         for index, (media_uuid, path) in enumerate(ready_media):

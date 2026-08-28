@@ -7,6 +7,11 @@
       "name": "next-dev",
       "command": "bash .cursor/dev.sh",
       "description": "Next.js Phase 0 desk on http://localhost:3456 (Fanvue redirect URI)"
+    },
+    {
+      "name": "phase0-operate",
+      "command": "bash fanvue-automation/scripts/operate_loop.sh",
+      "description": "Every 6 hours: Fanvue status scoreboard + ContentAgent (max 5 teasers)"
     }
   ],
   "ports": [
