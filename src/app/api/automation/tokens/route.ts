@@ -1,6 +1,5 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
+import { persistSessionTokens } from "@/lib/tokensOnDisk";
 import { getSession } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -41,9 +40,6 @@ export async function POST(request: Request) {
   if (!session) {
     return NextResponse.json({ error: "not_authenticated" }, { status: 401 });
   }
-  const destDir = path.join(process.cwd(), "fanvue-automation");
-  const dest = path.join(destDir, "tokens.json");
-  await mkdir(destDir, { recursive: true });
-  await writeFile(dest, JSON.stringify(tokenPayload(session), null, 2), { mode: 0o600 });
+  persistSessionTokens(session);
   return NextResponse.redirect(new URL("/?tokens=saved", request.url));
 }

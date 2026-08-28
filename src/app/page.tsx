@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { getAccount, getCurrentUser, getPostsPreview, getSessionScopes } from "@/lib/fanvue";
 import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
+import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
+import { getSession } from "@/lib/session";
 import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
-import { tokensFileExists } from "@/lib/tokensOnDisk";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,10 @@ export default async function Home({
   const errorDescriptionParam =
     typeof params?.error_description === "string" ? params.error_description : undefined;
   const tokensSaved = params?.tokens === "saved";
+  const session = await getSession();
+  if (session?.accessToken) {
+    persistSessionTokens(session);
+  }
   const tokensOnDisk = tokensFileExists();
   const fans = account?.account?.fans;
   const subscribers = Number(fans?.subscribers || 0);
@@ -76,11 +81,21 @@ export default async function Home({
 
         {!tokensOnDisk ? (
           <p className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            <strong>tokens.json is missing on this Cloud Agent.</strong> Clicking Complete on a
-            Cursor setup action does not create it. n8n on port 5678 is a different machine.
-            Use this desk on port 3456: Login with Fanvue, then Save into fanvue-automation/,
-            and wait until the URL includes <code>?tokens=saved</code>. Or add Cursor secrets
-            named <code>FANVUE_TOKEN</code> and <code>FANVUE_REFRESH_TOKEN</code>.
+            <strong>tokens.json is missing on this Cloud Agent.</strong>
+            {isAuthed ? (
+              <>
+                {" "}
+                You are signed in. Click the green <strong>Save into fanvue-automation/</strong>{" "}
+                button below, or refresh this page once.
+              </>
+            ) : (
+              <>
+                {" "}
+                Click <strong>Login with Fanvue</strong>, then{" "}
+                <strong>Save into fanvue-automation/</strong>. n8n on port 5678 is a different
+                machine.
+              </>
+            )}
           </p>
         ) : (
           <p className="rounded-lg border border-[#49f264] bg-[#49f26422] px-4 py-3 text-sm">
@@ -196,7 +211,7 @@ export default async function Home({
                   Download tokens.json
                 </a>
                 <form action="/api/automation/tokens" method="post">
-                  <button className="rounded-full border px-4 h-10 text-sm">
+                  <button className="rounded-full bg-[#49f264] px-4 h-10 text-sm text-black font-medium">
                     Save into fanvue-automation/
                   </button>
                 </form>
