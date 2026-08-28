@@ -87,6 +87,10 @@ def format_status(payload: dict[str, Any]) -> str:
         )
     if payload.get("ppv_posted") is not None:
         lines.append(f"PPV wall posts: {payload.get('ppv_posted')}")
+    packs = payload.get("ppv_packs") or []
+    if packs:
+        done = sum(1 for pack in packs if pack.get("ready") == pack.get("total") and pack.get("total"))
+        lines.append(f"Script packs complete: {done}/{len(packs)}")
     if payload.get("catalog_total") is not None:
         lines.append(
             f"PPV catalog: {payload.get('ready') or 0}/{payload.get('catalog_total')} files ready"

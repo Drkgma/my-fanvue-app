@@ -12,6 +12,8 @@ from agent_log import get_logger
 from agents import analytics_agent, chat_agent, content_agent, money_agent, ppv_agent, traffic_agent
 from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
+from ppv_catalog import inventory as ppv_inventory
+from ppv_catalog import next_shoot_list
 from telegram_notify import discover_chat_id, format_share, send, send_status
 
 
@@ -88,6 +90,31 @@ def cmd_share() -> int:
     return 0 if ping.get("ok") else 2
 
 
+def cmd_scripts() -> int:
+    """Print the next files to film. Does not generate nudes or clips."""
+    log = get_logger("cli")
+    stock = ppv_inventory()
+    nxt = next_shoot_list(limit=8)
+    payload = {
+        "ppv_ready": len(stock["ready"]),
+        "ppv_total": stock["total"],
+        "ppv_packs": stock.get("packs") or [],
+        "next": nxt,
+        "note": "Film these yourself and drop the files in ppv_bank/. I will not generate nudes or sex clips.",
+    }
+    print(json.dumps(payload, indent=2, default=str))
+    lines = [
+        "Funny Kite — next PPV shoot",
+        f"Ready {len(stock['ready'])}/{stock['total']}",
+        "Film it yourself. No AI nudes.",
+    ]
+    for row in nxt:
+        lines.append(f"- {row['filename']} ({row['pack']})")
+    ping = send("\n".join(lines))
+    log.info("telegram scripts %s", ping)
+    return 0 if ping.get("ok") else 2
+
+
 def cmd_login() -> int:
     """Browser PKCE login; writes fanvue-automation/tokens.json."""
     path = login_interactive()
@@ -151,6 +178,7 @@ def main(argv: list[str] | None = None) -> int:
         "share": cmd_share,
         "content": lambda: _run_named("content", content_agent.run),
         "ppv": lambda: _run_named("ppv", ppv_agent.run),
+        "scripts": cmd_scripts,
         "chat": lambda: _run_named("chat", chat_agent.run),
         "money": lambda: _run_named("money", money_agent.run),
         "traffic": lambda: _run_named("traffic", traffic_agent.run),
@@ -161,7 +189,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|content|ppv|share|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|content|ppv|scripts|share|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

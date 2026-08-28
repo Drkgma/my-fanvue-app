@@ -24,3 +24,15 @@ riding.mp4
 
 Public teasers stay in `../content_bank/` (SFW, clothed). Do not mix
 these paid shots into the teaser bank. Do not commit the media.
+
+Script packs (film yourself) use ids like:
+
+```
+s1-p-selfies.jpg
+s1-v4-dildo.mp4
+s2-v2-cowgirl.mp4
+s3-v1-drop.mp4
+s10-v10-orgasm.mp4
+```
+
+`python run.py scripts` prints the next missing filenames.

@@ -4,7 +4,7 @@ import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
-import { readPpvCatalog } from "@/lib/ppvCatalog";
+import { readPpvCatalog, readPpvScripts } from "@/lib/ppvCatalog";
 import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
 
 export const dynamic = "force-dynamic";
@@ -44,9 +44,13 @@ export default async function Home({
   const leftover = progress?.leftover_teasers;
   const publicUrl = progress?.public_url || "https://www.fanvue.com/funny-kite-83";
   const ppvCatalog = readPpvCatalog();
+  const ppvScripts = readPpvScripts();
   const ppvReady = progress?.ppv_ready ?? 0;
   const ppvTotal = progress?.ppv_total ?? ppvCatalog.length;
+  const starterReady = progress?.ppv_starter_ready ?? 0;
+  const starterTotal = progress?.ppv_starter_total ?? ppvCatalog.length;
   const ppvMissing = new Set(progress?.ppv_missing || ppvCatalog.map((row) => row.id));
+  const packReady = new Map((progress?.ppv_packs || []).map((row) => [row.id, row.ready || 0]));
   const missingScopes = PHASE0_SCOPES.filter((scope) => !scopes.includes(scope));
 
   return (
@@ -188,8 +192,11 @@ export default async function Home({
             until 5 subscribers.
           </p>
           <p className="text-2xl font-semibold">
-            {ppvReady} / {ppvTotal || 16}
-            <span className="ml-2 text-sm font-normal opacity-60">files ready</span>
+            {starterReady} / {starterTotal || 16}
+            <span className="ml-2 text-sm font-normal opacity-60">starter files ready</span>
+          </p>
+          <p className="text-sm opacity-70">
+            All SKUs (starter + scripts): {ppvReady} / {ppvTotal || 16}
           </p>
           {progress?.ppv_posted != null ? (
             <p className="text-sm opacity-70">Wall unlocks posted: {progress.ppv_posted}</p>
@@ -203,6 +210,22 @@ export default async function Home({
                   <code className="text-xs">
                     {row.filename}.{row.kind === "video" ? "mp4" : "jpg"}
                   </code>
+                </li>
+              );
+            })}
+          </ul>
+          <h3 className="pt-2 font-medium">Film-it-yourself scripts</h3>
+          <p className="text-sm opacity-70">
+            Name files like <code className="text-xs">s1-v4-dildo.mp4</code>. I will not
+            generate these clips. Reddit / leak-site copies stay out.
+          </p>
+          <ul className="space-y-1 text-sm">
+            {ppvScripts.map((pack) => {
+              const ready = packReady.get(pack.id) ?? 0;
+              return (
+                <li key={pack.id}>
+                  {ready >= pack.total && pack.total > 0 ? "✓" : "○"} {pack.title} · {ready}/
+                  {pack.total} · bundle ${(pack.bundle_price_cents / 100).toFixed(0)}
                 </li>
               );
             })}

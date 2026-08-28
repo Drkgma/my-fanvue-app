@@ -9,6 +9,13 @@ export type PpvCatalogItem = {
   filename: string;
 };
 
+export type PpvScriptPack = {
+  id: string;
+  title: string;
+  total: number;
+  bundle_price_cents: number;
+};
+
 /** Read the starter PPV shot list. Counts and labels only — no media. */
 export function readPpvCatalog(): PpvCatalogItem[] {
   const dest = join(process.cwd(), "fanvue-automation", "ppv_catalog.yaml");
@@ -27,6 +34,28 @@ export function readPpvCatalog(): PpvCatalogItem[] {
       items.push({ id, kind, label, price_cents: price, filename });
     }
     return items;
+  } catch {
+    return [];
+  }
+}
+
+/** Film-it-yourself script packs. Shot counts only. */
+export function readPpvScripts(): PpvScriptPack[] {
+  const dest = join(process.cwd(), "fanvue-automation", "ppv_scripts.yaml");
+  try {
+    if (!existsSync(dest)) return [];
+    const raw = readFileSync(dest, "utf8");
+    const packs: PpvScriptPack[] = [];
+    const blocks = raw.split(/\n  - id: /);
+    for (const block of blocks.slice(1)) {
+      const id = block.split("\n", 1)[0]?.trim();
+      if (!id) continue;
+      const title = /title:\s*(.+)/.exec(block)?.[1]?.trim() || id;
+      const bundle = Number(/bundle_price_cents:\s*(\d+)/.exec(block)?.[1] || 300);
+      const total = (block.match(/\{id:/g) || []).length;
+      packs.push({ id, title, total, bundle_price_cents: bundle });
+    }
+    return packs;
   } catch {
     return [];
   }
