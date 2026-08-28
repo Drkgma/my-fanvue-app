@@ -78,3 +78,32 @@ def test_create_post_requires_audience(tmp_path: Path) -> None:
     client = make_client(tmp_path, routes)
     post = client.create_post(audience="followers-and-subscribers", text="teaser", media_uuids=["m1"])
     assert post["uuid"] == "post-1"
+
+
+def test_free_trial_link_list_and_create(tmp_path: Path) -> None:
+    routes = {
+        ("GET", f"{API_BASE}/free-trial-links"): FakeResponse(
+            200,
+            {
+                "data": [
+                    {
+                        "url": "https://www.fanvue.com/funny-kite-83?free_trial=abc",
+                        "usedCount": 0,
+                        "maxUsages": 10,
+                    }
+                ]
+            },
+        ),
+        ("POST", f"{API_BASE}/free-trial-links"): FakeResponse(
+            201,
+            {"url": "https://www.fanvue.com/funny-kite-83?free_trial=new", "maxUsages": 10},
+        ),
+    }
+    client = make_client(tmp_path, routes)
+    listed = client.list_free_trial_links()
+    assert listed["data"][0]["url"].endswith("free_trial=abc")
+    created = client.create_free_trial_link()
+    assert created["url"].endswith("free_trial=new")
+    session = client.session
+    assert isinstance(session, FakeSession)
+    assert ("POST", f"{API_BASE}/free-trial-links") in session.calls

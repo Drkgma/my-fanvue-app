@@ -85,6 +85,22 @@ def install_account_setup(
             queue.close()
 
 
+def ensure_trial_link(client: FanvueClient) -> dict[str, Any] | None:
+    """Reuse an open Fanvue free-trial link, or create one for the first 10 people."""
+    listed = client.list_free_trial_links()
+    rows = listed.get("data") if isinstance(listed, dict) else listed
+    if not isinstance(rows, list):
+        rows = []
+    for row in rows:
+        if not isinstance(row, dict) or not row.get("url"):
+            continue
+        max_uses = row.get("maxUsages")
+        used = int(row.get("usedCount") or 0)
+        if max_uses is None or used < int(max_uses):
+            return row
+    return client.create_free_trial_link()
+
+
 def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> dict[str, Any]:
     """Phase 1+ MoneyBot. PPV DMs stay off under min_subscribers_for_ppv."""
     log = get_logger("money")

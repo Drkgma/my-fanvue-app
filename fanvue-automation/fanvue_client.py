@@ -327,6 +327,30 @@ class FanvueClient:
             body["price"] = price
         return self.request("POST", f"/chats/{user_uuid}/message", json_body=body)
 
+    def list_free_trial_links(self) -> dict[str, Any]:
+        """GET /free-trial-links."""
+        return self.request("GET", "/free-trial-links")
+
+    def create_free_trial_link(
+        self,
+        *,
+        name: str = "phase0-first-10",
+        max_usages: int = 10,
+        expires_days: int = 14,
+        trial_duration_days: int = 7,
+    ) -> dict[str, Any]:
+        """POST /free-trial-links. One shareable Fanvue trial for this creator."""
+        return self.request(
+            "POST",
+            "/free-trial-links",
+            json_body={
+                "name": name,
+                "maxUsages": max_usages,
+                "expiresDays": expires_days,
+                "trialDurationDays": trial_duration_days,
+            },
+        )
+
     def list_automated_messages(self) -> dict[str, Any]:
         """GET /chats/automated-messages."""
         return self.request("GET", "/chats/automated-messages")

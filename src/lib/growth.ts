@@ -13,7 +13,7 @@ export const PHASE0_SCOPES = [
 ] as const;
 
 export const GROWTH_LADDER = [
-  { phase: 0, label: "Now", revenue: "$5/mo", subs: "1 → 10", focus: "SFW teasers + share the page" },
+  { phase: 0, label: "Now", revenue: "$5/mo", subs: "1 → 10", focus: "SFW teasers + share the 7-day trial" },
   { phase: 1, label: "Month 1", revenue: "$500–$1,000", subs: "35–70", focus: "Daily posts, ChatMate, PPV menu" },
   { phase: 2, label: "Month 3", revenue: "$3,000–$5,000", subs: "200–400", focus: "SFW Reddit/TikTok teasers only" },
   { phase: 3, label: "Month 6", revenue: "$8,000–$15,000", subs: "600–1,000", focus: "Tiered pricing, custom content" },
@@ -36,7 +36,7 @@ export const PLATFORM_RULES = [
     id: "share",
     title: "Right now (0 followers)",
     detail:
-      "Text https://www.fanvue.com/funny-kite-83 to 10 people you already talk to. Film a 15–30s clothed intro video in Fanvue Settings (Discover placement). Reddit, X, TikTok, and ads wait until 10 subscribers.",
+      "Text the 7-day free trial (10 uses) to 10 people you already talk to. Film a 15–30s clothed intro video in Fanvue Settings (Discover placement). Reddit, X, TikTok, and ads wait until 10 subscribers.",
   },
   {
     id: "offsite",
@@ -53,7 +53,8 @@ export const SHARE_STEPS = [
   {
     id: "text-10",
     title: "Text 10 people you already talk to",
-    detail: "Friends, not strangers. Fanvue will not recommend a page with 0 followers.",
+    detail:
+      "Send the 7-day free trial from this desk. Friends, not strangers. Fanvue will not recommend a page with 0 followers.",
   },
   {
     id: "bio",

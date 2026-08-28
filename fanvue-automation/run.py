@@ -86,7 +86,16 @@ def cmd_share() -> int:
     payload["teaser_captions"] = captions
     ping = send(format_share(payload))
     log.info("telegram share %s", ping)
-    print(json.dumps({"share": ping, "public_url": payload.get("public_url")}, indent=2))
+    print(
+        json.dumps(
+            {
+                "share": ping,
+                "public_url": payload.get("public_url"),
+                "trial_url": payload.get("trial_url"),
+            },
+            indent=2,
+        )
+    )
     return 0 if ping.get("ok") else 2
 
 

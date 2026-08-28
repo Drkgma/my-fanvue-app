@@ -113,9 +113,31 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
         data["curated"] = bool(me.get("isInCuratedSection")) if me else None
         data["video_count"] = int(counts.get("videoCount") or 0) if me else None
         data["likes"] = int(me.get("likesCount") or 0) if me else None
+        try:
+            trials = (client.list_free_trial_links() or {}).get("data") or []
+            open_trial = next(
+                (
+                    row
+                    for row in trials
+                    if isinstance(row, dict)
+                    and row.get("url")
+                    and (
+                        row.get("maxUsages") is None
+                        or int(row.get("usedCount") or 0) < int(row.get("maxUsages") or 0)
+                    )
+                ),
+                None,
+            )
+            if open_trial:
+                data["trial_url"] = open_trial.get("url")
+                data["trial_used"] = open_trial.get("usedCount")
+                data["trial_max"] = open_trial.get("maxUsages")
+                data["trial_days"] = open_trial.get("trialDurationDays")
+        except Exception as exc:  # noqa: BLE001
+            log.info("trial links unavailable (%s)", exc)
         if data["followers"] == 0:
             bits = [
-                "0 followers: text the public page to 10 people you already talk to.",
+                "0 followers: text the 7-day free trial to 10 people you already talk to.",
             ]
             if data.get("video_count") == 0:
                 bits.append(

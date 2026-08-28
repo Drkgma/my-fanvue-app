@@ -75,6 +75,13 @@ def format_status(payload: dict[str, Any]) -> str:
         lines.append(f"Earnings: ${cents / 100:.2f}")
     if payload.get("public_url"):
         lines.append(f"Page: {payload.get('public_url')}")
+    if payload.get("trial_url"):
+        used = payload.get("trial_used")
+        cap = payload.get("trial_max")
+        days = payload.get("trial_days") or 7
+        lines.append(
+            f"Free trial ({days} days, {used or 0}/{cap or 10}): {payload.get('trial_url')}"
+        )
     if "posts_listed" in payload:
         lines.append(f"Posts listed: {payload.get('posts_listed')}")
     if "teasers_posted" in payload:
@@ -124,7 +131,8 @@ def format_status(payload: dict[str, Any]) -> str:
 
 def format_share(payload: dict[str, Any]) -> str:
     """Copy-paste kit. Posts do not create subscribers until someone sees the page."""
-    url = str(payload.get("public_url") or "https://www.fanvue.com/funny-kite-83")
+    public = str(payload.get("public_url") or "https://www.fanvue.com/funny-kite-83")
+    url = str(payload.get("trial_url") or public)
     captions = payload.get("teaser_captions") or [
         "hi, it's me — more on the page if you want it",
         "garden light, come say hi",
@@ -133,23 +141,36 @@ def format_share(payload: dict[str, Any]) -> str:
     video_count = payload.get("video_count")
     lines = [
         "Funny Kite — share this to get subscribers",
-        f"Page: {url}",
-        f"Subs: {payload.get('subscribers', '?')}/{payload.get('next_milestone') or 10}",
-        f"Followers: {payload.get('followers', '?')}",
-        f"Posts live: {payload.get('posts_listed', '?')}",
-        "",
-        "Fanvue does not send people to an empty follower count.",
-        "Do this today:",
-        f"1. Text this link to 10 people you already talk to: {url}",
-        "2. Paste it in your own IG / Snap / WhatsApp bio. Clothes-on only.",
-        "3. Film a 15–30s clothed intro video in Fanvue Settings → Profile.",
-        "   Discover places intro videos. No nudes in the intro.",
-        "Ads and TrafficAgent stay off until 10 subscribers.",
-        "",
-        "Copy-paste:",
-        f"{captions[0]}",
-        url,
+        f"Page: {public}",
     ]
+    if url != public:
+        used = payload.get("trial_used")
+        cap = payload.get("trial_max")
+        days = payload.get("trial_days") or 7
+        lines.append(f"Free trial ({days} days, {used or 0}/{cap or 10} uses): {url}")
+    lines.extend(
+        [
+            f"Subs: {payload.get('subscribers', '?')}/{payload.get('next_milestone') or 10}",
+            f"Followers: {payload.get('followers', '?')}",
+            f"Posts live: {payload.get('posts_listed', '?')}",
+            "",
+            "Fanvue does not send people to an empty follower count.",
+            "Do this today:",
+            f"1. Text this link to 10 people you already talk to: {url}",
+            "2. Paste it in your own IG / Snap / WhatsApp bio. Clothes-on only.",
+            "3. Film a 15–30s clothed intro video in Fanvue Settings → Profile.",
+            "   Discover places intro videos. No nudes in the intro.",
+            "Ads and TrafficAgent stay off until 10 subscribers.",
+            "",
+            "Copy-paste:",
+            f"{captions[0]}",
+            url,
+        ]
+    )
+    if url != public:
+        lines[lines.index("Do this today:") + 1] = (
+            f"1. Text this 7-day free trial to 10 people you already talk to: {url}"
+        )
     if video_count == 0:
         lines.insert(5, "Intro videos on page: 0 — this is the Discover gap.")
     return "\n".join(lines)

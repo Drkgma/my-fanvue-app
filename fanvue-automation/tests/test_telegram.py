@@ -40,6 +40,20 @@ def test_format_status_includes_share_note() -> None:
     assert "share the public page" in text
 
 
+def test_format_status_includes_trial_url() -> None:
+    text = format_status(
+        {
+            "handle": "funny-kite-83",
+            "public_url": "https://www.fanvue.com/funny-kite-83",
+            "trial_url": "https://www.fanvue.com/funny-kite-83?free_trial=abc",
+            "trial_used": 0,
+            "trial_max": 10,
+            "trial_days": 7,
+        }
+    )
+    assert "Free trial (7 days, 0/10): https://www.fanvue.com/funny-kite-83?free_trial=abc" in text
+
+
 def test_format_share_includes_copy_paste() -> None:
     from telegram_notify import format_share
 
@@ -50,13 +64,19 @@ def test_format_share_includes_copy_paste() -> None:
             "followers": 0,
             "posts_listed": 16,
             "teaser_captions": ["hi, it's me — more on the page if you want it"],
+            "trial_url": "https://www.fanvue.com/funny-kite-83?free_trial=test",
+            "trial_used": 0,
+            "trial_max": 10,
+            "trial_days": 7,
         }
     )
     assert "https://www.fanvue.com/funny-kite-83" in text
+    assert "https://www.fanvue.com/funny-kite-83?free_trial=test" in text
     assert "Copy-paste:" in text
     assert "Ads and TrafficAgent stay off" in text
     assert "10 people" in text
     assert "intro video" in text.lower()
+    assert "7-day free trial" in text.lower()
 
 
 def test_format_status_includes_ppv_catalog() -> None:

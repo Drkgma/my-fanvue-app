@@ -11,6 +11,7 @@ class StubClient:
     def __init__(self) -> None:
         self.messages: list[tuple[str, str]] = []
         self.price: int | None = None
+        self.trials: list[dict[str, Any]] = []
 
     def upsert_automated_message(self, trigger: str, text: str, price: int | None = None) -> dict[str, Any]:
         self.messages.append((trigger, text))
@@ -22,6 +23,19 @@ class StubClient:
 
     def get_account(self) -> dict[str, Any]:
         return {"account": {"fans": {"subscribers": 0}, "subscriptionPrice": self.price}}
+
+    def list_free_trial_links(self) -> dict[str, Any]:
+        return {"data": list(self.trials)}
+
+    def create_free_trial_link(self, **kwargs: Any) -> dict[str, Any]:
+        row = {
+            "url": "https://www.fanvue.com/funny-kite-83?free_trial=test",
+            "usedCount": 0,
+            "maxUsages": 10,
+            "trialDurationDays": 7,
+        }
+        self.trials.append(row)
+        return row
 
 
 def test_bootstrap_installs_welcomes_in_phase_zero(tmp_path: Path, monkeypatch) -> None:
@@ -46,6 +60,8 @@ def test_bootstrap_installs_welcomes_in_phase_zero(tmp_path: Path, monkeypatch) 
     assert set(result["welcome"]) == {"new_follower", "new_subscriber", "first_message_reply"}
     assert client.price == 999
     assert len(client.messages) == 3
+    assert result["trial_url"] == "https://www.fanvue.com/funny-kite-83?free_trial=test"
+    assert len(client.trials) == 1
     assert "ChatMate" in result["note"] or "cannot text" in result["note"].lower()
 
 
@@ -68,6 +84,14 @@ def test_bootstrap_is_idempotent(tmp_path: Path, monkeypatch) -> None:
     assert second["welcome"] == ["new_follower"]
     assert client.messages == []
     assert client.price is None
+
+
+def test_ensure_trial_link_reuses_open_link() -> None:
+    client = StubClient()
+    first = money_agent.ensure_trial_link(client)
+    second = money_agent.ensure_trial_link(client)
+    assert first["url"] == second["url"]
+    assert len(client.trials) == 1
 
 
 def test_money_and_traffic_stay_gated() -> None:

@@ -51,7 +51,8 @@ export default async function Home({
   const postCount = isAuthed ? (posts?.data?.length ?? null) : (progress?.posts_listed ?? null);
   const leftover = progress?.leftover_teasers;
   const publicUrl = progress?.public_url || PUBLIC_PAGE;
-  const shareBody = `${SHARE_CAPTION}\n${publicUrl}`;
+  const trialUrl = progress?.trial_url || publicUrl;
+  const shareBody = `${SHARE_CAPTION}\n${trialUrl}`;
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(shareBody)}`;
   const smsHref = `sms:?&body=${encodeURIComponent(shareBody)}`;
   const ppvCatalog = readPpvCatalog();
@@ -184,13 +185,17 @@ export default async function Home({
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
           <h2 className="font-semibold">How to get the next 10 subscribers</h2>
           <p className="text-sm opacity-70">
-            More Fanvue posts will not create subscribers. The page is live with
-            SFW teasers. Someone has to open the link. Ads and TrafficAgent stay
-            off until 10 subscribers.
+            More Fanvue posts will not create subscribers. Share the 7-day free
+            trial. Ads and TrafficAgent stay off until 10 subscribers.
           </p>
           <p className="break-all rounded-lg bg-black/[.04] dark:bg-white/[.06] px-3 py-2 text-sm font-medium">
-            {publicUrl}
+            {trialUrl}
           </p>
+          {progress?.trial_url ? (
+            <p className="text-xs opacity-50">
+              7-day free trial · {progress.trial_used ?? 0}/{progress.trial_max ?? 10} uses
+            </p>
+          ) : null}
           <p className="text-sm opacity-70">
             Copy-paste: <em>{SHARE_CAPTION}</em>
           </p>
@@ -211,7 +216,7 @@ export default async function Home({
             </a>
             <a
               className="rounded-full border px-4 h-10 inline-flex items-center text-sm"
-              href={publicUrl}
+              href={trialUrl}
               target="_blank"
               rel="noreferrer"
             >
