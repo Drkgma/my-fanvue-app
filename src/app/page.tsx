@@ -5,6 +5,7 @@ import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
 import { readPpvCatalog } from "@/lib/ppvCatalog";
+import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
 
 export const dynamic = "force-dynamic";
 
