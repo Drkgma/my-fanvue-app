@@ -35,7 +35,8 @@ export const PLATFORM_RULES = [
   {
     id: "share",
     title: "Right now (0 followers)",
-    detail: "Share https://www.fanvue.com/funny-kite-83. Reddit, X, and TikTok wait until 10 subscribers.",
+    detail:
+      "Text https://www.fanvue.com/funny-kite-83 to 10 people you already talk to. Film a 15–30s clothed intro video in Fanvue Settings (Discover placement). Reddit, X, TikTok, and ads wait until 10 subscribers.",
   },
   {
     id: "offsite",
@@ -45,9 +46,36 @@ export const PLATFORM_RULES = [
   },
 ] as const;
 
+export const PUBLIC_PAGE = "https://www.fanvue.com/funny-kite-83";
+export const SHARE_CAPTION = "hi, it's me — more on the page if you want it";
+
+export const SHARE_STEPS = [
+  {
+    id: "text-10",
+    title: "Text 10 people you already talk to",
+    detail: "Friends, not strangers. Fanvue will not recommend a page with 0 followers.",
+  },
+  {
+    id: "bio",
+    title: "Put the link in your own bio",
+    detail: "Instagram, Snapchat, WhatsApp, or iMessage — your accounts. One paste. No nudes off-platform.",
+  },
+  {
+    id: "intro",
+    title: "Film a 15–30s clothed intro video",
+    detail:
+      "Fanvue Discover guarantees intro-video placement. Phone selfie, clothes on, say hi and point at subscribe. No nudes in the intro.",
+  },
+  {
+    id: "no-ads",
+    title: "Do not buy ads yet",
+    detail: "TrafficAgent, Reddit, X, TikTok, and Meta ads stay off until 10 subscribers.",
+  },
+] as const;
+
 export const TWENTY_FOUR_HOUR = [
   { id: "auth", title: "Fix auth", detail: "Login with Fanvue must return your user, then save tokens.json." },
   { id: "upload", title: "Upload 20 images", detail: "Drop files in fanvue-automation/content_bank/ and run ContentAgent." },
-  { id: "teasers", title: "Post 5 teasers", detail: "Audience: followers-and-subscribers. Then share the public page." },
-  { id: "chat", title: "ChatMate + MoneyBot", detail: "Phase 1 only. Do not turn these on until 10 subscribers." },
+  { id: "teasers", title: "Post teasers", detail: "Audience: followers-and-subscribers. Bank is posted. Next is sharing." },
+  { id: "intro", title: "Intro video", detail: "15–30s clothed clip in Fanvue Settings → Profile. Discover uses this." },
 ] as const;

@@ -102,11 +102,26 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
         data["ppv_starter_total"] = stock.get("starter_total")
         data["ppv_packs"] = stock.get("packs") or []
         data["sell_packs"] = stock.get("sell_packs") or []
+        try:
+            me = client.get_me()
+        except Exception as exc:  # noqa: BLE001 — scoreboard still works without /users/me extras
+            log.info("profile extras unavailable (%s)", exc)
+            me = {}
+        counts = me.get("contentCounts") or {}
+        data["discoverable"] = bool(me.get("isDiscoverable")) if me else None
+        data["curated"] = bool(me.get("isInCuratedSection")) if me else None
+        data["video_count"] = int(counts.get("videoCount") or 0) if me else None
+        data["likes"] = int(me.get("likesCount") or 0) if me else None
         if data["followers"] == 0:
-            data["share_note"] = (
-                "0 followers: share the public page or nobody new can subscribe. "
-                "Ads and TrafficAgent stay off until 10 subscribers."
-            )
+            bits = [
+                "0 followers: text the public page to 10 people you already talk to.",
+            ]
+            if data.get("video_count") == 0:
+                bits.append(
+                    "Film a 15–30s clothed intro video in Fanvue Settings — Discover places intro videos."
+                )
+            bits.append("Ads and TrafficAgent stay off until 10 subscribers.")
+            data["share_note"] = " ".join(bits)
         write_progress(data)
         key = f"analytics:snapshot:{data['at'][:10]}"
         if queue.claim("analytics", "snapshot", key, data):

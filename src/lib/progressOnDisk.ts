@@ -32,6 +32,10 @@ export type ProgressSnapshot = {
   }[];
   next_milestone?: number;
   share_note?: string;
+  discoverable?: boolean;
+  curated?: boolean;
+  video_count?: number;
+  likes?: number;
 };
 
 const progressPath = () => join(process.cwd(), "fanvue-automation", "progress.json");

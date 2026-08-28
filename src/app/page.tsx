@@ -1,6 +1,14 @@
 import Image from "next/image";
 import { getAccount, getCurrentUser, getPostsPreview, getSessionScopes } from "@/lib/fanvue";
-import { GROWTH_LADDER, PHASE0_SCOPES, PLATFORM_RULES, TWENTY_FOUR_HOUR } from "@/lib/growth";
+import {
+  GROWTH_LADDER,
+  PHASE0_SCOPES,
+  PLATFORM_RULES,
+  PUBLIC_PAGE,
+  SHARE_CAPTION,
+  SHARE_STEPS,
+  TWENTY_FOUR_HOUR,
+} from "@/lib/growth";
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
@@ -42,7 +50,10 @@ export default async function Home({
   const followers = isAuthed ? Number(fans?.followers || 0) : progress?.followers;
   const postCount = isAuthed ? (posts?.data?.length ?? null) : (progress?.posts_listed ?? null);
   const leftover = progress?.leftover_teasers;
-  const publicUrl = progress?.public_url || "https://www.fanvue.com/funny-kite-83";
+  const publicUrl = progress?.public_url || PUBLIC_PAGE;
+  const shareBody = `${SHARE_CAPTION}\n${publicUrl}`;
+  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(shareBody)}`;
+  const smsHref = `sms:?&body=${encodeURIComponent(shareBody)}`;
   const ppvCatalog = readPpvCatalog();
   const ppvScripts = readPpvScripts();
   const sellPacks = readPpvSellPacks();
@@ -169,16 +180,57 @@ export default async function Home({
         </section>
 
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
-          <h2 className="font-semibold">Share to get subscribers</h2>
+          <h2 className="font-semibold">How to get the next 10 subscribers</h2>
           <p className="text-sm opacity-70">
-            Fanvue will not send traffic to 0 followers. Copy the link. Ads and TrafficAgent
-            stay off until 10 subscribers.
+            More Fanvue posts will not create subscribers. The page is live with
+            SFW teasers. Someone has to open the link. Ads and TrafficAgent stay
+            off until 10 subscribers.
           </p>
-          <p className="break-all rounded-lg bg-black/[.04] dark:bg-white/[.06] px-3 py-2 text-sm">
+          <p className="break-all rounded-lg bg-black/[.04] dark:bg-white/[.06] px-3 py-2 text-sm font-medium">
             {publicUrl}
           </p>
           <p className="text-sm opacity-70">
-            Copy-paste caption: <em>hi, it&apos;s me — more on the page if you want it</em>
+            Copy-paste: <em>{SHARE_CAPTION}</em>
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              className="rounded-full bg-[#49f264] px-4 h-10 text-black font-medium inline-flex items-center text-sm"
+              href={whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Send on WhatsApp
+            </a>
+            <a
+              className="rounded-full border px-4 h-10 inline-flex items-center text-sm"
+              href={smsHref}
+            >
+              Send as text
+            </a>
+            <a
+              className="rounded-full border px-4 h-10 inline-flex items-center text-sm"
+              href={publicUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open the page
+            </a>
+          </div>
+          <ol className="space-y-2 text-sm">
+            {SHARE_STEPS.map((step, index) => (
+              <li key={step.id} className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+                <p className="font-medium">
+                  {index + 1}. {step.title}
+                </p>
+                <p className="opacity-70">{step.detail}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="text-xs opacity-50">
+            Discoverable: {progress?.discoverable === true ? "yes" : progress?.discoverable === false ? "no" : "—"}
+            {" · "}
+            Intro videos on page: {progress?.video_count ?? "—"}
+            {progress?.video_count === 0 ? " — film the clothed intro next" : ""}
           </p>
           {progress?.share_note ? (
             <p className="text-sm text-amber-800 dark:text-amber-200">{progress.share_note}</p>
@@ -290,7 +342,7 @@ export default async function Home({
                 (item.id === "auth" && (isAuthed || tokensOnDisk)) ||
                 (item.id === "upload" && ((progress?.bank ?? 0) >= 20 || (postCount ?? 0) > 0)) ||
                 (item.id === "teasers" && (postCount ?? 0) >= 5) ||
-                (item.id === "chat" && phase >= 1);
+                (item.id === "intro" && (progress?.video_count ?? 0) > 0);
               return (
                 <li key={item.id} className="flex gap-3">
                   <span

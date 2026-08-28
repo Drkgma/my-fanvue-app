@@ -55,6 +55,8 @@ def test_format_share_includes_copy_paste() -> None:
     assert "https://www.fanvue.com/funny-kite-83" in text
     assert "Copy-paste:" in text
     assert "Ads and TrafficAgent stay off" in text
+    assert "10 people" in text
+    assert "intro video" in text.lower()
 
 
 def test_format_status_includes_ppv_catalog() -> None:

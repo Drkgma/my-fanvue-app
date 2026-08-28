@@ -130,6 +130,7 @@ def format_share(payload: dict[str, Any]) -> str:
         "garden light, come say hi",
         "kitchen tea and a quiet morning",
     ]
+    video_count = payload.get("video_count")
     lines = [
         "Funny Kite — share this to get subscribers",
         f"Page: {url}",
@@ -138,12 +139,19 @@ def format_share(payload: dict[str, Any]) -> str:
         f"Posts live: {payload.get('posts_listed', '?')}",
         "",
         "Fanvue does not send people to an empty follower count.",
-        "Share the link. Ads and TrafficAgent stay off until 10 subscribers.",
+        "Do this today:",
+        f"1. Text this link to 10 people you already talk to: {url}",
+        "2. Paste it in your own IG / Snap / WhatsApp bio. Clothes-on only.",
+        "3. Film a 15–30s clothed intro video in Fanvue Settings → Profile.",
+        "   Discover places intro videos. No nudes in the intro.",
+        "Ads and TrafficAgent stay off until 10 subscribers.",
         "",
         "Copy-paste:",
         f"{captions[0]}",
         url,
     ]
+    if video_count == 0:
+        lines.insert(5, "Intro videos on page: 0 — this is the Discover gap.")
     return "\n".join(lines)
 
 
