@@ -122,3 +122,12 @@ class JobQueue:
             (agent, kind, status),
         ).fetchone()
         return int(row["n"]) if row else 0
+
+    def leftover_teaser_count(self) -> int:
+        """Uploaded media that has not been posted as a teaser yet."""
+        pending = 0
+        for row in self.done_results("content", "upload"):
+            media_uuid = str(row.get("media_uuid") or "")
+            if media_uuid and not self.has_done(f"content:teaser:{media_uuid}"):
+                pending += 1
+        return pending

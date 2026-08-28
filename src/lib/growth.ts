@@ -22,6 +22,6 @@ export const GROWTH_LADDER = [
 export const TWENTY_FOUR_HOUR = [
   { id: "auth", title: "Fix auth", detail: "Login with Fanvue must return your user, then save tokens.json." },
   { id: "upload", title: "Upload 20 images", detail: "Drop files in fanvue-automation/content_bank/ and run ContentAgent." },
-  { id: "teasers", title: "Post 5 teasers", detail: "Audience: followers-and-subscribers. No PPV on teasers." },
-  { id: "chat", title: "ChatMate + MoneyBot", detail: "Phase 1 only. Do not turn these on until teasers are live." },
+  { id: "teasers", title: "Post 5 teasers", detail: "Audience: followers-and-subscribers. Then share the public page." },
+  { id: "chat", title: "ChatMate + MoneyBot", detail: "Phase 1 only. Do not turn these on until 10 subscribers." },
 ] as const;

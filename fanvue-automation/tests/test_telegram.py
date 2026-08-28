@@ -22,7 +22,39 @@ def test_format_status_omits_missing_fields() -> None:
     assert "Subs: 1/10" in text
     assert "Earnings: $3.99" in text
     assert "Uploaded this run: 1" in text
-    assert "Teasers posted: 0" in text
+    assert "Teasers posted this run: 0" in text
+
+
+def test_format_status_includes_share_note() -> None:
+    text = format_status(
+        {
+            "handle": "funny-kite-83",
+            "public_url": "https://www.fanvue.com/funny-kite-83",
+            "subscribers": 0,
+            "leftover_teasers": 16,
+            "share_note": "0 followers: share the public page",
+        }
+    )
+    assert "Page: https://www.fanvue.com/funny-kite-83" in text
+    assert "Leftover vault teasers: 16" in text
+    assert "share the public page" in text
+
+
+def test_format_share_includes_copy_paste() -> None:
+    from telegram_notify import format_share
+
+    text = format_share(
+        {
+            "public_url": "https://www.fanvue.com/funny-kite-83",
+            "subscribers": 0,
+            "followers": 0,
+            "posts_listed": 16,
+            "teaser_captions": ["hi, it's me — more on the page if you want it"],
+        }
+    )
+    assert "https://www.fanvue.com/funny-kite-83" in text
+    assert "Copy-paste:" in text
+    assert "Ads and TrafficAgent stay off" in text
 
 
 def test_send_skips_without_token(monkeypatch) -> None:

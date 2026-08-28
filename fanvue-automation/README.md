@@ -17,6 +17,7 @@ home page and drop it in this folder (gitignored).
 4. `pnpm dev`, click **Login with Fanvue**, then **Save tokens for local agents**.
 5. Put up to 20 images in `content_bank/` (SFW teasers are enough to start).
 6. `python run.py telegram` then `python run.py content` then `python run.py status`.
+   `python run.py share` sends the public page link to Telegram.
 
 Telegram: set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in gitignored
 `fanvue-automation/.env`. `python run.py telegram` discovers the chat id

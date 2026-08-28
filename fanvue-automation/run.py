@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|content|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|content|share|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from agent_log import get_logger
 from agents import analytics_agent, chat_agent, content_agent, money_agent, traffic_agent
 from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
-from telegram_notify import discover_chat_id, send, send_status
+from telegram_notify import discover_chat_id, format_share, send, send_status
 
 
 def cmd_status() -> int:
@@ -66,6 +66,25 @@ def cmd_telegram() -> int:
     )
     log.info("telegram %s", ping)
     print(json.dumps({"chat_id_saved": True, "telegram": ping}, indent=2))
+    return 0 if ping.get("ok") else 2
+
+
+def cmd_share() -> int:
+    """Ping Telegram with the public page + a copy-paste caption. No ads."""
+    log = get_logger("cli")
+    config = load_config()
+    try:
+        result = analytics_agent.run()
+    except FanvueAuthError as exc:
+        log.error("%s", exc)
+        send_status({"auth_error": str(exc), "note": "Login with Fanvue, then Save tokens."})
+        return 2
+    captions = list((config.get("content") or {}).get("teaser_captions") or [])
+    payload = dict(result)
+    payload["teaser_captions"] = captions
+    ping = send(format_share(payload))
+    log.info("telegram share %s", ping)
+    print(json.dumps({"share": ping, "public_url": payload.get("public_url")}, indent=2))
     return 0 if ping.get("ok") else 2
 
 
@@ -128,6 +147,7 @@ def main(argv: list[str] | None = None) -> int:
     dispatch = {
         "login": cmd_login,
         "status": cmd_status,
+        "share": cmd_share,
         "content": lambda: _run_named("content", content_agent.run),
         "chat": lambda: _run_named("chat", chat_agent.run),
         "money": lambda: _run_named("money", money_agent.run),
@@ -139,7 +159,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|content|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|content|share|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

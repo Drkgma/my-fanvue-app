@@ -52,6 +52,8 @@ def test_content_agent_uploads_and_posts_once(tmp_path: Path, monkeypatch) -> No
     first = content_agent.run(client=client, queue=queue)
     assert len(first["uploaded"]) == 2
     assert len(first["posted"]) == 2
+    assert first["leftover_teasers"] == 0
+    assert first["teasers_posted"] == 2
     queue.close()
 
     queue = JobQueue(tmp_path / "jobs.db")

@@ -89,7 +89,7 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
             try:
                 media_uuid = client.upload_file(path)
                 client.wait_until_media_ready(media_uuid)
-                queue.mark_done(upload_key, {"media_uuid": media_uuid})
+                queue.mark_done(upload_key, {"media_uuid": media_uuid, "file": path.name})
                 summary["uploaded"].append({"file": path.name, "media_uuid": media_uuid})
                 ready_media.append((media_uuid, path))
                 uploaded_this_run += 1
@@ -123,7 +123,7 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                     text=caption,
                     media_uuids=[media_uuid],
                 )
-                queue.mark_done(post_key, {"post_uuid": post.get("uuid")})
+                queue.mark_done(post_key, {"post_uuid": post.get("uuid"), "file": path.name})
                 summary["posted"].append({"media_uuid": media_uuid, "post_uuid": post.get("uuid")})
                 posted += 1
                 log.info("posted teaser %s", post.get("uuid"))
@@ -131,6 +131,8 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 queue.mark_error(post_key, str(exc))
                 log.error("teaser failed for %s: %s", media_uuid, exc)
                 raise
+        summary["teasers_posted"] = queue.count("content", "teaser")
+        summary["leftover_teasers"] = queue.leftover_teaser_count()
         return summary
     finally:
         if owned_queue:

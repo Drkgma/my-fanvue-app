@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getAccount, getCurrentUser, getPostsPreview, getSessionScopes } from "@/lib/fanvue";
 import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
+import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
 import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
 
@@ -34,10 +35,13 @@ export default async function Home({
     persistSessionTokens(session);
   }
   const tokensOnDisk = tokensFileExists();
+  const progress = readProgress();
   const fans = account?.account?.fans;
-  const subscribers = Number(fans?.subscribers || 0);
-  const followers = Number(fans?.followers || 0);
-  const postCount = posts?.data?.length ?? null;
+  const subscribers = isAuthed ? Number(fans?.subscribers || 0) : progress?.subscribers;
+  const followers = isAuthed ? Number(fans?.followers || 0) : progress?.followers;
+  const postCount = isAuthed ? (posts?.data?.length ?? null) : (progress?.posts_listed ?? null);
+  const leftover = progress?.leftover_teasers;
+  const publicUrl = progress?.public_url || "https://www.fanvue.com/funny-kite-83";
   const missingScopes = PHASE0_SCOPES.filter((scope) => !scopes.includes(scope));
 
   return (
@@ -106,31 +110,68 @@ export default async function Home({
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5">
           <p className="text-sm opacity-70">
             This is a beginner account. The first win is <strong>10 subscribers</strong>, not
-            $1M/month. Phase 0 work is auth, a content bank, and five public teasers.
+            $1M/month. Teasers are live. More posts will not create subscribers until people
+            see{" "}
+            <a className="underline" href={publicUrl} target="_blank" rel="noreferrer">
+              {publicUrl.replace("https://", "")}
+            </a>
+            .
           </p>
-          <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Subscribers</dt>
               <dd className="text-2xl font-semibold">
-                {isAuthed ? subscribers : "—"}
+                {subscribers ?? "—"}
                 <span className="text-sm font-normal opacity-50"> / {target}</span>
               </dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Followers</dt>
-              <dd className="text-2xl font-semibold">{isAuthed ? followers : "—"}</dd>
+              <dd className="text-2xl font-semibold">{followers ?? "—"}</dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Earnings</dt>
               <dd className="text-2xl font-semibold">
-                {isAuthed ? cents(account?.account?.earnings?.total) : "—"}
+                {isAuthed
+                  ? cents(account?.account?.earnings?.total)
+                  : progress?.earnings_cents != null
+                    ? cents(progress.earnings_cents)
+                    : "—"}
               </dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
-              <dt className="text-xs opacity-60">Posts (page 1)</dt>
+              <dt className="text-xs opacity-60">Posts live</dt>
               <dd className="text-2xl font-semibold">{postCount ?? "—"}</dd>
             </div>
+            <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+              <dt className="text-xs opacity-60">Leftover teasers</dt>
+              <dd className="text-2xl font-semibold">{leftover ?? "—"}</dd>
+            </div>
+            <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+              <dt className="text-xs opacity-60">Content bank</dt>
+              <dd className="text-2xl font-semibold">{progress?.bank ?? "—"}</dd>
+            </div>
           </dl>
+          {progress?.at ? (
+            <p className="mt-3 text-xs opacity-50">Last automation snapshot {progress.at}</p>
+          ) : null}
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">Share to get subscribers</h2>
+          <p className="text-sm opacity-70">
+            Fanvue will not send traffic to 0 followers. Copy the link. Ads and TrafficAgent
+            stay off until 10 subscribers.
+          </p>
+          <p className="break-all rounded-lg bg-black/[.04] dark:bg-white/[.06] px-3 py-2 text-sm">
+            {publicUrl}
+          </p>
+          <p className="text-sm opacity-70">
+            Copy-paste caption: <em>hi, it&apos;s me — more on the page if you want it</em>
+          </p>
+          {progress?.share_note ? (
+            <p className="text-sm text-amber-800 dark:text-amber-200">{progress.share_note}</p>
+          ) : null}
         </section>
 
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5">
@@ -138,8 +179,8 @@ export default async function Home({
           <ol className="mt-3 space-y-3">
             {TWENTY_FOUR_HOUR.map((item, index) => {
               const done =
-                (item.id === "auth" && isAuthed) ||
-                (item.id === "upload" && (postCount ?? 0) > 0) ||
+                (item.id === "auth" && (isAuthed || tokensOnDisk)) ||
+                (item.id === "upload" && ((progress?.bank ?? 0) >= 20 || (postCount ?? 0) > 0)) ||
                 (item.id === "teasers" && (postCount ?? 0) >= 5) ||
                 (item.id === "chat" && phase >= 1);
               return (

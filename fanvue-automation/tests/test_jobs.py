@@ -23,3 +23,15 @@ def test_retry_error_resets_failed_job(tmp_path: Path) -> None:
     results = queue.done_results("content", "upload")
     assert results[0]["media_uuid"] == "xyz"
     queue.close()
+
+
+def test_leftover_teaser_count(tmp_path: Path) -> None:
+    queue = JobQueue(tmp_path / "jobs.db")
+    queue.claim("content", "upload", "content:upload:a", {})
+    queue.mark_done("content:upload:a", {"media_uuid": "media-a", "file": "a.png"})
+    queue.claim("content", "upload", "content:upload:b", {})
+    queue.mark_done("content:upload:b", {"media_uuid": "media-b", "file": "b.png"})
+    queue.claim("content", "teaser", "content:teaser:media-a", {})
+    queue.mark_done("content:teaser:media-a", {"post_uuid": "post-a"})
+    assert queue.leftover_teaser_count() == 1
+    queue.close()

@@ -73,19 +73,52 @@ def format_status(payload: dict[str, Any]) -> str:
     if "earnings_cents" in payload:
         cents = int(payload.get("earnings_cents") or 0)
         lines.append(f"Earnings: ${cents / 100:.2f}")
+    if payload.get("public_url"):
+        lines.append(f"Page: {payload.get('public_url')}")
     if "posts_listed" in payload:
         lines.append(f"Posts listed: {payload.get('posts_listed')}")
+    if "teasers_posted" in payload:
+        lines.append(f"Teasers posted (total): {payload.get('teasers_posted')}")
+    if "leftover_teasers" in payload:
+        lines.append(f"Leftover vault teasers: {payload.get('leftover_teasers')}")
     if "bank" in payload:
         lines.append(f"Content bank: {payload.get('bank')} files")
     if "uploaded" in payload:
         uploaded = payload.get("uploaded") or []
         posted = payload.get("posted") or []
         lines.append(f"Uploaded this run: {len(uploaded)}")
-        lines.append(f"Teasers posted: {len(posted)}")
+        lines.append(f"Teasers posted this run: {len(posted)}")
+    if payload.get("share_note"):
+        lines.append(str(payload["share_note"]))
     if payload.get("auth_error"):
         lines.append(f"Auth: BLOCKED — {payload['auth_error']}")
     if payload.get("note"):
         lines.append(str(payload["note"]))
+    return "\n".join(lines)
+
+
+def format_share(payload: dict[str, Any]) -> str:
+    """Copy-paste kit. Posts do not create subscribers until someone sees the page."""
+    url = str(payload.get("public_url") or "https://www.fanvue.com/funny-kite-83")
+    captions = payload.get("teaser_captions") or [
+        "hi, it's me — more on the page if you want it",
+        "garden light, come say hi",
+        "kitchen tea and a quiet morning",
+    ]
+    lines = [
+        "Funny Kite — share this to get subscribers",
+        f"Page: {url}",
+        f"Subs: {payload.get('subscribers', '?')}/{payload.get('next_milestone') or 10}",
+        f"Followers: {payload.get('followers', '?')}",
+        f"Posts live: {payload.get('posts_listed', '?')}",
+        "",
+        "Fanvue does not send people to an empty follower count.",
+        "Share the link. Ads and TrafficAgent stay off until 10 subscribers.",
+        "",
+        "Copy-paste:",
+        f"{captions[0]}",
+        url,
+    ]
     return "\n".join(lines)
 
 
