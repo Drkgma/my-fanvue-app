@@ -11,7 +11,7 @@
     {
       "name": "phase0-operate",
       "command": "bash fanvue-automation/scripts/operate_loop.sh",
-      "description": "Every 6 hours: scoreboard, ContentAgent teasers, then PPV wall posts if files exist"
+      "description": "Every hour: welcome DMs, scoreboard, teasers, then PPV wall posts if files exist"
     }
   ],
   "ports": [

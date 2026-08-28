@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|content|ppv|share|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from agent_log import get_logger
-from agents import analytics_agent, chat_agent, content_agent, money_agent, ppv_agent, traffic_agent
+from agents import analytics_agent, bootstrap_agent, chat_agent, content_agent, money_agent, ppv_agent, traffic_agent
 from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
 from ppv_catalog import inventory as ppv_inventory
@@ -176,6 +176,7 @@ def main(argv: list[str] | None = None) -> int:
         "login": cmd_login,
         "status": cmd_status,
         "share": cmd_share,
+        "bootstrap": lambda: _run_named("bootstrap", bootstrap_agent.run),
         "content": lambda: _run_named("content", content_agent.run),
         "ppv": lambda: _run_named("ppv", ppv_agent.run),
         "scripts": cmd_scripts,
@@ -189,7 +190,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|content|ppv|scripts|share|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

@@ -125,7 +125,9 @@ export default async function Home({
           </p>
         ) : (
           <p className="rounded-lg border border-[#49f264] bg-[#49f26422] px-4 py-3 text-sm">
-            tokens.json is present on this VM. ContentAgent can run.
+            Hands-off on this VM: welcome DMs, scoreboard, leftover teasers, and PPV
+            posts when you drop files. ChatMate, ads, and TrafficAgent stay off until
+            10 subscribers. I cannot text your friends or film the intro video.
           </p>
         )}
 

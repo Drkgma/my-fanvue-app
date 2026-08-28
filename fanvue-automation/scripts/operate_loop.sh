@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-# Keep Phase 0 operating while this Cloud Agent is up.
-# Runs status, public teasers, then PPV wall posts if ppv_bank/ has files.
+# Hands-off Phase 0 loop while this Cloud Agent VM is up.
+# Welcome DMs, scoreboard, public teasers, then PPV wall posts if ppv_bank/ has files.
+# ChatMate, ads, and TrafficAgent stay off.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-INTERVAL_SECONDS="${OPERATE_INTERVAL_SECONDS:-21600}"
+INTERVAL_SECONDS="${OPERATE_INTERVAL_SECONDS:-3600}"
 while true; do
+  echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) bootstrap =="
+  python3 run.py bootstrap || true
   echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) status =="
   python3 run.py status || true
   echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) content =="

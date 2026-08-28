@@ -327,13 +327,16 @@ class FanvueClient:
             body["price"] = price
         return self.request("POST", f"/chats/{user_uuid}/message", json_body=body)
 
-    def upsert_automated_message(self, trigger: str, text: str, price: int = 0) -> dict[str, Any]:
-        """PUT /chats/automated-messages/{trigger}."""
-        return self.request(
-            "PUT",
-            f"/chats/automated-messages/{trigger}",
-            json_body={"text": text, "price": price},
-        )
+    def list_automated_messages(self) -> dict[str, Any]:
+        """GET /chats/automated-messages."""
+        return self.request("GET", "/chats/automated-messages")
+
+    def upsert_automated_message(self, trigger: str, text: str, price: int | None = None) -> dict[str, Any]:
+        """PUT /chats/automated-messages/{trigger}. Free messages omit price."""
+        body: dict[str, Any] = {"text": text, "enabled": True}
+        if price:
+            body["price"] = price
+        return self.request("PUT", f"/chats/automated-messages/{trigger}", json_body=body)
 
     def update_subscription_price(self, cents: int) -> dict[str, Any]:
         """PATCH /users/me/subscription-price."""

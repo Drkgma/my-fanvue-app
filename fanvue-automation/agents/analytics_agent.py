@@ -11,6 +11,7 @@ from config_loader import ROOT, agent_allowed, load_config
 from fanvue_client import FanvueAuthError, FanvueClient
 from jobs import JobQueue, utc_now
 from ppv_catalog import inventory as ppv_inventory
+from telegram_notify import format_share, send
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 PROGRESS_PATH = ROOT / "progress.json"
@@ -138,6 +139,12 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
         )
         if data["subscribers"] < 10:
             log.info("Stay on Phase 0. Share %s — do not buy ads.", data.get("public_url"))
+            nudge_key = f"analytics:share-nudge:{data['at'][:10]}"
+            if queue.claim("analytics", "share-nudge", nudge_key, {"url": data.get("public_url")}):
+                captions = list((config.get("content") or {}).get("teaser_captions") or [])
+                ping = send(format_share({**data, "teaser_captions": captions}))
+                queue.mark_done(nudge_key, {"telegram": ping})
+                data["share_nudge"] = ping
         return data
     except FanvueAuthError:
         log.error("Auth is broken. Fix OAuth before measuring anything else.")
