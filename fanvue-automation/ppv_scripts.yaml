@@ -130,3 +130,20 @@ scripts:
       - {id: s10-v6-fingers, kind: video, label: "Fingering", filename: s10-v6-fingers, price_cents: 1500, duration: "1min"}
       - {id: s10-v8-dildo, kind: video, label: "Dildo slow/fast/slow", filename: s10-v8-dildo, price_cents: 2500, duration: "3min"}
       - {id: s10-v10-orgasm, kind: video, label: "Dildo orgasm, 4 poses", filename: s10-v10-orgasm, price_cents: 3000, duration: "5min"}
+
+  - id: sales-95
+    title: Chatter sales menu
+    location: Solo set, film yourself
+    clothing: whatever matches the clip
+    bundle_price_cents: 5000
+    shots:
+      - {id: sales-solo, kind: video, label: "Solo masturbation", filename: sales-solo, price_cents: 2500, duration: "2-4min"}
+      - {id: sales-ride-rear, kind: video, label: "Riding dildo, rear camera", filename: sales-ride-rear, price_cents: 2500, duration: "2min"}
+      - {id: sales-ride-front, kind: video, label: "Riding dildo, full body front", filename: sales-ride-front, price_cents: 2500, duration: "2min"}
+      - {id: sales-anal-dildo, kind: video, label: "Anal dildo (close + full)", filename: sales-anal-dildo, price_cents: 3000, duration: "2min"}
+      - {id: sales-bj-pov, kind: video, label: "BJ POV on dildo", filename: sales-bj-pov, price_cents: 2000, duration: "1-2min"}
+      - {id: sales-bj-side, kind: video, label: "BJ side view on dildo", filename: sales-bj-side, price_cents: 2000, duration: "1-2min"}
+      - {id: sales-joi, kind: video, label: "JOI talk to camera", filename: sales-joi, price_cents: 2000, duration: "2-3min"}
+      - {id: sales-foot-joi, kind: video, label: "Foot job / JOI", filename: sales-foot-joi, price_cents: 2000, duration: "2min"}
+      - {id: sales-sex-tape, kind: video, label: "Partner sex tape (optional)", filename: sales-sex-tape, price_cents: 4000, duration: "1-2min per pose", notes: "Skip if solo. Do not copy someone else's tape."}
+      - {id: sales-anal-tape, kind: video, label: "Partner anal tape (optional)", filename: sales-anal-tape, price_cents: 4000, duration: "1-2min per pose", notes: "Skip if solo."}

@@ -44,6 +44,7 @@ content:
     - kitchen tea and a quiet morning
     - white shirt, no filter
     - brunch fit. subscribe if you want the rest
+    - hey — what do you actually want to see next? tell me and I will make it
 
 chat:
   enabled: false
@@ -63,6 +64,10 @@ money:
 
 traffic:
   enabled: false
+  note: >-
+    Phase 2 only. Public posts stay SFW girl-next-door. Never nudes on the
+    main feed (that kills PPV unlocks). Never leak sites or other creators'
+    content. Share the Fanvue page until 10 subscribers.
 
 analytics:
   enabled: true

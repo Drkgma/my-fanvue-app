@@ -107,16 +107,18 @@ def test_ppv_agent_posts_priced_wall_item(tmp_path: Path, monkeypatch) -> None:
     assert second["posted"] == []
 
 
-def test_scripts_have_nine_packs_and_dildo_shots() -> None:
+def test_scripts_have_sales_menu_and_dildo_shots() -> None:
     scripts = load_scripts()
     ids = {row["id"] for row in scripts}
-    assert len(scripts) == 9
+    assert len(scripts) == 10
     assert "s1-chilling-in-bed" in ids
     assert "s10-in-my-bed" in ids
+    assert "sales-95" in ids
     catalog_ids = {row["id"] for row in load_catalog()}
     assert "s1-v4-dildo" in catalog_ids
     assert "s2-v2-cowgirl" in catalog_ids
-    assert "s4-v6-floor" in catalog_ids
+    assert "sales-solo" in catalog_ids
+    assert "sales-bj-pov" in catalog_ids
 
 
 def test_next_shoot_list_names_files(tmp_path: Path, monkeypatch) -> None:
@@ -137,3 +139,4 @@ def test_menu_text_lists_pics_and_clips() -> None:
     assert "Shower" in text or "shower" in text.lower()
     assert "Ask for a name" in text
     assert "Chilling in bed" in text
+    assert "Chatter sales menu" in text

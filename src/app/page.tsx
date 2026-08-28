@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getAccount, getCurrentUser, getPostsPreview, getSessionScopes } from "@/lib/fanvue";
-import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
+import { GROWTH_LADDER, PHASE0_SCOPES, PLATFORM_RULES, TWENTY_FOUR_HOUR } from "@/lib/growth";
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
@@ -229,6 +229,22 @@ export default async function Home({
                 </li>
               );
             })}
+          </ul>
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">Where content goes</h2>
+          <p className="text-sm opacity-70">
+            Different platforms need different content. Public stays SFW so the paid scripts
+            still sell. This desk will not scrape leak sites or copy other creators.
+          </p>
+          <ul className="space-y-2 text-sm">
+            {PLATFORM_RULES.map((row) => (
+              <li key={row.id}>
+                <p className="font-medium">{row.title}</p>
+                <p className="opacity-70">{row.detail}</p>
+              </li>
+            ))}
           </ul>
         </section>
 

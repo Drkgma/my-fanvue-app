@@ -13,10 +13,36 @@ export const PHASE0_SCOPES = [
 ] as const;
 
 export const GROWTH_LADDER = [
-  { phase: 0, label: "Now", revenue: "$5/mo", subs: "1 → 10", focus: "Auth, 20 images, 5 teasers" },
-  { phase: 1, label: "Month 1", revenue: "$500–$1,000", subs: "35–70", focus: "Daily posts, ChatMate, MoneyBot" },
-  { phase: 2, label: "Month 3", revenue: "$3,000–$5,000", subs: "200–400", focus: "Daily PPV, Reddit + TikTok" },
+  { phase: 0, label: "Now", revenue: "$5/mo", subs: "1 → 10", focus: "SFW teasers + share the page" },
+  { phase: 1, label: "Month 1", revenue: "$500–$1,000", subs: "35–70", focus: "Daily posts, ChatMate, PPV menu" },
+  { phase: 2, label: "Month 3", revenue: "$3,000–$5,000", subs: "200–400", focus: "SFW Reddit/TikTok teasers only" },
   { phase: 3, label: "Month 6", revenue: "$8,000–$15,000", subs: "600–1,000", focus: "Tiered pricing, custom content" },
+] as const;
+
+export const PLATFORM_RULES = [
+  {
+    id: "public",
+    title: "Public / main feed",
+    detail:
+      "Girl-next-door SFW only. Nudes on the free feed kill PPV unlocks. Ask what they want next.",
+  },
+  {
+    id: "ppv",
+    title: "PPV / scripts",
+    detail:
+      "Paid clips: solo, riding, BJ, JOI. Film yourself. Chatters sell the menu after 5–10 subs.",
+  },
+  {
+    id: "share",
+    title: "Right now (0 followers)",
+    detail: "Share https://www.fanvue.com/funny-kite-83. Reddit, X, and TikTok wait until 10 subscribers.",
+  },
+  {
+    id: "offsite",
+    title: "Reddit / X / TikTok later",
+    detail:
+      "Phase 2. Same SFW niche teasers. Never leak sites, never other people's photos or videos.",
+  },
 ] as const;
 
 export const TWENTY_FOUR_HOUR = [
