@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|content|share|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|content|ppv|share|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from agent_log import get_logger
-from agents import analytics_agent, chat_agent, content_agent, money_agent, traffic_agent
+from agents import analytics_agent, chat_agent, content_agent, money_agent, ppv_agent, traffic_agent
 from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
 from telegram_notify import discover_chat_id, format_share, send, send_status
@@ -121,6 +121,7 @@ def cmd_daily() -> int:
     code = 0
     for name, fn in (
         ("content", content_agent.run),
+        ("ppv", ppv_agent.run),
         ("chat", chat_agent.run),
         ("money", money_agent.run),
         ("analytics", analytics_agent.run),
@@ -149,6 +150,7 @@ def main(argv: list[str] | None = None) -> int:
         "status": cmd_status,
         "share": cmd_share,
         "content": lambda: _run_named("content", content_agent.run),
+        "ppv": lambda: _run_named("ppv", ppv_agent.run),
         "chat": lambda: _run_named("chat", chat_agent.run),
         "money": lambda: _run_named("money", money_agent.run),
         "traffic": lambda: _run_named("traffic", traffic_agent.run),
@@ -159,7 +161,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|content|share|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|content|ppv|share|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

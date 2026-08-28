@@ -32,9 +32,12 @@ def _default_config() -> dict[str, Any]:
         "focus": ["fix_auth", "upload_content", "schedule_posts"],
         "content": {
             "bank_dir": "content_bank",
+            "ppv_bank_dir": "ppv_bank",
             "max_uploads_per_run": 20,
             "max_teasers_per_run": 5,
+            "max_ppv_per_run": 3,
             "teaser_audience": "followers-and-subscribers",
+            "ppv_audience": "followers-and-subscribers",
             "teaser_captions": ["New photos just dropped."],
         },
         "chat": {"enabled": False, "max_replies_per_run": 10, "reply_template": ""},

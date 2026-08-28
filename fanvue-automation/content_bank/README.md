@@ -9,4 +9,5 @@ Only files in this folder are uploaded. Empty-room stills belong in
 Current local bank: 36 SFW stills (face lock + hourglass body), including
 garden/kitchen/field/brunch lifestyle teasers. Extra body sheets live in
 `../datasets/identity/body-refs/` and are not uploaded. Lingerie / thong /
-bikini / nude recreations stay out of this folder.
+bikini / nude recreations stay out of this folder — paid starter-pack shots
+go in `../ppv_bank/` instead.

@@ -26,9 +26,12 @@ oauth:
 
 content:
   bank_dir: content_bank
+  ppv_bank_dir: ppv_bank
   max_uploads_per_run: 20
   max_teasers_per_run: 5
+  max_ppv_per_run: 3
   teaser_audience: followers-and-subscribers
+  ppv_audience: followers-and-subscribers
   launch_files:
     - glam-close-portrait.png
     - life-garden-selfie.png
@@ -46,18 +49,17 @@ chat:
   enabled: false
   max_replies_per_run: 10
   reply_template: >-
-    Hey {name} — thanks for writing. I saw your message and I will reply
-    properly soon. If you are not subscribed yet, that is the best way to
-    get the full sets.
+    Hey {name} — thanks for writing. I have a menu (lingerie, shower clip,
+    bed stills, and more). Subscribe or tell me which one you want unlocked.
 
 money:
   enabled: false
   subscription_price_cents: 999
   min_subscribers_for_ppv: 5
   welcome:
-    new_follower: Thanks for following. Subscribe if you want the full sets.
-    new_subscriber: Welcome in. Glad you are here — ask me what you want next.
-    first_message_reply: Hey, thanks for the message. What brought you here?
+    new_follower: Thanks for following. Subscribe if you want the full sets, or ask for a PPV unlock from the menu.
+    new_subscriber: Welcome in. Menu is live — lingerie, shower, bed, and clips. Ask for a name.
+    first_message_reply: Hey — I have a paid menu. Tell me which still or clip you want unlocked.
 
 traffic:
   enabled: false

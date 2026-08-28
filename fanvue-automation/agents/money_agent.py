@@ -74,7 +74,10 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
             )
         else:
             summary["ppv"] = "eligible"
-            log.info("PPV is allowed now, but this run does not blast mass messages.")
+            log.info(
+                "PPV DMs are allowed now, but this run does not blast mass messages. "
+                "Wall unlocks go through python run.py ppv."
+            )
         return summary
     finally:
         if owned_queue:

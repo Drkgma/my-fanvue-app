@@ -57,6 +57,23 @@ def test_format_share_includes_copy_paste() -> None:
     assert "Ads and TrafficAgent stay off" in text
 
 
+def test_format_status_includes_ppv_catalog() -> None:
+    text = format_status(
+        {
+            "handle": "funny-kite-83",
+            "ppv_ready": 0,
+            "ppv_total": 16,
+            "ppv_posted": 0,
+            "catalog_total": 16,
+            "ready": 0,
+            "uploaded": [],
+            "posted": [],
+        }
+    )
+    assert "PPV catalog: 0/16 files ready" in text
+    assert "PPV posted this run: 0" in text
+
+
 def test_send_skips_without_token(monkeypatch) -> None:
     monkeypatch.setattr("telegram_notify._token", lambda: "")
     monkeypatch.setattr("telegram_notify._chat_id", lambda: "1")

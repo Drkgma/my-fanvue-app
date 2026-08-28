@@ -4,7 +4,7 @@ import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
 import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
 import { readProgress } from "@/lib/progressOnDisk";
 import { getSession } from "@/lib/session";
-import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
+import { readPpvCatalog } from "@/lib/ppvCatalog";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +42,10 @@ export default async function Home({
   const postCount = isAuthed ? (posts?.data?.length ?? null) : (progress?.posts_listed ?? null);
   const leftover = progress?.leftover_teasers;
   const publicUrl = progress?.public_url || "https://www.fanvue.com/funny-kite-83";
+  const ppvCatalog = readPpvCatalog();
+  const ppvReady = progress?.ppv_ready ?? 0;
+  const ppvTotal = progress?.ppv_total ?? ppvCatalog.length;
+  const ppvMissing = new Set(progress?.ppv_missing || ppvCatalog.map((row) => row.id));
   const missingScopes = PHASE0_SCOPES.filter((scope) => !scopes.includes(scope));
 
   return (
@@ -172,6 +176,36 @@ export default async function Home({
           {progress?.share_note ? (
             <p className="text-sm text-amber-800 dark:text-amber-200">{progress.share_note}</p>
           ) : null}
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">PPV starter pack</h2>
+          <p className="text-sm opacity-70">
+            From the new-account shot list. Drop <strong>your own</strong> files into{" "}
+            <code className="text-xs">fanvue-automation/ppv_bank/</code>. Public teasers stay
+            clothed. This desk will not generate nudes or sex clips. Chat PPV DMs stay off
+            until 5 subscribers.
+          </p>
+          <p className="text-2xl font-semibold">
+            {ppvReady} / {ppvTotal || 16}
+            <span className="ml-2 text-sm font-normal opacity-60">files ready</span>
+          </p>
+          {progress?.ppv_posted != null ? (
+            <p className="text-sm opacity-70">Wall unlocks posted: {progress.ppv_posted}</p>
+          ) : null}
+          <ul className="grid grid-cols-1 gap-1 text-sm sm:grid-cols-2">
+            {ppvCatalog.map((row) => {
+              const ready = !ppvMissing.has(row.id);
+              return (
+                <li key={row.id} className={ready ? "opacity-100" : "opacity-60"}>
+                  {ready ? "✓" : "○"} {row.label} · ${(row.price_cents / 100).toFixed(2)} ·{" "}
+                  <code className="text-xs">
+                    {row.filename}.{row.kind === "video" ? "mp4" : "jpg"}
+                  </code>
+                </li>
+              );
+            })}
+          </ul>
         </section>
 
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5">

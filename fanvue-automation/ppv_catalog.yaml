@@ -1,0 +1,102 @@
+# Starter PPV library from BASIC CONTENT FOR A NEW ACCOUNT.
+# Drop your own photos/videos into ppv_bank/ using the `id` as the filename
+# (e.g. lingerie.jpg, shower.mp4). Do not put these files in content_bank/.
+# Public teasers stay SFW. This catalog is paid wall posts only.
+
+items:
+  - id: lingerie
+    kind: pic
+    label: Underwear / lingerie
+    price_cents: 800
+    caption: unlock the lingerie set
+    filename: lingerie
+  - id: pussy-pic
+    kind: pic
+    label: Pussy pic
+    price_cents: 500
+    caption: unlock this still
+    filename: pussy-pic
+  - id: frogbutt
+    kind: pic
+    label: Frogbutt
+    price_cents: 500
+    caption: unlock this still
+    filename: frogbutt
+  - id: titpic
+    kind: pic
+    label: Tit pic
+    price_cents: 500
+    caption: unlock this still
+    filename: titpic
+  - id: clothes-on-off
+    kind: pic
+    label: Clothes on / off
+    price_cents: 600
+    caption: unlock the on/off set
+    filename: clothes-on-off
+  - id: mirror-tit
+    kind: pic
+    label: Mirror tit
+    price_cents: 500
+    caption: unlock the mirror still
+    filename: mirror-tit
+  - id: handbra
+    kind: pic
+    label: Handbra
+    price_cents: 500
+    caption: unlock this still
+    filename: handbra
+  - id: laying-bed
+    kind: pic
+    label: Laying bed
+    price_cents: 500
+    caption: unlock the bed still
+    filename: laying-bed
+  - id: shower
+    kind: video
+    label: Shower (30s)
+    price_cents: 1200
+    caption: 30s shower clip — unlock
+    filename: shower
+  - id: pussy-tease
+    kind: video
+    label: Pussy tease (10s)
+    price_cents: 1000
+    caption: 10s tease — unlock
+    filename: pussy-tease
+  - id: moan
+    kind: video
+    label: Moan (30s)
+    price_cents: 1000
+    caption: 30s clip — unlock
+    filename: moan
+  - id: masturb-hand
+    kind: video
+    label: Masturb w/ hand (30s–1min)
+    price_cents: 1500
+    caption: unlock the longer clip
+    filename: masturb-hand
+  - id: orgasm
+    kind: video
+    label: Orgasm (20s)
+    price_cents: 1500
+    caption: 20s clip — unlock
+    filename: orgasm
+  - id: playing-tits
+    kind: video
+    label: Playing with tits (20s)
+    price_cents: 1000
+    caption: 20s clip — unlock
+    filename: playing-tits
+  - id: dancing-twerk
+    kind: video
+    label: Dancing / twerk
+    price_cents: 800
+    caption: unlock the dance clip
+    filename: dancing-twerk
+  - id: riding
+    kind: video
+    label: Riding (30s)
+    price_cents: 1500
+    caption: 30s clip — unlock
+    filename: riding

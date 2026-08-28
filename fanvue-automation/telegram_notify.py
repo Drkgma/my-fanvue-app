@@ -81,13 +81,26 @@ def format_status(payload: dict[str, Any]) -> str:
         lines.append(f"Teasers posted (total): {payload.get('teasers_posted')}")
     if "leftover_teasers" in payload:
         lines.append(f"Leftover vault teasers: {payload.get('leftover_teasers')}")
+    if payload.get("ppv_total") is not None:
+        lines.append(
+            f"PPV catalog: {payload.get('ppv_ready') or 0}/{payload.get('ppv_total')} files ready"
+        )
+    if payload.get("ppv_posted") is not None:
+        lines.append(f"PPV wall posts: {payload.get('ppv_posted')}")
+    if payload.get("catalog_total") is not None:
+        lines.append(
+            f"PPV catalog: {payload.get('ready') or 0}/{payload.get('catalog_total')} files ready"
+        )
     if "bank" in payload:
         lines.append(f"Content bank: {payload.get('bank')} files")
     if "uploaded" in payload:
         uploaded = payload.get("uploaded") or []
         posted = payload.get("posted") or []
         lines.append(f"Uploaded this run: {len(uploaded)}")
-        lines.append(f"Teasers posted this run: {len(posted)}")
+        if payload.get("catalog_total") is not None:
+            lines.append(f"PPV posted this run: {len(posted)}")
+        else:
+            lines.append(f"Teasers posted this run: {len(posted)}")
     if payload.get("share_note"):
         lines.append(str(payload["share_note"]))
     if payload.get("auth_error"):

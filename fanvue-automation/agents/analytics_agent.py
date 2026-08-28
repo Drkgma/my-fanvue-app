@@ -10,6 +10,7 @@ from agent_log import get_logger
 from config_loader import ROOT, agent_allowed, load_config
 from fanvue_client import FanvueAuthError, FanvueClient
 from jobs import JobQueue, utc_now
+from ppv_catalog import inventory as ppv_inventory
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 PROGRESS_PATH = ROOT / "progress.json"
@@ -92,6 +93,11 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
         data["teasers_posted"] = queue.count("content", "teaser")
         data["leftover_teasers"] = queue.leftover_teaser_count()
         data["bank"] = _bank_count(config)
+        stock = ppv_inventory(config)
+        data["ppv_ready"] = len(stock["ready"])
+        data["ppv_total"] = stock["total"]
+        data["ppv_missing"] = stock["missing"]
+        data["ppv_posted"] = queue.count("ppv", "post")
         if data["followers"] == 0:
             data["share_note"] = (
                 "0 followers: share the public page or nobody new can subscribe. "

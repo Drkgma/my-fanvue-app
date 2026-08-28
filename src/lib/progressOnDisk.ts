@@ -12,6 +12,10 @@ export type ProgressSnapshot = {
   teasers_posted?: number;
   leftover_teasers?: number;
   bank?: number;
+  ppv_ready?: number;
+  ppv_total?: number;
+  ppv_posted?: number;
+  ppv_missing?: string[];
   next_milestone?: number;
   share_note?: string;
 };
