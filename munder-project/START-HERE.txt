@@ -1,8 +1,9 @@
 Funny Kite — put this folder on your Desktop
 
 This Cloud Agent cannot write to your Windows/Mac Desktop.
-Download Funny-Kite-Munder-Project.zip from this run's Artifacts,
-unzip it onto your Desktop, then:
+Open https://cursor.com/agents/bc-781d5938-3492-4b26-920a-3a714985189b
+→ Artifacts → Download Funny-Kite-Munder-Project.zip
+Unzip it onto your Desktop, then:
 
 1. Munder Difflin → Add project → pick this folder
 2. Give Michael MICHAEL.md
