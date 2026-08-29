@@ -118,6 +118,13 @@ def test_send_skips_without_token(monkeypatch) -> None:
     assert send("hi") == {"ok": False, "reason": "TELEGRAM_BOT_TOKEN missing"}
 
 
+def test_get_updates_empty_without_token(monkeypatch) -> None:
+    from telegram_notify import get_updates
+
+    monkeypatch.setattr("telegram_notify._token", lambda: "")
+    assert get_updates() == []
+
+
 def test_send_skips_without_chat(monkeypatch) -> None:
     monkeypatch.setattr("telegram_notify._token", lambda: "tok")
     monkeypatch.setattr("telegram_notify._chat_id", lambda: "")

@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|listen|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -125,6 +125,14 @@ def cmd_kit() -> int:
     return 0 if ok else 2
 
 
+def cmd_listen() -> int:
+    """Owner Telegram loop. Does not post to Reddit/X. Blocks until killed."""
+    from telegram_operator import poll_forever
+
+    poll_forever()
+    return 0
+
+
 def cmd_scripts() -> int:
     """Print the next files to film. Does not generate nudes or clips."""
     log = get_logger("cli")
@@ -212,6 +220,7 @@ def main(argv: list[str] | None = None) -> int:
         "status": cmd_status,
         "share": cmd_share,
         "kit": cmd_kit,
+        "listen": cmd_listen,
         "bootstrap": lambda: _run_named("bootstrap", bootstrap_agent.run),
         "content": lambda: _run_named("content", content_agent.run),
         "ppv": lambda: _run_named("ppv", ppv_agent.run),
@@ -226,7 +235,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|listen|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

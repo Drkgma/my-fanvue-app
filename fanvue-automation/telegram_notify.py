@@ -305,6 +305,26 @@ def send_media_group(paths: list[Path], caption: str = "") -> dict[str, Any]:
     }
 
 
+def get_updates(offset: int | None = None, timeout: int = 0) -> list[dict[str, Any]]:
+    """Long-poll Telegram getUpdates. Empty list when the bot is not configured."""
+    token = _token()
+    if not token:
+        return []
+    params: dict[str, Any] = {"limit": 50, "timeout": int(timeout)}
+    if offset is not None:
+        params["offset"] = int(offset)
+    wait = max(20, int(timeout) + 10)
+    response = requests.get(f"{API}/bot{token}/getUpdates", params=params, timeout=wait)
+    try:
+        body = response.json()
+    except ValueError:
+        return []
+    if not response.ok or not body.get("ok"):
+        return []
+    rows = body.get("result") or []
+    return rows if isinstance(rows, list) else []
+
+
 def discover_chat_id() -> str | None:
     """Read the latest private-chat id from getUpdates. Does not print the token."""
     token = _token()
