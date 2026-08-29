@@ -1,0 +1,9 @@
+{
+  "spec": "munder-difflin/hire@1",
+  "name": "Funny Kite Michael",
+  "description": "GOD for one Fanvue creator. Phase 0. Ten subscribers first.",
+  "goal": "Read MICHAEL.md, STATE.md, and TOOLS.md in this project folder. Get Funny Kite to 10 subscribers via the official 7-day trial and a clothed Discover intro. Do not enable ChatMate or TrafficAgent. Do not post to Reddit, X, or TikTok. Do not generate nudes on a CPU VM. Public teasers stay fully clothed.",
+  "provider": "cursor",
+  "capabilities": ["fanvue-ops", "phase-gating", "sfw-teasers"],
+  "author": "Funny Kite desk"
+}

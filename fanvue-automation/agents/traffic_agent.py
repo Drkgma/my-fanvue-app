@@ -18,7 +18,9 @@ def run() -> dict[str, Any]:
         return {"skipped": True, "reason": reason}
     message = (
         "TrafficAgent is unblocked in config, but off-platform posting is still "
-        "Phase 2 work. Get to 10 subscribers with Fanvue teasers + DMs first."
+        "Phase 2 work. Public teasers stay SFW. Do not post nudes on Reddit/X/TikTok, "
+        "do not use leak sites, and do not copy other creators. "
+        "Get to 10 subscribers by sharing the Fanvue page first."
     )
     log.info(message)
     return {"skipped": True, "reason": message}

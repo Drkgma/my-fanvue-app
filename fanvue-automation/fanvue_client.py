@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
-from dotenv import load_dotenv
+from dotenv import dotenv_values, load_dotenv
 
 API_BASE = "https://api.fanvue.com"
 API_VERSION = "2025-06-26"
@@ -30,10 +30,32 @@ PHASE0_SCOPES = (
     "read:self read:chat write:chat read:post write:post "
     "read:media write:media read:creator write:creator"
 )
+_FILE_WINS_IF_LONGER = (
+    "OAUTH_CLIENT_SECRET",
+    "OAUTH_CLIENT_ID",
+    "FANVUE_TOKEN",
+    "FANVUE_REFRESH_TOKEN",
+)
 
 load_dotenv(REPO_ROOT / ".env.local")
 load_dotenv(REPO_ROOT / ".env")
 load_dotenv(ROOT / ".env")
+
+
+def prefer_longer_file_secrets() -> None:
+    """Cursor may inject a truncated OAUTH_CLIENT_SECRET. Prefer a longer file value."""
+    for path in (REPO_ROOT / ".env.local", REPO_ROOT / ".env", ROOT / ".env"):
+        if not path.exists():
+            continue
+        values = dotenv_values(path)
+        for key in _FILE_WINS_IF_LONGER:
+            file_val = (values.get(key) or "").strip()
+            env_val = (os.getenv(key) or "").strip()
+            if file_val and (not env_val or len(file_val) > len(env_val)):
+                os.environ[key] = file_val
+
+
+prefer_longer_file_secrets()
 
 
 class FanvueAuthError(RuntimeError):
@@ -59,6 +81,32 @@ def generate_pkce() -> tuple[str, str]:
     verifier = _b64url(secrets.token_bytes(32))
     challenge = _b64url(hashlib.sha256(verifier.encode("ascii")).digest())
     return verifier, challenge
+
+
+def seed_tokens_from_env(token_path: Path | None = None) -> Path | None:
+    """Write tokens.json from FANVUE_TOKEN secrets. Returns the path if written."""
+    access = (os.getenv("FANVUE_TOKEN") or "").strip()
+    if not access:
+        return None
+    path = Path(token_path) if token_path else TOKEN_PATH
+    expires_raw = (os.getenv("FANVUE_TOKEN_EXPIRES_AT") or "0").strip()
+    try:
+        expires_at = int(expires_raw or "0")
+    except ValueError:
+        expires_at = 0
+    payload = {
+        "access_token": access,
+        "refresh_token": (os.getenv("FANVUE_REFRESH_TOKEN") or "").strip() or None,
+        "token_type": "Bearer",
+        "expires_at": expires_at,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    try:
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+    return path
 
 
 def _load_env_credentials() -> dict[str, str]:
@@ -279,17 +327,48 @@ class FanvueClient:
             body["price"] = price
         return self.request("POST", f"/chats/{user_uuid}/message", json_body=body)
 
-    def upsert_automated_message(self, trigger: str, text: str, price: int = 0) -> dict[str, Any]:
-        """PUT /chats/automated-messages/{trigger}."""
+    def list_free_trial_links(self) -> dict[str, Any]:
+        """GET /free-trial-links."""
+        return self.request("GET", "/free-trial-links")
+
+    def create_free_trial_link(
+        self,
+        *,
+        name: str = "phase0-first-10",
+        max_usages: int = 10,
+        expires_days: int = 14,
+        trial_duration_days: int = 7,
+    ) -> dict[str, Any]:
+        """POST /free-trial-links. One shareable Fanvue trial for this creator."""
         return self.request(
-            "PUT",
-            f"/chats/automated-messages/{trigger}",
-            json_body={"text": text, "price": price},
+            "POST",
+            "/free-trial-links",
+            json_body={
+                "name": name,
+                "maxUsages": max_usages,
+                "expiresDays": expires_days,
+                "trialDurationDays": trial_duration_days,
+            },
         )
 
+    def list_automated_messages(self) -> dict[str, Any]:
+        """GET /chats/automated-messages."""
+        return self.request("GET", "/chats/automated-messages")
+
+    def upsert_automated_message(self, trigger: str, text: str, price: int | None = None) -> dict[str, Any]:
+        """PUT /chats/automated-messages/{trigger}. Free messages omit price."""
+        body: dict[str, Any] = {"text": text, "enabled": True}
+        if price:
+            body["price"] = price
+        return self.request("PUT", f"/chats/automated-messages/{trigger}", json_body=body)
+
     def update_subscription_price(self, cents: int) -> dict[str, Any]:
-        """PATCH /users/me/subscription-price."""
-        return self.request("PATCH", "/users/me/subscription-price", json_body={"price": cents})
+        """PATCH /users/me/subscription-price. Amount is USD cents."""
+        return self.request(
+            "PATCH",
+            "/users/me/subscription-price",
+            json_body={"subscriptionPrice": int(cents), "forceOptIn": False},
+        )
 
     def _part_url(self, upload_id: str, part_number: int, creator_uuid: str | None) -> str:
         encoded = urllib.parse.quote(upload_id, safe="")

@@ -13,4 +13,6 @@ def test_chat_draft_does_not_hard_sell() -> None:
 def test_traffic_refuses_in_phase_zero() -> None:
     result = run_traffic()
     assert result["skipped"] is True
-    assert "phase" in result["reason"].lower() or "ChatMate" in result["reason"] or "2" in result["reason"]
+    reason = result["reason"].lower()
+    assert "phase" in reason or "2" in result["reason"]
+    assert "leak" in reason or "phase" in reason

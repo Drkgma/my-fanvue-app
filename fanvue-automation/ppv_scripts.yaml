@@ -1,0 +1,149 @@
+# Film-it-yourself PPV scripts. Drop YOUR OWN files into ppv_bank/
+# named after each shot filename. This agent does not generate nudes
+# or sex videos. Do not copy other creators' leaked stills.
+
+scripts:
+  - id: s1-chilling-in-bed
+    title: Chilling in bed
+    location: Bedroom
+    clothing: lingerie, shirt, panties, or nude
+    bundle_price_cents: 3500
+    shots:
+      - {id: s1-p-selfies, kind: pic, label: "Bed selfies (tits + outfit)", filename: s1-p-selfies, price_cents: 500, notes: "10–15 stills"}
+      - {id: s1-v1-strip, kind: video, label: "Selfie strip tease", filename: s1-v1-strip, price_cents: 1500, duration: "60-70s"}
+      - {id: s1-v2-tease, kind: video, label: "Tease + dirty talk", filename: s1-v2-tease, price_cents: 2000, duration: "2min"}
+      - {id: s1-v3-rub, kind: video, label: "Tripod rub, knees up", filename: s1-v3-rub, price_cents: 2000, duration: "2min"}
+      - {id: s1-v4-dildo, kind: video, label: "Dildo to orgasm", filename: s1-v4-dildo, price_cents: 2500, duration: "3min+"}
+
+  - id: s2-quickie-loud
+    title: Quickie loud
+    location: Bedroom
+    clothing: sexy outfit you strip
+    bundle_price_cents: 4000
+    shots:
+      - {id: s2-p-bed, kind: pic, label: "Bed tease stills (7)", filename: s2-p-bed, price_cents: 500}
+      - {id: s2-v1-horny, kind: video, label: "Hey baby I'm so horny", filename: s2-v1-horny, price_cents: 1000, duration: "10s"}
+      - {id: s2-v2-cowgirl, kind: video, label: "Cowgirl dildo, close-up", filename: s2-v2-cowgirl, price_cents: 2000, duration: "1:30"}
+      - {id: s2-v3-reverse, kind: video, label: "Reverse cowgirl, look back", filename: s2-v3-reverse, price_cents: 2000, duration: "1:30"}
+      - {id: s2-v4-doggy, kind: video, label: "Doggy + orgasm", filename: s2-v4-doggy, price_cents: 2500, duration: "2min"}
+
+  - id: s3-shower-fun
+    title: Shower fun
+    location: Bathroom
+    clothing: bathrobe then lingerie
+    bundle_price_cents: 3500
+    shots:
+      - {id: s3-p1-robe, kind: pic, label: "Bathrobe stills (3)", filename: s3-p1-robe, price_cents: 500}
+      - {id: s3-p2-lingerie, kind: pic, label: "Lingerie under robe", filename: s3-p2-lingerie, price_cents: 500}
+      - {id: s3-p3-bra-off, kind: pic, label: "Bra off", filename: s3-p3-bra-off, price_cents: 500}
+      - {id: s3-p4-cover, kind: pic, label: "Underwear off, hand cover", filename: s3-p4-cover, price_cents: 500}
+      - {id: s3-v1-drop, kind: video, label: "Towel drop into shower", filename: s3-v1-drop, price_cents: 1200, duration: "30s"}
+      - {id: s3-v2-tease, kind: video, label: "Naked shower tease", filename: s3-v2-tease, price_cents: 1500, duration: "1min"}
+      - {id: s3-v3-vibe, kind: video, label: "Vibrator in shower", filename: s3-v3-vibe, price_cents: 2000, duration: "1:30"}
+      - {id: s3-v4-doggy, kind: video, label: "Doggy dildo + vibe orgasm", filename: s3-v4-doggy, price_cents: 2500, duration: "2:30"}
+
+  - id: s4-laundry
+    title: Laundry
+    location: Laundry or under table/bed
+    clothing: short maid skirt, no underwear
+    bundle_price_cents: 4500
+    shots:
+      - {id: s4-p-basket, kind: pic, label: "Maid + laundry basket (5)", filename: s4-p-basket, price_cents: 500}
+      - {id: s4-v1-bend, kind: video, label: "Bend to drop basket", filename: s4-v1-bend, price_cents: 1200, duration: "30s"}
+      - {id: s4-v2-stuck, kind: video, label: "Stuck, ass to camera", filename: s4-v2-stuck, price_cents: 1500, duration: "1min"}
+      - {id: s4-v3-spread, kind: video, label: "Skirt up, tease", filename: s4-v3-spread, price_cents: 2000, duration: "1:30"}
+      - {id: s4-v4-play, kind: video, label: "Play while stuck", filename: s4-v4-play, price_cents: 2000, duration: "2min"}
+      - {id: s4-v5-dildo, kind: video, label: "Dildo while stuck, no cum", filename: s4-v5-dildo, price_cents: 2500, duration: "2:30"}
+      - {id: s4-v6-floor, kind: video, label: "Floor vibe + dildo orgasm", filename: s4-v6-floor, price_cents: 3000, duration: "4min"}
+      - {id: s4-v7-after, kind: video, label: "Aftercare wink", filename: s4-v7-after, price_cents: 1000, duration: "30s"}
+
+  - id: s5-massage-oil
+    title: Massage oil
+    location: Bedroom
+    clothing: strip to nude + baby oil
+    bundle_price_cents: 4500
+    shots:
+      - {id: s5-p-bottle, kind: pic, label: "Holding oil bottle (5)", filename: s5-p-bottle, price_cents: 500}
+      - {id: s5-v1-strip, kind: video, label: "Standing strip", filename: s5-v1-strip, price_cents: 1500, duration: "1min"}
+      - {id: s5-v2-chest, kind: video, label: "Oil on chest", filename: s5-v2-chest, price_cents: 2000, duration: "1:30"}
+      - {id: s5-v3-ass, kind: video, label: "Oil on ass / panties off", filename: s5-v3-ass, price_cents: 2000, duration: "2min"}
+      - {id: s5-v4-tease, kind: video, label: "Oiled tease + soft moans", filename: s5-v4-tease, price_cents: 2500, duration: "2:30"}
+      - {id: s5-v5-dildo, kind: video, label: "Dildo in, slow to fast", filename: s5-v5-dildo, price_cents: 2500, duration: "2:30"}
+      - {id: s5-v6-doggy, kind: video, label: "Doggy, don't cum", filename: s5-v6-doggy, price_cents: 2000, duration: "2min"}
+      - {id: s5-v7-cowgirl, kind: video, label: "Cowgirl orgasm", filename: s5-v7-cowgirl, price_cents: 3000, duration: "4min"}
+      - {id: s5-v8-kiss, kind: video, label: "Blow kiss", filename: s5-v8-kiss, price_cents: 500, duration: "10s"}
+
+  - id: s6-multiple-orgasm
+    title: Multiple orgasm
+    location: Bedroom
+    clothing: strip to panties then nude
+    bundle_price_cents: 4000
+    shots:
+      - {id: s6-v1-strip, kind: video, label: "Strip to panties", filename: s6-v1-strip, price_cents: 1500, duration: "1min"}
+      - {id: s6-v2-bj, kind: video, label: "Dildo BJ", filename: s6-v2-bj, price_cents: 2000, duration: "1min"}
+      - {id: s6-v3-knees, kind: video, label: "BJ on knees, look up", filename: s6-v3-knees, price_cents: 2000, duration: "1min"}
+      - {id: s6-v4-fingers, kind: video, label: "Fingers to orgasm", filename: s6-v4-fingers, price_cents: 2500, duration: "2:30"}
+      - {id: s6-v5-cowgirl, kind: video, label: "Cowgirl + fingers orgasm", filename: s6-v5-cowgirl, price_cents: 2500, duration: "2min"}
+      - {id: s6-v6-two, kind: video, label: "Two dildos orgasm", filename: s6-v6-two, price_cents: 3000, duration: "3:30"}
+      - {id: s6-v7-after, kind: video, label: "Exhausted blow kiss", filename: s6-v7-after, price_cents: 1000, duration: "20s"}
+
+  - id: s8-good-morning
+    title: Good morning baby
+    location: Bed, no makeup, lingerie
+    clothing: lingerie
+    bundle_price_cents: 3000
+    shots:
+      - {id: s8-p1-bed, kind: pic, label: "In bed", filename: s8-p1-bed, price_cents: 500}
+      - {id: s8-p2-chest, kind: pic, label: "Flash chest under covers", filename: s8-p2-chest, price_cents: 500}
+      - {id: s8-p3-pussy, kind: pic, label: "Flash under covers", filename: s8-p3-pussy, price_cents: 500}
+      - {id: s8-v4-play, kind: video, label: "Slow play 60s", filename: s8-v4-play, price_cents: 1500, duration: "60s"}
+      - {id: s8-v5-pose1, kind: video, label: "Masturbate pose 1", filename: s8-v5-pose1, price_cents: 2000, duration: "2min"}
+      - {id: s8-v6-pose2, kind: video, label: "Masturbate pose 2", filename: s8-v6-pose2, price_cents: 2000, duration: "2min"}
+      - {id: s8-v7-orgasm, kind: video, label: "Pose 3 + orgasm", filename: s8-v7-orgasm, price_cents: 2500, duration: "3min"}
+
+  - id: s9-just-got-home
+    title: Just got home
+    location: Living room then bed
+    clothing: street clothes then nude
+    bundle_price_cents: 3500
+    shots:
+      - {id: s9-p1-door, kind: pic, label: "At the door / car", filename: s9-p1-door, price_cents: 500}
+      - {id: s9-v2-clothed, kind: video, label: "Touch over clothes", filename: s9-v2-clothed, price_cents: 1500, duration: "1min"}
+      - {id: s9-p2-tits, kind: pic, label: "Flash tits", filename: s9-p2-tits, price_cents: 500}
+      - {id: s9-p3-pussy, kind: pic, label: "Flash", filename: s9-p3-pussy, price_cents: 500}
+      - {id: s9-v4-undress, kind: video, label: "Undress, no play yet", filename: s9-v4-undress, price_cents: 1500, duration: "1:30"}
+      - {id: s9-v5-talk, kind: video, label: "Bed tease + dirty talk", filename: s9-v5-talk, price_cents: 1500, duration: "1min"}
+      - {id: s9-v6-pose1, kind: video, label: "Play pose 1", filename: s9-v6-pose1, price_cents: 2000, duration: "2min"}
+      - {id: s9-v7-pose2, kind: video, label: "Play pose 2", filename: s9-v7-pose2, price_cents: 2000, duration: "2min"}
+      - {id: s9-v8-orgasm, kind: video, label: "Orgasm", filename: s9-v8-orgasm, price_cents: 2500, duration: "2min+"}
+
+  - id: s10-in-my-bed
+    title: In my bed
+    location: Bedroom
+    clothing: bra then nude, needs dildo
+    bundle_price_cents: 3500
+    shots:
+      - {id: s10-p1-bra, kind: pic, label: "In bed, show bra", filename: s10-p1-bra, price_cents: 500}
+      - {id: s10-v2-tease, kind: video, label: "Underwear tease 30s", filename: s10-v2-tease, price_cents: 1000, duration: "30s"}
+      - {id: s10-v3-bra, kind: video, label: "Bra off", filename: s10-v3-bra, price_cents: 1500, duration: "1min"}
+      - {id: s10-v4-panties, kind: video, label: "Panties off, start play", filename: s10-v4-panties, price_cents: 2000, duration: "1:30"}
+      - {id: s10-v6-fingers, kind: video, label: "Fingering", filename: s10-v6-fingers, price_cents: 1500, duration: "1min"}
+      - {id: s10-v8-dildo, kind: video, label: "Dildo slow/fast/slow", filename: s10-v8-dildo, price_cents: 2500, duration: "3min"}
+      - {id: s10-v10-orgasm, kind: video, label: "Dildo orgasm, 4 poses", filename: s10-v10-orgasm, price_cents: 3000, duration: "5min"}
+
+  - id: sales-95
+    title: Chatter sales menu
+    location: Solo set, film yourself
+    clothing: whatever matches the clip
+    bundle_price_cents: 5000
+    shots:
+      - {id: sales-solo, kind: video, label: "Solo masturbation", filename: sales-solo, price_cents: 2500, duration: "2-4min"}
+      - {id: sales-ride-rear, kind: video, label: "Riding dildo, rear camera", filename: sales-ride-rear, price_cents: 2500, duration: "2min"}
+      - {id: sales-ride-front, kind: video, label: "Riding dildo, full body front", filename: sales-ride-front, price_cents: 2500, duration: "2min"}
+      - {id: sales-anal-dildo, kind: video, label: "Anal dildo (close + full)", filename: sales-anal-dildo, price_cents: 3000, duration: "2min"}
+      - {id: sales-bj-pov, kind: video, label: "BJ POV on dildo", filename: sales-bj-pov, price_cents: 2000, duration: "1-2min"}
+      - {id: sales-bj-side, kind: video, label: "BJ side view on dildo", filename: sales-bj-side, price_cents: 2000, duration: "1-2min"}
+      - {id: sales-joi, kind: video, label: "JOI talk to camera", filename: sales-joi, price_cents: 2000, duration: "2-3min"}
+      - {id: sales-foot-joi, kind: video, label: "Foot job / JOI", filename: sales-foot-joi, price_cents: 2000, duration: "2min"}
+      - {id: sales-sex-tape, kind: video, label: "Partner sex tape (optional)", filename: sales-sex-tape, price_cents: 4000, duration: "1-2min per pose", notes: "Skip if solo. Do not copy someone else's tape."}
+      - {id: sales-anal-tape, kind: video, label: "Partner anal tape (optional)", filename: sales-anal-tape, price_cents: 4000, duration: "1-2min per pose", notes: "Skip if solo."}

@@ -10,22 +10,31 @@ home page and drop it in this folder (gitignored).
 ## This week (Phase 0)
 
 1. Register redirect URIs on the Fanvue app:
-   - `http://localhost:3000/api/oauth/callback`
-   - `http://localhost:8765/callback` (optional Python login)
+   - `http://localhost:3456/callback` (Funny Kite n8n app — required)
+   - `http://localhost:3000/api/oauth/callback` (optional extra)
 2. Request scopes: `read:self read:chat write:chat read:post write:post read:media write:media read:creator write:creator`
 3. Copy `.env.example` → `.env.local` in the repo root and fill client id/secret.
 4. `pnpm dev`, click **Login with Fanvue**, then **Save tokens for local agents**.
 5. Put up to 20 images in `content_bank/` (SFW teasers are enough to start).
-6. `python run.py content` then `python run.py status`.
+6. `python run.py telegram` then `python run.py bootstrap` then `python run.py content` then `python run.py status`.
+   `python run.py share` sends the public page link to Telegram.
+   The operate loop repeats bootstrap + content + ppv every hour while this VM is up.
 
-Do not enable ChatMate, MoneyBot, TrafficAgent, ads, or extra personas
-until auth works and those 5 teasers are live.
+Telegram: set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in gitignored
+`fanvue-automation/.env`. `python run.py telegram` discovers the chat id
+after you tap /start on @drkgma78bot. Status, content, and daily runs
+send a scoreboard there. Never commit the bot token.
+
+Do not enable ChatMate, TrafficAgent, ads, or extra personas until 10
+subscribers. `python run.py bootstrap` installs welcome DMs in Phase 0
+(no PPV blasts). I cannot text your friends or film an intro video.
 
 ## Commands
 
 ```bat
 python -m pip install -r requirements.txt
 python run.py login
+python run.py bootstrap
 python run.py content
 python run.py daily
 run_daily.bat
@@ -35,8 +44,9 @@ run_daily.bat
 
 ## Phase gate
 
-`config.yaml` at the repo root sets `phase: 0`. Chat and money stay
+`config.yaml` at the repo root sets `phase: 0`. ChatMate and PPV DMs stay
 disabled until you set `phase: 1` and `chat.enabled` / `money.enabled`.
+`python run.py bootstrap` still installs welcome DMs in Phase 0.
 TrafficAgent always no-ops before phase 2.
 
 ## Image gen (Phase 0)

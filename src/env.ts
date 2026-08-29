@@ -1,5 +1,37 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+
+const FILE_WINS_IF_LONGER = new Set([
+  "OAUTH_CLIENT_SECRET",
+  "OAUTH_CLIENT_ID",
+  "FANVUE_TOKEN",
+  "FANVUE_REFRESH_TOKEN",
+]);
+
+/** Cursor sometimes injects a truncated client secret. Prefer a longer value from .env.local. */
+function overlayLongerSecretsFromDotenv() {
+  try {
+    const text = readFileSync(join(process.cwd(), ".env.local"), "utf8");
+    for (const raw of text.split("\n")) {
+      const line = raw.trim();
+      if (!line || line.startsWith("#") || !line.includes("=")) continue;
+      const i = line.indexOf("=");
+      const key = line.slice(0, i).trim();
+      const val = line.slice(i + 1).trim().replace(/^['"]|['"]$/g, "");
+      if (!FILE_WINS_IF_LONGER.has(key) || !val) continue;
+      const current = process.env[key] || "";
+      if (val.length > current.length) {
+        process.env[key] = val;
+      }
+    }
+  } catch {
+    // .env.local is optional at build time
+  }
+}
+
+overlayLongerSecretsFromDotenv();
 
 export const env = createEnv({
   server: {

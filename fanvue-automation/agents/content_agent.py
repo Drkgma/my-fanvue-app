@@ -28,14 +28,17 @@ def _bank_dir(config: dict[str, Any]) -> Path:
 
 
 def list_bank_images(config: dict[str, Any] | None = None) -> list[Path]:
-    """Return image files in the content bank, sorted by name."""
+    """Return image files in the content bank. Launch files (if set) come first."""
     cfg = config or load_config()
     folder = _bank_dir(cfg)
     if not folder.exists():
         return []
-    return sorted(
+    images = [
         path for path in folder.iterdir() if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
-    )
+    ]
+    priority = [str(name) for name in (cfg.get("content") or {}).get("launch_files") or []]
+    rank = {name: index for index, name in enumerate(priority)}
+    return sorted(images, key=lambda path: (rank.get(path.name, len(rank)), path.name))
 
 
 def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> dict[str, Any]:
@@ -78,13 +81,15 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 continue
             if uploaded_this_run >= max_uploads:
                 break
-            if not queue.claim("content", "upload", upload_key, {"file": str(path)}):
-                summary["skipped"].append(str(path.name))
-                continue
+            claimed = queue.claim("content", "upload", upload_key, {"file": str(path)})
+            if not claimed:
+                if not queue.retry_error(upload_key):
+                    summary["skipped"].append(str(path.name))
+                    continue
             try:
                 media_uuid = client.upload_file(path)
                 client.wait_until_media_ready(media_uuid)
-                queue.mark_done(upload_key, {"media_uuid": media_uuid})
+                queue.mark_done(upload_key, {"media_uuid": media_uuid, "file": path.name})
                 summary["uploaded"].append({"file": path.name, "media_uuid": media_uuid})
                 ready_media.append((media_uuid, path))
                 uploaded_this_run += 1
@@ -93,6 +98,16 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 queue.mark_error(upload_key, str(exc))
                 log.error("upload failed for %s: %s", path.name, exc)
                 raise
+
+        seen = {uuid for uuid, _ in ready_media}
+        for row in queue.done_results("content", "upload"):
+            media_uuid = str(row.get("media_uuid") or "")
+            if not media_uuid or media_uuid in seen:
+                continue
+            if queue.has_done(f"content:teaser:{media_uuid}"):
+                continue
+            ready_media.append((media_uuid, Path(str(row.get("file") or media_uuid))))
+            seen.add(media_uuid)
 
         posted = 0
         for index, (media_uuid, path) in enumerate(ready_media):
@@ -108,7 +123,7 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                     text=caption,
                     media_uuids=[media_uuid],
                 )
-                queue.mark_done(post_key, {"post_uuid": post.get("uuid")})
+                queue.mark_done(post_key, {"post_uuid": post.get("uuid"), "file": path.name})
                 summary["posted"].append({"media_uuid": media_uuid, "post_uuid": post.get("uuid")})
                 posted += 1
                 log.info("posted teaser %s", post.get("uuid"))
@@ -116,6 +131,8 @@ def run(client: FanvueClient | None = None, queue: JobQueue | None = None) -> di
                 queue.mark_error(post_key, str(exc))
                 log.error("teaser failed for %s: %s", media_uuid, exc)
                 raise
+        summary["teasers_posted"] = queue.count("content", "teaser")
+        summary["leftover_teasers"] = queue.leftover_teaser_count()
         return summary
     finally:
         if owned_queue:

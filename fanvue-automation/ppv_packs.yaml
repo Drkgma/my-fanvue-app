@@ -1,0 +1,48 @@
+# Paid wall packs. One Fanvue post per pack (multiple media + one price).
+# Drop YOUR OWN files into ppv_bank/ using the prefix:
+#   pack1-01.jpg pack1-02.jpg pack1-tease.mp4
+#   pack2-01.jpg …
+# Pack 1 is Instagram-sexy, not nude. Packs 2–4 are film-it-yourself.
+# This agent does not generate lingerie or nudes.
+
+packs:
+  - id: pack-1
+    title: Pack 1
+    blurb: 2 to 4 pics + sexy video. Think "Slutty for Instagram but not that slutty".
+    price_cents: 900
+    prefix: pack1
+    min_pics: 2
+    max_pics: 4
+    min_videos: 1
+    nsfw: tease
+    caption: was so scared to upload this…
+  - id: pack-2
+    title: Pack 2
+    blurb: Lingerie
+    price_cents: 2300
+    prefix: pack2
+    min_pics: 2
+    max_pics: 8
+    min_videos: 0
+    nsfw: lingerie
+    caption: picked a sub at random. this is for your eyes only
+  - id: pack-3
+    title: Pack 3
+    blurb: Lingerie + Half nudes
+    price_cents: 3500
+    prefix: pack3
+    min_pics: 2
+    max_pics: 8
+    min_videos: 0
+    nsfw: half-nude
+    caption: I was told not to share this… but fuck it, here
+  - id: pack-4
+    title: Pack 4
+    blurb: Only nudes
+    price_cents: 7500
+    prefix: pack4
+    min_pics: 2
+    max_pics: 10
+    min_videos: 0
+    nsfw: nude
+    caption: this might get me banned…

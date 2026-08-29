@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { env } from "@/env";
 import { exchangeCodeForToken } from "@/lib/oauth";
 import { setSession } from "@/lib/session";
+import { persistSessionTokens } from "@/lib/tokensOnDisk";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -45,8 +46,15 @@ export async function GET(request: Request) {
       scope: token.scope,
       expiresAt: Date.now() + token.expires_in * 1000,
     });
+    persistSessionTokens({
+      accessToken: token.access_token,
+      refreshToken: token.refresh_token,
+      tokenType: token.token_type,
+      scope: token.scope,
+      expiresAt: Date.now() + token.expires_in * 1000,
+    });
 
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/`, request.url));
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/?tokens=saved`, request.url));
   } catch (e) {
     return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_token_exchange_failed`, request.url));
   }
@@ -92,7 +100,14 @@ export async function POST(request: Request) {
       scope: token.scope,
       expiresAt: Date.now() + token.expires_in * 1000,
     });
-    return NextResponse.redirect(new URL(`${env.BASE_URL}/`, request.url));
+    persistSessionTokens({
+      accessToken: token.access_token,
+      refreshToken: token.refresh_token,
+      tokenType: token.token_type,
+      scope: token.scope,
+      expiresAt: Date.now() + token.expires_in * 1000,
+    });
+    return NextResponse.redirect(new URL(`${env.BASE_URL}/?tokens=saved`, request.url));
   } catch (e) {
     return NextResponse.redirect(new URL(`${env.BASE_URL}/?error=oauth_token_exchange_failed`, request.url));
   }

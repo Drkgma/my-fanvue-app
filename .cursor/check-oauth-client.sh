@@ -22,7 +22,7 @@ if path.exists():
 client_id = env.get("OAUTH_CLIENT_ID", "")
 client_secret = env.get("OAUTH_CLIENT_SECRET", "")
 issuer = env.get("OAUTH_ISSUER_BASE_URL", "https://auth.fanvue.com")
-redirect = env.get("OAUTH_REDIRECT_URI", "http://localhost:3000/api/oauth/callback")
+redirect = env.get("OAUTH_REDIRECT_URI", "http://localhost:3456/callback")
 placeholder = client_id in {"", "dev-client-id"} or client_secret in {"", "dev-client-secret"}
 auth = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
 res = requests.post(

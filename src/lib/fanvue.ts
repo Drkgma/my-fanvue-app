@@ -80,7 +80,7 @@ export async function getAccount() {
 }
 
 export async function getPostsPreview() {
-  const res = await fanvueFetch("/posts?page=1&size=15");
+  const res = await fanvueFetch("/posts?page=1&size=50");
   if (!res.ok) return null;
   return res.json() as Promise<{ data?: unknown[]; pagination?: { hasMore?: boolean } }>;
 }
