@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|listen|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|listen|improve|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from agent_log import get_logger
-from agents import analytics_agent, bootstrap_agent, chat_agent, content_agent, money_agent, ppv_agent, traffic_agent
+from agents import analytics_agent, bootstrap_agent, chat_agent, content_agent, improve_agent, money_agent, ppv_agent, traffic_agent
 from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
 from ppv_catalog import inventory as ppv_inventory
@@ -195,6 +195,7 @@ def cmd_daily() -> int:
         ("chat", chat_agent.run),
         ("money", money_agent.run),
         ("analytics", analytics_agent.run),
+        ("improve", improve_agent.run),
     ):
         print(f"== {name} ==")
         step = _run_named(name, fn)
@@ -228,6 +229,7 @@ def main(argv: list[str] | None = None) -> int:
         "chat": lambda: _run_named("chat", chat_agent.run),
         "money": lambda: _run_named("money", money_agent.run),
         "traffic": lambda: _run_named("traffic", traffic_agent.run),
+        "improve": lambda: _run_named("improve", improve_agent.run),
         "analytics": lambda: _run_named("analytics", analytics_agent.run),
         "daily": cmd_daily,
         "all": cmd_all,
@@ -235,7 +237,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|listen|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|listen|improve|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

@@ -9,6 +9,7 @@ def test_parse_command_defaults_to_share() -> None:
     assert parse_command("hello") == "share"
     assert parse_command("") == "share"
     assert parse_command("/start") == "help"
+    assert parse_command("/improve") == "improve"
 
 
 def test_reply_for_share_includes_trial() -> None:

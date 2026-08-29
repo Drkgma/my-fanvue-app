@@ -40,6 +40,10 @@ export type ProgressSnapshot = {
   trial_used?: number;
   trial_max?: number;
   trial_days?: number;
+  improve_kind?: string;
+  improve_reason?: string;
+  improve_variant?: string;
+  improve_at?: string;
 };
 
 const progressPath = () => join(process.cwd(), "fanvue-automation", "progress.json");

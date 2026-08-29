@@ -10,6 +10,8 @@ while true; do
   python3 run.py bootstrap || true
   echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) status =="
   python3 run.py status || true
+  echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) improve =="
+  python3 run.py improve || true
   echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) content =="
   python3 run.py content || true
   echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) ppv =="

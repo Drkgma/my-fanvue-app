@@ -17,6 +17,8 @@ def test_phase_zero_blocks_chat_and_traffic(tmp_path: Path) -> None:
     cfg = load_config(path)
     ok, reason = agent_allowed("content", cfg)
     assert ok
+    ok, reason = agent_allowed("improve", cfg)
+    assert ok
     ok, reason = agent_allowed("chat", cfg)
     assert not ok
     assert "phase 1" in reason

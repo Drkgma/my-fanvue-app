@@ -75,3 +75,7 @@ traffic:
 
 analytics:
   enabled: true
+
+improve:
+  enabled: true
+  explore_rate: 0.3

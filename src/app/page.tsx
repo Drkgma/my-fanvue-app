@@ -182,6 +182,24 @@ export default async function Home({
           ) : null}
         </section>
 
+        {progress?.improve_kind ? (
+          <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-2">
+            <h2 className="font-semibold">Self-improving agent</h2>
+            <p className="text-sm">
+              Next try: <strong>{progress.improve_kind}</strong>
+              {progress.improve_variant ? ` · ${progress.improve_variant}` : ""}
+            </p>
+            {progress.improve_reason ? (
+              <p className="text-sm opacity-70">{progress.improve_reason}</p>
+            ) : null}
+            <p className="text-xs opacity-50">
+              Measures subs, followers, and trial uses. Rotates share captions.
+              Does not post to Reddit, X, or Instagram.
+              {progress.improve_at ? ` Last cycle ${progress.improve_at}` : ""}
+            </p>
+          </section>
+        ) : null}
+
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
           <h2 className="font-semibold">How to get the next 10 subscribers</h2>
           <p className="text-sm opacity-70">

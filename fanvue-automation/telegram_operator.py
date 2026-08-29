@@ -27,7 +27,7 @@ PROGRESS_PATH = ROOT / "progress.json"
 HELP = (
     "Funny Kite — hands-off while this VM is up.\n"
     "I run Fanvue: welcome DMs, $9.99, teasers, trial link, scoreboard.\n"
-    "/status  /share  /kit\n"
+    "/status  /share  /kit  /improve\n"
     "I do not post to Reddit, X, TikTok, or Instagram.\n"
     "I cannot text your friends or film a clothed intro video."
 )
@@ -47,6 +47,8 @@ def parse_command(text: str) -> str:
         "share": "share",
         "/kit": "kit",
         "kit": "kit",
+        "/improve": "improve",
+        "improve": "improve",
     }
     return mapping.get(token, "share")
 
@@ -94,6 +96,8 @@ def reply_for(command: str, progress: dict[str, Any] | None = None) -> str | Non
         return HELP + "\n\n" + format_share(payload)
     if command == "kit":
         return None
+    if command == "improve":
+        return None
     return format_share(payload)
 
 
@@ -106,6 +110,12 @@ def dispatch(command: str) -> dict[str, Any]:
         result = send_social_kit(_share_payload())
         log.info("operator kit albums=%s", len(result.get("albums") or []))
         return {"command": "kit", "result": result}
+    if command == "improve":
+        from agents.improve_agent import run as improve_run
+
+        result = improve_run()
+        log.info("operator improve %s", (result.get("action") or {}).get("kind"))
+        return {"command": "improve", "result": result}
     text = reply_for(command)
     ping = send(text or "")
     return {"command": command, "telegram": ping}
