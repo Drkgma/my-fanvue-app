@@ -47,6 +47,7 @@ fanvue-automation/jobs.db
 fanvue-automation/progress.json
 fanvue-automation/telegram_offset.json
 fanvue-automation/improve_memory.json
+fanvue-automation/share_kit/
 fanvue-automation/logs/*.log
 fanvue-automation/content_bank/*
 !fanvue-automation/content_bank/.gitkeep

@@ -14,8 +14,9 @@ from config_loader import load_config
 from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
 from ppv_catalog import inventory as ppv_inventory
 from ppv_catalog import next_shoot_list
-from telegram_notify import discover_chat_id, format_share, send, send_status
+from share_export import load_progress_payload, write_kit, write_share
 from social_kit import run as send_social_kit
+from telegram_notify import discover_chat_id, format_share, send, send_status
 
 
 def cmd_status() -> int:
@@ -73,56 +74,53 @@ def cmd_telegram() -> int:
 
 
 def cmd_share() -> int:
-    """Ping Telegram with the public page + a copy-paste caption. No ads."""
+    """Write SHARE.txt and ping Telegram. Works offline when tokens are missing."""
     log = get_logger("cli")
     config = load_config()
+    captions = list((config.get("content") or {}).get("teaser_captions") or [])
+    payload = load_progress_payload()
     try:
-        result = analytics_agent.run()
+        payload.update(analytics_agent.run())
     except FanvueAuthError as exc:
         log.error("%s", exc)
-        send_status({"auth_error": str(exc), "note": "Login with Fanvue, then Save tokens."})
-        return 2
-    captions = list((config.get("content") or {}).get("teaser_captions") or [])
-    payload = dict(result)
-    payload["teaser_captions"] = captions
-    ping = send(format_share(payload))
-    log.info("telegram share %s", ping)
+        payload["auth_error"] = str(exc)
+        payload["note"] = "Offline share kit. Login with Fanvue, then Save tokens."
+        send_status({"auth_error": str(exc), "note": payload["note"]})
+    if captions:
+        payload["teaser_captions"] = captions
+    path = write_share(payload)
+    text = format_share(payload)
+    print(text)
+    ping = send(text)
+    log.info("telegram share %s local=%s", ping, path)
     print(
         json.dumps(
             {
                 "share": ping,
+                "local": str(path),
                 "public_url": payload.get("public_url"),
                 "trial_url": payload.get("trial_url"),
             },
             indent=2,
         )
     )
-    return 0 if ping.get("ok") else 2
+    return 0
 
 
 def cmd_kit() -> int:
-    """Send clothed teaser sets + bio copy to Telegram. Does not post to Reddit/X."""
+    """Write KIT.txt and send clothed sets to Telegram when configured."""
     log = get_logger("cli")
     config = load_config()
-    payload: dict = {
-        "teaser_captions": list((config.get("content") or {}).get("teaser_captions") or []),
-    }
-    progress_path = Path(__file__).resolve().parent / "progress.json"
-    if progress_path.exists():
-        try:
-            data = json.loads(progress_path.read_text(encoding="utf-8"))
-            if isinstance(data, dict) and data.get("trial_url"):
-                payload["trial_url"] = data["trial_url"]
-        except (OSError, ValueError):
-            pass
+    payload = load_progress_payload()
+    captions = list((config.get("content") or {}).get("teaser_captions") or [])
+    if captions:
+        payload["teaser_captions"] = captions
+    local = write_kit(payload=payload)
     result = send_social_kit(payload)
+    result["local"] = str(local)
     print(json.dumps(result, indent=2, default=str))
-    log.info("kit albums=%s", len(result.get("albums") or []))
-    albums = result.get("albums") or []
-    ok = bool((result.get("intro") or {}).get("ok")) and all(
-        (row.get("telegram") or {}).get("ok") for row in albums
-    )
-    return 0 if ok else 2
+    log.info("kit albums=%s local=%s", len(result.get("albums") or []), local)
+    return 0
 
 
 def cmd_listen() -> int:

@@ -1,0 +1,21 @@
+Funny Kite — put this folder on your Desktop
+
+This Cloud Agent cannot write to your Windows/Mac Desktop.
+Download Funny-Kite-Munder-Project.zip from this run's Artifacts,
+unzip it onto your Desktop, then:
+
+1. Munder Difflin → Add project → pick this folder
+2. Give Michael MICHAEL.md
+3. Do not ask the floor to post Reddit, X, TikTok, or run ads
+
+Also in this folder:
+- CURSOR-AGENT-INSTRUCTIONS.md  (Phase 0 rules)
+- STATE.md                      (live facts + trial URL)
+- TOOLS.md                      (ComfyUI / RunPod — your PC only)
+- SHARE.txt is written by:      python run.py share
+- KIT.txt is written by:        python run.py kit
+
+Trial (send to 10 people you already talk to):
+https://www.fanvue.com/funny-kite-83?free_trial=b31468d1-0986-402f-9915-e7015e933c21
+
+First milestone: 10 subscribers. Not $1M/month.

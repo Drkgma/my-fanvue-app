@@ -13,6 +13,8 @@ It is a handbook for Michael (GOD) and any hired agent. It is not a second Fanvu
 | `STATE.md` | Live account facts. Refresh after `python run.py status`. |
 | `TOOLS.md` | ComfyUI, RunPod, MiniMax, Seedance 2.0, Higgsfield — allowed vs forbidden. |
 | `hire-michael-fanvue.json` | Optional: import as a hire (pre-fills Add agent; you still click spawn). |
+| `START-HERE.txt` | How to unzip this onto your real Desktop. |
+| `CURSOR-AGENT-INSTRUCTIONS.md` | Phase 0 Cursor / Michael rules (the desk copy). |
 
 ## First session
 
