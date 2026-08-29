@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import os
+from pathlib import Path
 from typing import Any
 
 import requests
@@ -205,6 +207,102 @@ def send(text: str) -> dict[str, Any]:
 def send_status(payload: dict[str, Any]) -> dict[str, Any]:
     """Format and send a scoreboard payload."""
     return send(format_status(payload))
+
+
+def _auth() -> tuple[str, str] | dict[str, Any]:
+    token = _token()
+    chat_id = _chat_id()
+    if not token:
+        return {"ok": False, "reason": "TELEGRAM_BOT_TOKEN missing"}
+    if not chat_id:
+        return {"ok": False, "reason": "TELEGRAM_CHAT_ID missing — open [REDACTED] and tap /start"}
+    return token, chat_id
+
+
+def send_photo(path: Path, caption: str = "") -> dict[str, Any]:
+    """Send one local photo. Does not post off-platform."""
+    auth = _auth()
+    if isinstance(auth, dict):
+        return auth
+    token, chat_id = auth
+    file_path = Path(path)
+    if not file_path.is_file():
+        return {"ok": False, "reason": "no image file"}
+    mime = "image/jpeg" if file_path.suffix.lower() in {".jpg", ".jpeg"} else "image/png"
+    with file_path.open("rb") as handle:
+        response = requests.post(
+            f"{API}/bot{token}/sendPhoto",
+            data={"chat_id": chat_id, "caption": (caption or "")[:1024]},
+            files={"photo": (file_path.name, handle, mime)},
+            timeout=120,
+        )
+    try:
+        body = response.json()
+    except ValueError:
+        body = {"ok": False, "description": response.text[:300]}
+    if not response.ok or not body.get("ok"):
+        return {
+            "ok": False,
+            "status": response.status_code,
+            "reason": str(body.get("description") or body)[:300],
+        }
+    return {"ok": True, "message_id": (body.get("result") or {}).get("message_id")}
+
+
+def send_media_group(paths: list[Path], caption: str = "") -> dict[str, Any]:
+    """Send 1–10 local photos. One file uses sendPhoto; 2–10 use an album."""
+    auth = _auth()
+    if isinstance(auth, dict):
+        return auth
+    token, chat_id = auth
+    files = [Path(path) for path in paths if Path(path).is_file()]
+    if not files:
+        return {"ok": False, "reason": "no image files"}
+    if len(files) == 1:
+        return send_photo(files[0], caption)
+    if len(files) > 10:
+        files = files[:10]
+    media: list[dict[str, Any]] = []
+    handles: dict[str, Any] = {}
+    opened: list[Any] = []
+    try:
+        for index, path in enumerate(files):
+            field = f"photo{index}"
+            handle = path.open("rb")
+            opened.append(handle)
+            mime = "image/jpeg" if path.suffix.lower() in {".jpg", ".jpeg"} else "image/png"
+            handles[field] = (path.name, handle, mime)
+            item: dict[str, Any] = {"type": "photo", "media": f"attach://{field}"}
+            if index == 0 and caption:
+                item["caption"] = caption[:1024]
+            media.append(item)
+        response = requests.post(
+            f"{API}/bot{token}/sendMediaGroup",
+            data={"chat_id": chat_id, "media": json.dumps(media)},
+            files=handles,
+            timeout=120,
+        )
+    finally:
+        for handle in opened:
+            handle.close()
+    try:
+        body = response.json()
+    except ValueError:
+        body = {"ok": False, "description": response.text[:300]}
+    if not response.ok or not body.get("ok"):
+        return {
+            "ok": False,
+            "status": response.status_code,
+            "reason": str(body.get("description") or body)[:300],
+        }
+    results = body.get("result") or []
+    return {
+        "ok": True,
+        "count": len(results) if isinstance(results, list) else 1,
+        "message_ids": [
+            row.get("message_id") for row in results if isinstance(row, dict)
+        ],
+    }
 
 
 def discover_chat_id() -> str | None:

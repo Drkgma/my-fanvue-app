@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from fanvue_client import FanvueAuthError, FanvueClient, login_interactive
 from ppv_catalog import inventory as ppv_inventory
 from ppv_catalog import next_shoot_list
 from telegram_notify import discover_chat_id, format_share, send, send_status
+from social_kit import run as send_social_kit
 
 
 def cmd_status() -> int:
@@ -97,6 +98,31 @@ def cmd_share() -> int:
         )
     )
     return 0 if ping.get("ok") else 2
+
+
+def cmd_kit() -> int:
+    """Send clothed teaser sets + bio copy to Telegram. Does not post to Reddit/X."""
+    log = get_logger("cli")
+    config = load_config()
+    payload: dict = {
+        "teaser_captions": list((config.get("content") or {}).get("teaser_captions") or []),
+    }
+    progress_path = Path(__file__).resolve().parent / "progress.json"
+    if progress_path.exists():
+        try:
+            data = json.loads(progress_path.read_text(encoding="utf-8"))
+            if isinstance(data, dict) and data.get("trial_url"):
+                payload["trial_url"] = data["trial_url"]
+        except (OSError, ValueError):
+            pass
+    result = send_social_kit(payload)
+    print(json.dumps(result, indent=2, default=str))
+    log.info("kit albums=%s", len(result.get("albums") or []))
+    albums = result.get("albums") or []
+    ok = bool((result.get("intro") or {}).get("ok")) and all(
+        (row.get("telegram") or {}).get("ok") for row in albums
+    )
+    return 0 if ok else 2
 
 
 def cmd_scripts() -> int:
@@ -185,6 +211,7 @@ def main(argv: list[str] | None = None) -> int:
         "login": cmd_login,
         "status": cmd_status,
         "share": cmd_share,
+        "kit": cmd_kit,
         "bootstrap": lambda: _run_named("bootstrap", bootstrap_agent.run),
         "content": lambda: _run_named("content", content_agent.run),
         "ppv": lambda: _run_named("ppv", ppv_agent.run),
@@ -199,7 +226,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1
