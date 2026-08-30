@@ -5,14 +5,24 @@
   "terminals": [
     {
       "name": "next-dev",
-      "command": "pnpm dev",
-      "description": "Next.js Phase 0 desk on http://localhost:3000"
+      "command": "bash .cursor/dev.sh",
+      "description": "Next.js Phase 0 desk on http://localhost:3456 (Fanvue redirect URI)"
+    },
+    {
+      "name": "phase0-operate",
+      "command": "bash fanvue-automation/scripts/operate_loop.sh",
+      "description": "Every hour: welcome DMs, scoreboard, teasers, then PPV wall posts if files exist"
+    },
+    {
+      "name": "phase0-telegram",
+      "command": "bash fanvue-automation/scripts/telegram_loop.sh",
+      "description": "Owner Telegram: /status /share /kit /improve. Any other text sends the trial link. Does not post to Reddit/X"
     }
   ],
   "ports": [
     {
       "name": "web",
-      "port": 3000
+      "port": 3456
     }
   ]
 }

@@ -17,6 +17,7 @@ PHASE_MIN_AGENT = {
     "money": 1,
     "traffic": 2,
     "analytics": 0,
+    "improve": 0,
 }
 
 
@@ -32,9 +33,12 @@ def _default_config() -> dict[str, Any]:
         "focus": ["fix_auth", "upload_content", "schedule_posts"],
         "content": {
             "bank_dir": "content_bank",
+            "ppv_bank_dir": "ppv_bank",
             "max_uploads_per_run": 20,
             "max_teasers_per_run": 5,
+            "max_ppv_per_run": 3,
             "teaser_audience": "followers-and-subscribers",
+            "ppv_audience": "followers-and-subscribers",
             "teaser_captions": ["New photos just dropped."],
         },
         "chat": {"enabled": False, "max_replies_per_run": 10, "reply_template": ""},
@@ -46,6 +50,7 @@ def _default_config() -> dict[str, Any]:
         },
         "traffic": {"enabled": False},
         "analytics": {"enabled": True},
+        "improve": {"enabled": True, "explore_rate": 0.3},
     }
 
 
@@ -62,7 +67,7 @@ def load_config(path: Path | None = None) -> dict[str, Any]:
     if not isinstance(loaded, dict):
         raise ConfigError("config.yaml must be a mapping")
     merged.update(loaded)
-    for key in ("content", "chat", "money", "traffic", "analytics"):
+    for key in ("content", "chat", "money", "traffic", "analytics", "improve"):
         if isinstance(loaded.get(key), dict):
             section = _default_config()[key]
             section.update(loaded[key])

@@ -1,5 +1,5 @@
 # Fanvue automation — current phase. Agents refuse work past phase+1.
-# Current reality: ~1 subscriber. First milestone: 10 subscribers.
+# Current reality: 0 subscribers, 0 followers. First milestone: 10 subscribers.
 
 phase: 0
 revenue_target: 5
@@ -21,40 +21,61 @@ oauth:
     - read:creator
     - write:creator
   redirect_uris:
+    - http://localhost:3456/callback
     - http://localhost:3000/api/oauth/callback
-    - http://localhost:8765/callback
 
 content:
   bank_dir: content_bank
+  ppv_bank_dir: ppv_bank
   max_uploads_per_run: 20
   max_teasers_per_run: 5
+  max_ppv_per_run: 3
   teaser_audience: followers-and-subscribers
+  ppv_audience: followers-and-subscribers
+  launch_files:
+    - glam-close-portrait.png
+    - life-garden-selfie.png
+    - casual-kitchen-mug.png
+    - body2-studio-white-shirt.png
+    - life-brunch-linen.png
   teaser_captions:
-    - New photos just dropped.
-    - Behind the scenes from today's shoot.
-    - A little teaser for later.
-    - Fresh set is live for subscribers.
-    - Saving the rest for the vault.
+    - hi, it's me — more on the page if you want it
+    - garden light, come say hi
+    - kitchen tea and a quiet morning
+    - white shirt, no filter
+    - brunch fit. subscribe if you want the rest
+    - hey — what do you actually want to see next? tell me and I will make it
 
 chat:
   enabled: false
   max_replies_per_run: 10
-  reply_template: >-
-    Hey {name} — thanks for writing. I saw your message and I will reply
-    properly soon. If you are not subscribed yet, that is the best way to
-    get the full sets.
+  reply_template: |
+    Hey {name} — thanks for writing. Tip menu: Pack 1 $9 (2–4 pics + sexy
+    video, slutty for Instagram but not that slutty), Pack 2 $23 (lingerie),
+    Pack 3 $35 (lingerie + half nudes), Pack 4 $75 (only nudes).
+    Tell me which pack you want unlocked.
 
 money:
   enabled: false
   subscription_price_cents: 999
   min_subscribers_for_ppv: 5
   welcome:
-    new_follower: Thanks for following. Subscribe if you want the full sets.
-    new_subscriber: Welcome in. Glad you are here — ask me what you want next.
-    first_message_reply: Hey, thanks for the message. What brought you here?
+    new_follower: Thanks for following. Subscribe for the feed, or ask for Pack 1–4.
+    new_subscriber: >-
+      Welcome in. Tip menu: Pack 1 $9 (Instagram-sexy), Pack 2 $23 (lingerie),
+      Pack 3 $35 (lingerie + half nudes), Pack 4 $75 (only nudes). Ask for a pack.
+    first_message_reply: Hey — Pack 1 is $9, Pack 4 is $75 only nudes. Which one?
 
 traffic:
   enabled: false
+  note: >-
+    Phase 2 only. Public posts stay SFW girl-next-door. Never nudes on the
+    main feed (that kills PPV unlocks). Never leak sites or other creators'
+    content. Share the Fanvue page until 10 subscribers.
 
 analytics:
   enabled: true
+
+improve:
+  enabled: true
+  explore_rate: 0.3

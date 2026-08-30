@@ -87,6 +87,34 @@ class JobQueue:
         ).fetchone()
         return bool(row) and row["status"] == "done"
 
+    def retry_error(self, dedupe_key: str) -> bool:
+        """Reset an error job to pending so it can run again. Return True if reset."""
+        cur = self._conn.execute(
+            "UPDATE jobs SET status = 'pending', error = NULL, updated_at = ? WHERE dedupe_key = ? AND status = 'error'",
+            (utc_now(), dedupe_key),
+        )
+        self._conn.commit()
+        return cur.rowcount > 0
+
+    def done_results(self, agent: str, kind: str) -> list[dict[str, Any]]:
+        """Return result payloads for completed jobs of this agent/kind."""
+        rows = self._conn.execute(
+            "SELECT result_json FROM jobs WHERE agent = ? AND kind = ? AND status = 'done'",
+            (agent, kind),
+        ).fetchall()
+        out: list[dict[str, Any]] = []
+        for row in rows:
+            raw = row["result_json"]
+            if not raw:
+                continue
+            try:
+                payload = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(payload, dict):
+                out.append(payload)
+        return out
+
     def count(self, agent: str, kind: str, status: str = "done") -> int:
         """Count jobs for an agent/kind/status triple."""
         row = self._conn.execute(
@@ -94,3 +122,12 @@ class JobQueue:
             (agent, kind, status),
         ).fetchone()
         return int(row["n"]) if row else 0
+
+    def leftover_teaser_count(self) -> int:
+        """Uploaded media that has not been posted as a teaser yet."""
+        pending = 0
+        for row in self.done_results("content", "upload"):
+            media_uuid = str(row.get("media_uuid") or "")
+            if media_uuid and not self.has_done(f"content:teaser:{media_uuid}"):
+                pending += 1
+        return pending

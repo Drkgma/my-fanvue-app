@@ -1,6 +1,18 @@
 import Image from "next/image";
 import { getAccount, getCurrentUser, getPostsPreview, getSessionScopes } from "@/lib/fanvue";
-import { GROWTH_LADDER, PHASE0_SCOPES, TWENTY_FOUR_HOUR } from "@/lib/growth";
+import {
+  GROWTH_LADDER,
+  PHASE0_SCOPES,
+  PLATFORM_RULES,
+  PUBLIC_PAGE,
+  SHARE_CAPTION,
+  SHARE_STEPS,
+  TWENTY_FOUR_HOUR,
+} from "@/lib/growth";
+import { persistSessionTokens, tokensFileExists } from "@/lib/tokensOnDisk";
+import { readProgress } from "@/lib/progressOnDisk";
+import { getSession } from "@/lib/session";
+import { readPpvCatalog, readPpvScripts, readPpvSellPacks } from "@/lib/ppvCatalog";
 import { readCurrentPhase, readSubscriberTarget } from "@/lib/phase";
 
 export const dynamic = "force-dynamic";
@@ -27,10 +39,32 @@ export default async function Home({
   const errorDescriptionParam =
     typeof params?.error_description === "string" ? params.error_description : undefined;
   const tokensSaved = params?.tokens === "saved";
+  const session = await getSession();
+  if (session?.accessToken) {
+    persistSessionTokens(session);
+  }
+  const tokensOnDisk = tokensFileExists();
+  const progress = readProgress();
   const fans = account?.account?.fans;
-  const subscribers = Number(fans?.subscribers || 0);
-  const followers = Number(fans?.followers || 0);
-  const postCount = posts?.data?.length ?? null;
+  const subscribers = isAuthed ? Number(fans?.subscribers || 0) : progress?.subscribers;
+  const followers = isAuthed ? Number(fans?.followers || 0) : progress?.followers;
+  const postCount = isAuthed ? (posts?.data?.length ?? null) : (progress?.posts_listed ?? null);
+  const leftover = progress?.leftover_teasers;
+  const publicUrl = progress?.public_url || PUBLIC_PAGE;
+  const trialUrl = progress?.trial_url || publicUrl;
+  const shareBody = `${SHARE_CAPTION}\n${trialUrl}`;
+  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(shareBody)}`;
+  const smsHref = `sms:?&body=${encodeURIComponent(shareBody)}`;
+  const ppvCatalog = readPpvCatalog();
+  const ppvScripts = readPpvScripts();
+  const sellPacks = readPpvSellPacks();
+  const sellLive = new Map((progress?.sell_packs || []).map((row) => [row.id, row]));
+  const ppvReady = progress?.ppv_ready ?? 0;
+  const ppvTotal = progress?.ppv_total ?? ppvCatalog.length;
+  const starterReady = progress?.ppv_starter_ready ?? 0;
+  const starterTotal = progress?.ppv_starter_total ?? ppvCatalog.length;
+  const ppvMissing = new Set(progress?.ppv_missing || ppvCatalog.map((row) => row.id));
+  const packReady = new Map((progress?.ppv_packs || []).map((row) => [row.id, row.ready || 0]));
   const missingScopes = PHASE0_SCOPES.filter((scope) => !scopes.includes(scope));
 
   return (
@@ -72,34 +106,257 @@ export default async function Home({
           </p>
         ) : null}
 
+        {!tokensOnDisk ? (
+          <p className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <strong>tokens.json is missing on this Cloud Agent.</strong>
+            {isAuthed ? (
+              <>
+                {" "}
+                You are signed in. Click the green <strong>Save into fanvue-automation/</strong>{" "}
+                button below, or refresh this page once.
+              </>
+            ) : (
+              <>
+                {" "}
+                Click <strong>Login with Fanvue</strong>, then{" "}
+                <strong>Save into fanvue-automation/</strong>. n8n on port 5678 is a different
+                machine.
+              </>
+            )}
+          </p>
+        ) : (
+          <p className="rounded-lg border border-[#49f264] bg-[#49f26422] px-4 py-3 text-sm">
+            Hands-off on this VM: welcome DMs, scoreboard, leftover teasers, and PPV
+            posts when you drop files. ChatMate, ads, and TrafficAgent stay off until
+            10 subscribers. I cannot text your friends or film the intro video.
+          </p>
+        )}
+
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5">
           <p className="text-sm opacity-70">
             This is a beginner account. The first win is <strong>10 subscribers</strong>, not
-            $1M/month. Phase 0 work is auth, a content bank, and five public teasers.
+            $1M/month. Teasers are live. More posts will not create subscribers until people
+            see{" "}
+            <a className="underline" href={publicUrl} target="_blank" rel="noreferrer">
+              {publicUrl.replace("https://", "")}
+            </a>
+            .
           </p>
-          <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Subscribers</dt>
               <dd className="text-2xl font-semibold">
-                {isAuthed ? subscribers : "—"}
+                {subscribers ?? "—"}
                 <span className="text-sm font-normal opacity-50"> / {target}</span>
               </dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Followers</dt>
-              <dd className="text-2xl font-semibold">{isAuthed ? followers : "—"}</dd>
+              <dd className="text-2xl font-semibold">{followers ?? "—"}</dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
               <dt className="text-xs opacity-60">Earnings</dt>
               <dd className="text-2xl font-semibold">
-                {isAuthed ? cents(account?.account?.earnings?.total) : "—"}
+                {isAuthed
+                  ? cents(account?.account?.earnings?.total)
+                  : progress?.earnings_cents != null
+                    ? cents(progress.earnings_cents)
+                    : "—"}
               </dd>
             </div>
             <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
-              <dt className="text-xs opacity-60">Posts (page 1)</dt>
+              <dt className="text-xs opacity-60">Posts live</dt>
               <dd className="text-2xl font-semibold">{postCount ?? "—"}</dd>
             </div>
+            <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+              <dt className="text-xs opacity-60">Leftover teasers</dt>
+              <dd className="text-2xl font-semibold">{leftover ?? "—"}</dd>
+            </div>
+            <div className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+              <dt className="text-xs opacity-60">Content bank</dt>
+              <dd className="text-2xl font-semibold">{progress?.bank ?? "—"}</dd>
+            </div>
           </dl>
+          {progress?.at ? (
+            <p className="mt-3 text-xs opacity-50">Last automation snapshot {progress.at}</p>
+          ) : null}
+        </section>
+
+        {progress?.improve_kind ? (
+          <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-2">
+            <h2 className="font-semibold">Self-improving agent</h2>
+            <p className="text-sm">
+              Next try: <strong>{progress.improve_kind}</strong>
+              {progress.improve_variant ? ` · ${progress.improve_variant}` : ""}
+            </p>
+            {progress.improve_reason ? (
+              <p className="text-sm opacity-70">{progress.improve_reason}</p>
+            ) : null}
+            <p className="text-xs opacity-50">
+              Measures subs, followers, and trial uses. Rotates share captions.
+              Does not post to Reddit, X, or Instagram.
+              {progress.improve_at ? ` Last cycle ${progress.improve_at}` : ""}
+            </p>
+          </section>
+        ) : null}
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">How to get the next 10 subscribers</h2>
+          <p className="text-sm opacity-70">
+            More Fanvue posts will not create subscribers. Share the 7-day free
+            trial. Ads and TrafficAgent stay off until 10 subscribers.
+          </p>
+          <p className="break-all rounded-lg bg-black/[.04] dark:bg-white/[.06] px-3 py-2 text-sm font-medium">
+            {trialUrl}
+          </p>
+          {progress?.trial_url ? (
+            <p className="text-xs opacity-50">
+              7-day free trial · {progress.trial_used ?? 0}/{progress.trial_max ?? 10} uses
+            </p>
+          ) : null}
+          <p className="text-sm opacity-70">
+            Copy-paste: <em>{SHARE_CAPTION}</em>
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              className="rounded-full bg-[#49f264] px-4 h-10 text-black font-medium inline-flex items-center text-sm"
+              href={whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Send on WhatsApp
+            </a>
+            <a
+              className="rounded-full border px-4 h-10 inline-flex items-center text-sm"
+              href={smsHref}
+            >
+              Send as text
+            </a>
+            <a
+              className="rounded-full border px-4 h-10 inline-flex items-center text-sm"
+              href={trialUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open the page
+            </a>
+          </div>
+          <ol className="space-y-2 text-sm">
+            {SHARE_STEPS.map((step, index) => (
+              <li key={step.id} className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+                <p className="font-medium">
+                  {index + 1}. {step.title}
+                </p>
+                <p className="opacity-70">{step.detail}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="text-xs opacity-50">
+            Discoverable: {progress?.discoverable === true ? "yes" : progress?.discoverable === false ? "no" : "—"}
+            {" · "}
+            Intro videos on page: {progress?.video_count ?? "—"}
+            {progress?.video_count === 0 ? " — film the clothed intro next" : ""}
+          </p>
+          {progress?.share_note ? (
+            <p className="text-sm text-amber-800 dark:text-amber-200">{progress.share_note}</p>
+          ) : null}
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">Tip menu — 4 packs</h2>
+          <p className="text-sm opacity-70">
+            One paid post per pack. Drop files as{" "}
+            <code className="text-xs">pack1-01.jpg</code>, <code className="text-xs">pack1-tease.mp4</code>,{" "}
+            <code className="text-xs">pack2-01.jpg</code>… Pack 1 is Instagram-sexy,
+            not nude. Packs 2–4 you film. This desk will not generate lingerie or nudes.
+          </p>
+          <ul className="space-y-2 text-sm">
+            {sellPacks.map((pack) => {
+              const live = sellLive.get(pack.id);
+              const ready = live?.ready === true;
+              return (
+                <li key={pack.id} className="rounded-lg bg-black/[.04] dark:bg-white/[.06] p-3">
+                  <p className="font-medium">
+                    {ready ? "✓" : "○"} {pack.title} · ${(pack.price_cents / 100).toFixed(0)}
+                  </p>
+                  <p className="opacity-70">{pack.blurb}</p>
+                  <p className="text-xs opacity-50">
+                    need {pack.min_pics}+ pics
+                    {pack.min_videos ? ` + ${pack.min_videos} video` : ""} · prefix{" "}
+                    <code>{pack.prefix}-</code>
+                    {live
+                      ? ` · have ${live.pic_count ?? 0} pics / ${live.video_count ?? 0} videos`
+                      : ""}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">PPV starter pack</h2>
+          <p className="text-sm opacity-70">
+            From the new-account shot list. Drop <strong>your own</strong> files into{" "}
+            <code className="text-xs">fanvue-automation/ppv_bank/</code>. Public teasers stay
+            clothed. This desk will not generate nudes or sex clips. Chat PPV DMs stay off
+            until 5 subscribers.
+          </p>
+          <p className="text-2xl font-semibold">
+            {starterReady} / {starterTotal || 16}
+            <span className="ml-2 text-sm font-normal opacity-60">starter files ready</span>
+          </p>
+          <p className="text-sm opacity-70">
+            All SKUs (starter + scripts): {ppvReady} / {ppvTotal || 16}
+          </p>
+          {progress?.ppv_posted != null ? (
+            <p className="text-sm opacity-70">Wall unlocks posted: {progress.ppv_posted}</p>
+          ) : null}
+          <ul className="grid grid-cols-1 gap-1 text-sm sm:grid-cols-2">
+            {ppvCatalog.map((row) => {
+              const ready = !ppvMissing.has(row.id);
+              return (
+                <li key={row.id} className={ready ? "opacity-100" : "opacity-60"}>
+                  {ready ? "✓" : "○"} {row.label} · ${(row.price_cents / 100).toFixed(2)} ·{" "}
+                  <code className="text-xs">
+                    {row.filename}.{row.kind === "video" ? "mp4" : "jpg"}
+                  </code>
+                </li>
+              );
+            })}
+          </ul>
+          <h3 className="pt-2 font-medium">Film-it-yourself scripts</h3>
+          <p className="text-sm opacity-70">
+            Name files like <code className="text-xs">s1-v4-dildo.mp4</code>. I will not
+            generate these clips. Reddit / leak-site copies stay out.
+          </p>
+          <ul className="space-y-1 text-sm">
+            {ppvScripts.map((pack) => {
+              const ready = packReady.get(pack.id) ?? 0;
+              return (
+                <li key={pack.id}>
+                  {ready >= pack.total && pack.total > 0 ? "✓" : "○"} {pack.title} · {ready}/
+                  {pack.total} · bundle ${(pack.bundle_price_cents / 100).toFixed(0)}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <section className="rounded-xl border border-black/10 dark:border-white/15 p-5 space-y-3">
+          <h2 className="font-semibold">Where content goes</h2>
+          <p className="text-sm opacity-70">
+            Different platforms need different content. Public stays SFW so the paid scripts
+            still sell. This desk will not scrape leak sites or copy other creators.
+          </p>
+          <ul className="space-y-2 text-sm">
+            {PLATFORM_RULES.map((row) => (
+              <li key={row.id}>
+                <p className="font-medium">{row.title}</p>
+                <p className="opacity-70">{row.detail}</p>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="rounded-xl border border-black/10 dark:border-white/15 p-5">
@@ -107,10 +364,10 @@ export default async function Home({
           <ol className="mt-3 space-y-3">
             {TWENTY_FOUR_HOUR.map((item, index) => {
               const done =
-                (item.id === "auth" && isAuthed) ||
-                (item.id === "upload" && (postCount ?? 0) > 0) ||
+                (item.id === "auth" && (isAuthed || tokensOnDisk)) ||
+                (item.id === "upload" && ((progress?.bank ?? 0) >= 20 || (postCount ?? 0) > 0)) ||
                 (item.id === "teasers" && (postCount ?? 0) >= 5) ||
-                (item.id === "chat" && phase >= 1);
+                (item.id === "intro" && (progress?.video_count ?? 0) > 0);
               return (
                 <li key={item.id} className="flex gap-3">
                   <span
@@ -160,9 +417,11 @@ export default async function Home({
           <h2 className="font-semibold">Auth + local agents</h2>
           {!isAuthed ? (
             <p className="text-sm opacity-70">
-              Login first. In the Fanvue developer app, register{" "}
-              <code className="text-xs">http://localhost:3000/api/oauth/callback</code> and request
-              the Phase 0 scopes listed in <code className="text-xs">.env.example</code>.
+              Login first on <strong>this</strong> Cloud Agent desk (port 3456), then click
+              Save tokens until the URL includes <code className="text-xs">?tokens=saved</code>.
+              Completing a Cursor setup action, or logging in on Windows/n8n, does not copy
+              tokens here. The registered callback is{" "}
+              <code className="text-xs">http://localhost:3456/callback</code>.
             </p>
           ) : (
             <>
@@ -178,7 +437,7 @@ export default async function Home({
                   Download tokens.json
                 </a>
                 <form action="/api/automation/tokens" method="post">
-                  <button className="rounded-full border px-4 h-10 text-sm">
+                  <button className="rounded-full bg-[#49f264] px-4 h-10 text-sm text-black font-medium">
                     Save into fanvue-automation/
                   </button>
                 </form>

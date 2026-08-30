@@ -2,4 +2,4 @@ Same adult woman every time.
 
 Face (from face-source): heart-shaped face, pale complexion, large dark brown eyes, long dark eyelashes, arched eyebrows, small straight nose, full lips, small beauty mark on her left cheek, long straight brown hair with honey-blonde highlights, wispy bangs.
 
-Body (from body-source plus extra body-refs): hourglass / pear figure, slim waist, wide hips, toned legs. Public teasers stay fully clothed: black t-shirt and jeans, midi dress, sundress, white shirt and trousers, or an evening gown. Do not generate lingerie, thongs, bikinis, nudes, or extra fingers. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no minors.
+Body (from body-source plus extra body-refs): hourglass / pear figure, slim waist, wide hips, toned legs. Public teasers stay fully clothed: black t-shirt and jeans, midi dress, sundress, white shirt and trousers, evening gown, loungewear, flannel, or an oversized sweater. Do not generate lingerie, thongs, bikinis, nudes, or extra fingers. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no minors.
