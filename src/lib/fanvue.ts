@@ -1,7 +1,7 @@
 import { env } from "@/env";
-import { FANVUE_API_VERSION } from "@/lib/growth";
 import { getSession, setSession } from "@/lib/session";
 import { refreshAccessToken } from "@/lib/oauth";
+import { API_VERSION } from "@/lib/playbook";
 
 export type FanvueSession = {
   accessToken: string;
@@ -11,7 +11,7 @@ export type FanvueSession = {
   scope?: string;
 };
 
-async function getFreshSession(): Promise<FanvueSession | null> {
+export async function getFreshSession(): Promise<FanvueSession | null> {
   let session = await getSession();
   if (!session) return null;
 
@@ -32,42 +32,73 @@ async function getFreshSession(): Promise<FanvueSession | null> {
       return null;
     }
   }
+
   return session;
 }
 
-export async function fanvueFetch(path: string): Promise<Response> {
+export async function getAccessToken(): Promise<string | null> {
   const session = await getFreshSession();
-  if (!session) {
-    return new Response(JSON.stringify({ error: "not_authenticated" }), { status: 401 });
+  return session?.accessToken ?? null;
+}
+
+export async function fanvueFetch(path: string, init: RequestInit = {}) {
+  const token = await getAccessToken();
+  if (!token) {
+    return { ok: false as const, status: 401, data: { error: "Not signed in to Fanvue" } };
   }
-  return fetch(`${env.API_BASE_URL}${path}`, {
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-      "X-Fanvue-API-Version": FANVUE_API_VERSION,
-    },
+
+  const headers = new Headers(init.headers);
+  headers.set("Authorization", `Bearer ${token}`);
+  headers.set("X-Fanvue-API-Version", API_VERSION);
+  if (init.body && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  const res = await fetch(`${env.API_BASE_URL}${path}`, {
+    ...init,
+    headers,
     cache: "no-store",
   });
+
+  const text = await res.text();
+  let data: unknown = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { error: text };
+    }
+  }
+
+  return { ok: res.ok, status: res.status, data };
+}
+
+export function asArray(payload: unknown): Array<Record<string, unknown>> {
+  if (Array.isArray(payload)) return payload as Array<Record<string, unknown>>;
+  if (payload && typeof payload === "object" && "data" in payload) {
+    const data = (payload as { data: unknown }).data;
+    if (Array.isArray(data)) return data as Array<Record<string, unknown>>;
+  }
+  return [];
+}
+
+export function asRecord(payload: unknown): Record<string, unknown> | null {
+  if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+    return payload as Record<string, unknown>;
+  }
+  return null;
 }
 
 export async function getCurrentUser() {
-  try {
-    const res = await fanvueFetch("/users/me");
-    if (res.status === 401) return null;
-    if (!res.ok) {
-      console.error("GET /users/me failed", res.status, await res.text());
-      return null;
-    }
-    return res.json();
-  } catch (error) {
-    console.error("getCurrentUser", error);
-    return null;
-  }
+  const result = await fanvueFetch("/users/me");
+  if (!result.ok) return null;
+  return result.data as { handle?: string; uuid?: string; displayName?: string } | null;
 }
 
 export async function getAccount() {
-  const res = await fanvueFetch("/users/account");
-  if (!res.ok) return null;
-  return res.json() as Promise<{
+  const result = await fanvueFetch("/users/account");
+  if (!result.ok) return null;
+  return result.data as {
     handle?: string;
     displayName?: string;
     account?: {
@@ -76,13 +107,13 @@ export async function getAccount() {
       earnings?: { total?: number; availableBalance?: number };
       fans?: { followers?: number; subscribers?: number };
     };
-  }>;
+  };
 }
 
 export async function getPostsPreview() {
-  const res = await fanvueFetch("/posts?page=1&size=15");
-  if (!res.ok) return null;
-  return res.json() as Promise<{ data?: unknown[]; pagination?: { hasMore?: boolean } }>;
+  const result = await fanvueFetch("/posts?page=1&size=15");
+  if (!result.ok) return null;
+  return result.data as { data?: unknown[]; pagination?: { hasMore?: boolean } };
 }
 
 export async function getSessionScopes(): Promise<string[]> {

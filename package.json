@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:pack": "node scripts/validate-pack.cjs"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.13.8",

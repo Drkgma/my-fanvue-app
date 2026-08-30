@@ -2,22 +2,26 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
+  skipValidation: !process.env.OAUTH_CLIENT_ID,
   server: {
-    OAUTH_CLIENT_ID: z.string().min(1),
-    OAUTH_CLIENT_SECRET: z.string().min(1),
-    OAUTH_ISSUER_BASE_URL: z
-      .url()
-      .default("https://auth.fanvue.com"),
+    OAUTH_CLIENT_ID: z.string().min(1).optional(),
+    OAUTH_CLIENT_SECRET: z.string().min(1).optional(),
+    OAUTH_ISSUER_BASE_URL: z.url().default("https://auth.fanvue.com"),
     OAUTH_REDIRECT_URI: z.url().optional(),
     OAUTH_SCOPES: z
-      .string(),
+      .string()
+      .optional()
+      .default(
+        "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post",
+      ),
     OAUTH_RESPONSE_MODE: z.enum(["query", "form_post"]).optional(),
     OAUTH_PROMPT: z.string().optional(),
     BASE_URL: z.url().optional(),
     SESSION_COOKIE_NAME: z.string().default("fanvue_oauth"),
     SESSION_SECRET: z
       .string()
-      .min(16, { message: "SESSION_SECRET must be at least 16 characters" }),
+      .min(16, { message: "SESSION_SECRET must be at least 16 characters" })
+      .default("dev-only-change-me-16"),
     API_BASE_URL: z.url().default("https://api.fanvue.com"),
   },
   runtimeEnv: {
@@ -38,9 +42,7 @@ export const env = createEnv({
 
 export const oauthConfig = {
   issuerBaseURL: env.OAUTH_ISSUER_BASE_URL,
-  clientId: env.OAUTH_CLIENT_ID,
-  clientSecret: env.OAUTH_CLIENT_SECRET,
+  clientId: env.OAUTH_CLIENT_ID ?? "",
+  clientSecret: env.OAUTH_CLIENT_SECRET ?? "",
   redirectUri: env.OAUTH_REDIRECT_URI,
 };
-
-
