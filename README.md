@@ -159,7 +159,7 @@ Usage
 Operate scopes (must match the Fanvue app)
 
 ```
-read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post
+read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post
 ```
 
 Docs
