@@ -3,14 +3,22 @@ import { getSession, setSession } from "@/lib/session";
 import { refreshAccessToken } from "@/lib/oauth";
 import { API_VERSION } from "@/lib/playbook";
 
-export async function getAccessToken(): Promise<string | null> {
+export type FanvueSession = {
+  accessToken: string;
+  refreshToken?: string;
+  expiresAt: number;
+  tokenType?: string;
+  scope?: string;
+};
+
+export async function getFreshSession(): Promise<FanvueSession | null> {
   let session = await getSession();
   if (!session) return null;
 
   if (Date.now() >= session.expiresAt - 30_000 && session.refreshToken) {
     try {
       const refreshed = await refreshAccessToken(session.refreshToken);
-      const updatedSession = {
+      const updatedSession: FanvueSession = {
         accessToken: refreshed.access_token,
         refreshToken: refreshed.refresh_token ?? session.refreshToken,
         tokenType: refreshed.token_type,
@@ -19,12 +27,18 @@ export async function getAccessToken(): Promise<string | null> {
       };
       await setSession(updatedSession);
       session = updatedSession;
-    } catch {
+    } catch (error) {
+      console.error("Fanvue token refresh failed", error);
       return null;
     }
   }
 
-  return session.accessToken;
+  return session;
+}
+
+export async function getAccessToken(): Promise<string | null> {
+  const session = await getFreshSession();
+  return session?.accessToken ?? null;
 }
 
 export async function fanvueFetch(path: string, init: RequestInit = {}) {
@@ -78,5 +92,32 @@ export function asRecord(payload: unknown): Record<string, unknown> | null {
 export async function getCurrentUser() {
   const result = await fanvueFetch("/users/me");
   if (!result.ok) return null;
-  return result.data;
+  return result.data as { handle?: string; uuid?: string; displayName?: string } | null;
+}
+
+export async function getAccount() {
+  const result = await fanvueFetch("/users/account");
+  if (!result.ok) return null;
+  return result.data as {
+    handle?: string;
+    displayName?: string;
+    account?: {
+      status?: string;
+      subscriptionPrice?: number | null;
+      earnings?: { total?: number; availableBalance?: number };
+      fans?: { followers?: number; subscribers?: number };
+    };
+  };
+}
+
+export async function getPostsPreview() {
+  const result = await fanvueFetch("/posts?page=1&size=15");
+  if (!result.ok) return null;
+  return result.data as { data?: unknown[]; pagination?: { hasMore?: boolean } };
+}
+
+export async function getSessionScopes(): Promise<string[]> {
+  const session = await getSession();
+  const raw = session?.scope ?? "";
+  return raw.split(/\s+/).filter(Boolean);
 }

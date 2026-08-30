@@ -12,13 +12,16 @@ export const env = createEnv({
       .string()
       .optional()
       .default(
-        "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post",
+        "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post",
       ),
     OAUTH_RESPONSE_MODE: z.enum(["query", "form_post"]).optional(),
     OAUTH_PROMPT: z.string().optional(),
     BASE_URL: z.url().optional(),
     SESSION_COOKIE_NAME: z.string().default("fanvue_oauth"),
-    SESSION_SECRET: z.string().min(16).default("dev-only-change-me-16"),
+    SESSION_SECRET: z
+      .string()
+      .min(16, { message: "SESSION_SECRET must be at least 16 characters" })
+      .default("dev-only-change-me-16"),
     API_BASE_URL: z.url().default("https://api.fanvue.com"),
   },
   runtimeEnv: {

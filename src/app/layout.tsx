@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Creator ops — Operate + Reel Clearance Desk",
-  description: "Operate a Fanvue page, clear Instagram Reels, and build SFW prompts.",
+  title: "Creator ops — Phase 0 + Reel Clearance",
+  description: "Phase 0 growth desk, Fanvue operate tools, Instagram Reel clearance, and SFW prompts.",
   icons: {
     icon: "/fanvue.svg",
   },

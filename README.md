@@ -1,5 +1,9 @@
 # Fanvue App Starter (Next.js App Router)
 
+Phase 0 goal: **1 → 10 subscribers**. Login, upload a content bank, post 5 teasers. Do not plan a $1M month from this account.
+
+Local Python agents live in [`fanvue-automation/`](./fanvue-automation/README.md). After OAuth, use the home page to save `tokens.json`, drop images in `fanvue-automation/content_bank/`, then `python run.py content`.
+
 ## Requirements
 
 - pnpm
@@ -96,7 +100,7 @@ https://[your-app-name-here].dev:3001/api/oauth/callback
    - Development: `http://localhost:3000/api/oauth/callback`
    - Production: `https://YOUR_DOMAIN/api/oauth/callback`
 4. Configure scopes
-   - For Operate: `read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post`
+   - For Operate + Phase 0: `read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post`
    - The scopes you set in your `.env` must exactly match what you select in the Fanvue developer UI for your app
    - Note: The app automatically includes required system scopes (`openid`, `offline_access`, `offline`) in addition to what you set in `OAUTH_SCOPES`
 
@@ -119,7 +123,7 @@ Example `.env.local` (development)
 ```bash
 OAUTH_CLIENT_ID=YOUR_CLIENT_ID
 OAUTH_CLIENT_SECRET=YOUR_CLIENT_SECRET
-OAUTH_SCOPES="read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post"
+OAUTH_SCOPES="read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post"
 OAUTH_REDIRECT_URI=http://localhost:3000/api/oauth/callback
 SESSION_SECRET=use-a-random-16-char-secret
 OAUTH_ISSUER_BASE_URL=https://auth.fanvue.com

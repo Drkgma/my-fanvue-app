@@ -33,4 +33,4 @@ export function spendBucket(grossCents: number): SpendBucket {
 }
 
 export const OPERATOR_SCOPES =
-  "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post";
+  "read:self read:fan read:creator write:creator read:media write:media read:chat write:chat read:insights read:post write:post";
