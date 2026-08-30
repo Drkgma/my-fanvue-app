@@ -1,0 +1,144 @@
+{
+  "open_first": "munder-project/WORKFLOWS.md",
+  "phase": 0,
+  "creator": "funny-kite-83",
+  "cwd": "fanvue-automation",
+  "python": "python3",
+  "github_actions": {
+    "enabled": false,
+    "reason": "No documented GitHub Actions secrets for TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID. Tokens live in gitignored fanvue-automation/.env on the Cloud Agent VM. Use operate_loop.sh and telegram_loop.sh, not a scheduled Action."
+  },
+  "forbidden": [
+    "nsfw-generation",
+    "lingerie-generation",
+    "nude-generation",
+    "bikini-generation",
+    "face-swap",
+    "higgsfield-on-vm",
+    "kling-on-vm",
+    "nano-banana-on-vm",
+    "comfyui-on-vm",
+    "instagram-farm",
+    "tiktok-farm",
+    "reddit-farm",
+    "x-farm",
+    "augustus-multi-account",
+    "scrape-other-creators",
+    "viral-vault-scrape",
+    "enable-chatmate-before-10-subs",
+    "enable-trafficagent-before-phase-2",
+    "metadata-stripping",
+    "policy-evasion"
+  ],
+  "workflows": [
+    {
+      "id": "telegram-status",
+      "title": "Telegram status update",
+      "trigger": "Owner asks for a scoreboard, /status, or a Telegram ping of live numbers.",
+      "cwd": "fanvue-automation",
+      "command": "python3 run.py status",
+      "also": ["python3 run.py share"],
+      "success": "Exit 0. stdout JSON includes subscribers and public_url. progress.json rewritten. Telegram send returns ok. Daily share-nudge may also send format_share when subscribers < 10.",
+      "sends": [
+        "format_status scoreboard (always, via send_status)",
+        "format_share trial kit (once per UTC day while subscribers < 10, via analytics share-nudge)"
+      ],
+      "forbidden": [
+        "reddit-farm",
+        "x-farm",
+        "tiktok-farm",
+        "instagram-farm",
+        "enable-trafficagent-before-phase-2"
+      ]
+    },
+    {
+      "id": "telegram-kit",
+      "title": "Telegram clothed kit resend",
+      "trigger": "Owner asks to resend the clothed social sets, /kit, or the bio + albums.",
+      "cwd": "fanvue-automation",
+      "command": "python3 run.py kit",
+      "success": "Exit 0. intro.ok is true. Every albums[].telegram.ok is true. Sets come from existing content_bank prefixes only (glam-, life-, casual-, body2-, body-).",
+      "sends": [
+        "format_setup bio + captions + trial",
+        "Five clothed albums from the existing bank (does not generate images)"
+      ],
+      "forbidden": [
+        "nsfw-generation",
+        "face-swap",
+        "comfyui-on-vm",
+        "higgsfield-on-vm",
+        "reddit-farm",
+        "x-farm",
+        "instagram-farm"
+      ]
+    },
+    {
+      "id": "operate-loop",
+      "title": "Hourly operate loop",
+      "trigger": "Keep Phase 0 running on the Cloud Agent VM, or restart the hourly loop.",
+      "cwd": "fanvue-automation",
+      "command": "bash scripts/operate_loop.sh",
+      "env": {"OPERATE_INTERVAL_SECONDS": "3600"},
+      "steps": [
+        "python3 run.py bootstrap",
+        "python3 run.py status",
+        "python3 run.py improve",
+        "python3 run.py content",
+        "python3 run.py ppv"
+      ],
+      "success": "Each hour prints == UTC timestamps for bootstrap, status, improve, content, ppv, then sleep 3600s. ChatMate and TrafficAgent stay off.",
+      "forbidden": [
+        "enable-chatmate-before-10-subs",
+        "enable-trafficagent-before-phase-2",
+        "reddit-farm",
+        "instagram-farm"
+      ]
+    },
+    {
+      "id": "telegram-listen",
+      "title": "Telegram listen / operator",
+      "trigger": "Owner chat should answer /status /share /kit /improve, or any other text with the trial link.",
+      "cwd": "fanvue-automation",
+      "command": "bash scripts/telegram_loop.sh",
+      "also": ["python3 run.py listen"],
+      "success": "Log line 'telegram operator listening'. Owner private chat only. Unknown text still sends the trial share kit. Does not post to Reddit/X.",
+      "forbidden": [
+        "reddit-farm",
+        "x-farm",
+        "tiktok-farm",
+        "instagram-farm"
+      ]
+    },
+    {
+      "id": "improve",
+      "title": "Improve agent",
+      "trigger": "Owner asks to score the last try, /improve, or pick the next safe act.",
+      "cwd": "fanvue-automation",
+      "command": "python3 run.py improve",
+      "success": "Exit 0. JSON action.kind is one of intro_nudge, share_variant, rotate_welcome, pack_nudge, hold, phase1_ready. forbidden is false. Never traffic/reddit/x/tiktok/instagram/chat_enable.",
+      "forbidden": [
+        "enable-chatmate-before-10-subs",
+        "enable-trafficagent-before-phase-2",
+        "reddit-farm",
+        "x-farm",
+        "tiktok-farm",
+        "instagram-farm",
+        "nsfw-generation"
+      ]
+    },
+    {
+      "id": "live-numbers",
+      "title": "Check live Fanvue numbers and report them",
+      "trigger": "Owner asks how many subs/followers/trial uses, or to refresh STATE.md.",
+      "cwd": "fanvue-automation",
+      "command": "python3 run.py status",
+      "also": ["python3 run.py analytics"],
+      "offline": "fanvue-automation/progress.json (gitignored) then munder-project/STATE.md",
+      "success": "Live path: stdout JSON + rewritten progress.json with subscribers, followers, trial_used, video_count, earnings_cents. Report those five, then leftover_teasers and intro gap. Do not invent numbers from stale STATE.md when status ran.",
+      "forbidden": [
+        "scrape-other-creators",
+        "enable-trafficagent-before-phase-2"
+      ]
+    }
+  ]
+}

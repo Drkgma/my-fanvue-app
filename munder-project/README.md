@@ -8,6 +8,8 @@ It is a handbook for Michael (GOD) and any hired agent. It is not a second Fanvu
 
 | File | Who reads it |
 | --- | --- |
+| `WORKFLOWS.md` | Cursor / Munder / operator agents. Open first. Copy-paste CLI. |
+| `workflows.json` | Same pack, machine-readable (`python run.py workflows`). |
 | `MICHAEL.md` | GOD / Michael. Standing orders. Paste into Handbook if asked. |
 | `CLAUDE.md` | Claude Code / Cursor / Codex sessions spawned in this folder. |
 | `STATE.md` | Live account facts. Refresh after `python run.py status`. |
@@ -17,6 +19,6 @@ It is a handbook for Michael (GOD) and any hired agent. It is not a second Fanvu
 ## First session
 
 1. Add this folder as the project.
-2. Give Michael `MICHAEL.md` as the goal / handbook.
+2. Give Michael `MICHAEL.md` as the goal / handbook. Operators open `WORKFLOWS.md`.
 3. Do **not** ask the floor to post Reddit, X, TikTok, or Facebook.
 4. Do **not** ask the floor to turn on ChatMate until 10 subscribers.

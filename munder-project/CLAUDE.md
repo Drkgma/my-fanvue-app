@@ -2,7 +2,7 @@
 
 This folder is the **Munder Difflin project** for Funny Kite Fanvue.
 
-Read first: `MICHAEL.md`, `STATE.md`, `TOOLS.md`.
+Read first: `WORKFLOWS.md`, `MICHAEL.md`, `STATE.md`, `TOOLS.md`.
 
 ## Defaults
 

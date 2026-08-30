@@ -1,4 +1,4 @@
-"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|listen|improve|chat|money|traffic|analytics|daily|all]."""
+"""CLI entry: python run.py [login|status|bootstrap|content|ppv|share|kit|listen|improve|workflows|chat|money|traffic|analytics|daily|all]."""
 
 from __future__ import annotations
 
@@ -133,6 +133,20 @@ def cmd_listen() -> int:
     return 0
 
 
+def cmd_workflows(argv: list[str] | None = None) -> int:
+    """Print the Phase 0 agent workflow index. Does not send Telegram."""
+    from agent_workflows import WorkflowError, dump_cli
+
+    wanted = (argv or [None])[0] if argv else None
+    try:
+        payload = dump_cli(wanted)
+    except WorkflowError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+    print(json.dumps(payload, indent=2, default=str))
+    return 0
+
+
 def cmd_scripts() -> int:
     """Print the next files to film. Does not generate nudes or clips."""
     log = get_logger("cli")
@@ -216,6 +230,9 @@ def main(argv: list[str] | None = None) -> int:
     """Dispatch a single agent or a bundle."""
     args = list(sys.argv[1:] if argv is None else argv)
     command = (args[0] if args else "status").lower()
+    rest = args[1:]
+    if command == "workflows":
+        return cmd_workflows(rest)
     dispatch = {
         "login": cmd_login,
         "status": cmd_status,
@@ -237,7 +254,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     if command not in dispatch:
         print(
-            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|listen|improve|chat|money|traffic|analytics|daily|all|telegram]",
+            "Usage: python run.py [login|status|bootstrap|content|ppv|scripts|share|kit|listen|improve|workflows|chat|money|traffic|analytics|daily|all|telegram]",
             file=sys.stderr,
         )
         return 1

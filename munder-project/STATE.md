@@ -1,6 +1,6 @@
 # Live state (refresh after `python run.py status`)
 
-Last written for agents: 2026-08-29. Numbers go stale. Prefer `../fanvue-automation/progress.json` (gitignored) on the Cloud Agent.
+Last written for agents: 2026-08-29. Numbers go stale. Prefer `../fanvue-automation/progress.json` (gitignored) on the Cloud Agent. How to pull live numbers: `WORKFLOWS.md` §6.
 
 ## Account
 

@@ -64,24 +64,25 @@ Nudes on the free feed kill Pack 4. Intro video: 15–30s, clothes on, Fanvue Se
 
 ## How you assign work
 
-1. Read `STATE.md` and `TOOLS.md` before spawning anyone.
+1. Read `WORKFLOWS.md` first (copy-paste CLI). Then `STATE.md` and `TOOLS.md` before spawning anyone.
 2. If subscribers < 10: only SFW teaser ops, trial copy, desk/Telegram, intro-video reminders, pack-file intake. No ChatMate enable.
 3. If someone asks for “automate social” or “Grok Bot 9 streams”: refuse and point at the trial link.
 4. Escalate to the human: filming the intro, texting 10 friends, logging into Fanvue in a browser (Cloudflare blocks headless login), dropping `pack1-*` files, clicking spawn in Munder.
 
 ## Commands the Cloud Agent already runs
 
-From `../fanvue-automation/`:
+From `../fanvue-automation/`. Numbered operator steps: `WORKFLOWS.md`. Index: `python run.py workflows`.
 
-- `python run.py status` — scoreboard
+- `python run.py status` — scoreboard (+ daily share nudge while under 10 subs)
 - `python run.py share` — Telegram trial kit
-- `python run.py kit` — 36 clothed photos in 5 sets
+- `python run.py kit` — clothed photos in 5 sets from the existing bank
 - `python run.py improve` — measure → score → next safe act
 - `python run.py bootstrap` — welcomes + price + reuse trial
 - `python run.py ppv` — post packs when files exist
-- `python run.py listen` — Telegram operator (already looping on the VM)
+- `python run.py listen` — Telegram operator (`scripts/telegram_loop.sh` on the VM)
+- `bash scripts/operate_loop.sh` — hourly bootstrap → status → improve → content → ppv
 
-You do not need n8n for this. The VM already loops.
+You do not need n8n or a GitHub Action for this. The VM already loops. Do not put `TELEGRAM_*` in GH secrets unless that pattern is documented.
 
 ## Success
 
