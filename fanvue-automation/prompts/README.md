@@ -45,6 +45,7 @@ Keep `obsessed-outcome.ppv.json` as a later-phase prompt only.
 python run.py content
 python run.py status
 python scripts/print_reel_prompt.py teaser
+python scripts/render_obsessed_reel.py
 ```
 
 ContentAgent uploads up to 20 new bank files and publishes 5 teasers.
