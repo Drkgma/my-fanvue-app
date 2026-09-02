@@ -1,0 +1,48 @@
+{
+  "reel_id": "obsessed-outcome-teaser",
+  "audience": "followers-and-subscribers",
+  "phase": 0,
+  "product_name": "New set drop",
+  "product_type": "Creator teaser reel",
+  "description": "Vertical Instagram lip-sync reel. The identity woman looks straight into camera, mouthing: No, I don't think you understand. I'm obsessed. A white text bubble pops over her shoulder naming the outcome: this new set. Cut to a three-quarter shot from behind in a white button-down and high-waist black trousers, hip cocked, braid over her left shoulder, then back to a calm close-up. Photorealistic phone video, not CGI.",
+  "brand_style": "Clean, confident, lifestyle",
+  "style": "Instagram lip-sync reel, handheld-but-stable, photorealistic, no CGI, no product explosion",
+  "camera": "9:16 vertical. Start on a tight face close-up, hold for the first line, pull to a mid-thigh three-quarter from behind, end on a face close-up",
+  "lighting": "Bright even studio-style front light, soft shadows, off-white wall",
+  "location": "Plain off-white studio wall, same setting as the face identity still",
+  "time_of_day": "undefined indoor",
+  "atmosphere": "Calm, direct, a little teasing. No fog, no particles, no neon",
+  "identity_lock": [
+    "Same adult woman as face-source and body-source",
+    "Medium-tan complexion, large dark eyes, small nose stud, full lips",
+    "Long dark brown hair with wispy bangs, thick braid over the left shoulder",
+    "Thin gold chain necklace",
+    "Hourglass figure, slim waist, wide hips, fully clothed"
+  ],
+  "outfit": "Crisp white long-sleeve button-down tucked into high-waist black trousers, thin gold chain.",
+  "sound": "notmonica Original Audio. Lip-sync only; do not generate burned-in captions besides the one text bubble.",
+  "lip_sync_line": "No, I don't think you understand. I'm obsessed.",
+  "text_bubble": "this new set",
+  "elements": [
+    "0.0–1.2s: tight face close-up, she starts the line, eyes on lens",
+    "1.2–3.5s: she finishes I'm obsessed, a white rounded text bubble appears over her left shoulder reading this new set",
+    "3.5–6.5s: cut to three-quarter from behind, hip cocked, braid over left shoulder, white shirt and black trousers, she glances back at camera",
+    "6.5–8.0s: return to face close-up, small smile, hold"
+  ],
+  "motion": "Natural talking-head lip-sync, one clean cut to the over-shoulder body beat, no whip pans, no particle FX",
+  "cta_motion": "No logo. Hold the last close-up so a Follow sticker can be added in Instagram.",
+  "ending": "Face close-up, braid visible, gold chain catching the light, text bubble already gone",
+  "text": "Single on-screen bubble: this new set. No other captions, no hashtags in frame.",
+  "keywords": [
+    "9:16",
+    "Instagram reel",
+    "lip-sync",
+    "I'm obsessed",
+    "people",
+    "lifestyle",
+    "photorealistic",
+    "SFW teaser",
+    "no CGI",
+    "VEO 3"
+  ]
+}

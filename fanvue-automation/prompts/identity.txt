@@ -1,5 +1,5 @@
-Same adult woman every time.
+Same adult woman every time. Lock face and body from the identity stills.
 
-Face (from face-source): heart-shaped face, pale complexion, large dark brown eyes, long dark eyelashes, arched eyebrows, small straight nose, full lips, small beauty mark on her left cheek, long straight brown hair with honey-blonde highlights, wispy bangs.
+Face (from face-source): heart-shaped face, medium-tan complexion, large dark brown eyes, long dark eyelashes, well-defined eyebrows, small straight nose with a small stud piercing on the side, full neutral-toned lips, long dark brown hair with wispy bangs, often gathered into a thick braid over the left shoulder, thin gold chain necklace.
 
-Body (from body-source plus extra body-refs): hourglass / pear figure, slim waist, wide hips, toned legs. Public teasers stay fully clothed: black t-shirt and jeans, midi dress, sundress, white shirt and trousers, or an evening gown. Do not generate lingerie, thongs, bikinis, nudes, or extra fingers. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no minors.
+Body (from body-source plus extra body-refs): hourglass / pear figure, slim waist, wide hips, prominent backside, toned legs. Public teasers stay fully clothed: black t-shirt and jeans, midi dress, sundress, white button-down and high-waist black trousers, or an evening gown. Do not generate lingerie, thongs, bikinis, nudes, or extra fingers for anything that goes in content_bank/. Natural skin texture. Photorealistic iPhone photo, not CGI. No logos, no minors.
