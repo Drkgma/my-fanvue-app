@@ -16,4 +16,7 @@ Do not drop PPV stills or the body identity sheet into `content_bank/`.
 ```bat
 python scripts/print_reel_prompt.py teaser
 python scripts/print_reel_prompt.py ppv
+python scripts/render_obsessed_reel.py
 ```
+
+`render_obsessed_reel.py` writes 8-second 9:16 MP4s (timed stills, silent so you can drop the notmonica audio on top). VEO 3 lip-sync needs Higgsfield/Flow on your machine.

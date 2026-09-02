@@ -39,3 +39,9 @@ def test_print_script_exits_zero(tmp_path, monkeypatch, capsys) -> None:
     assert main() == 0
     dumped = json.loads(capsys.readouterr().out)
     assert dumped["reel_id"] == "obsessed-outcome-teaser"
+
+
+def test_render_script_is_nine_by_sixteen() -> None:
+    from scripts import render_obsessed_reel as render
+
+    assert (render.W, render.H, render.FPS) == (1080, 1920, 30)
