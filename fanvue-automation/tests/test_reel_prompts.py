@@ -45,3 +45,15 @@ def test_render_script_is_nine_by_sixteen() -> None:
     from scripts import render_obsessed_reel as render
 
     assert (render.W, render.H, render.FPS) == (1080, 1920, 30)
+
+
+def test_vol2_has_fifty_one_prompts() -> None:
+    from pathlib import Path
+
+    lines = [
+        line
+        for line in (Path("prompts") / "teaser_prompts_vol2.txt").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    assert len(lines) == 51
+    assert all(line.startswith("Use the reference images provided") for line in lines)

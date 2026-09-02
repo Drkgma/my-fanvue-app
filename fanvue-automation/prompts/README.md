@@ -17,6 +17,9 @@ evening gown). Identity sheets themselves are not uploaded.
 The first lip-sync Reel lives in `reels/`. Paste `obsessed-outcome.teaser.json`
 into VEO 3 / Flow at 9:16. The PPV bikini JSON is not a public teaser.
 
+`teaser_prompts_vol2.txt` is 51 RAW iPhone stills (reference images only,
+handheld or tripod). Generated files: `content_bank/teaser-v2-01.png` … `51`.
+
 ## What this agent can and cannot do
 
 This Cloud Agent VM has no NVIDIA GPU. It cannot download or run:
