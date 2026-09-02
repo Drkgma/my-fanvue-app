@@ -57,3 +57,36 @@ def test_vol2_has_fifty_one_prompts() -> None:
     ]
     assert len(lines) == 51
     assert all(line.startswith("Use the reference images provided") for line in lines)
+
+
+_BANNED_TEASER = (
+    "dildo",
+    "orgasm",
+    "nude",
+    "lingerie",
+    "bikini",
+    "thong",
+    "masturbat",
+    "pussy",
+    "stripper",
+    "vibrator",
+)
+
+
+def test_content_secrets_pack_stays_clothed() -> None:
+    from pathlib import Path
+
+    prompts = Path("prompts")
+    guide = (prompts / "content_secrets_sfw.md").read_text(encoding="utf-8")
+    mapping = (prompts / "script_teaser_map.txt").read_text(encoding="utf-8")
+    captions = (prompts / "curiosity_captions.txt").read_text(encoding="utf-8")
+
+    assert "Phase 0" in guide
+    assert "content_bank" in guide
+    script_rows = [line for line in mapping.splitlines() if line.startswith("SCRIPT ")]
+    assert len(script_rows) >= 10
+    caption_rows = [line for line in captions.splitlines() if line.strip() and not line.startswith("#")]
+    assert len(caption_rows) >= 15
+    blob = f"{mapping}\n{captions}".lower()
+    for word in _BANNED_TEASER:
+        assert word not in blob, word

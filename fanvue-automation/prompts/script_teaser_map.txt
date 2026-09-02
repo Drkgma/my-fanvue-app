@@ -1,0 +1,18 @@
+# SFW teaser half of Scripts 1–10
+# P = stills. V = later phone video on your desk. Stop before undress.
+# Do not generate the explicit second half here.
+
+SCRIPT 1 bed chill | P 10-15 selfies on the made bed in a tight black tee | V 60s look at camera, lip bite, stay dressed | stills: guide-bedroom-01
+SCRIPT 2 loud quickie | P 7 sits on the bed in jeans, a few angles | V 10s “hey baby” flirty, shirt stays on | stills: guide-bedroom-01, guide-angle-45
+SCRIPT 3 shower | P 3 closed-robe vanity shots | V 30s walk to the bath, robe stays shut | stills: guide-bath-01
+SCRIPT 4 laundry | P 5 holding the basket in jeans | V 15s set the basket down, no skirt flip | stills: guide-laundry-01
+SCRIPT 5 oil | SKIP here | shoot later on your phone | use kitchen or bed teasers only: guide-kitchen-01
+SCRIPT 6 multi | SKIP toys | P gym or stretch, full-length leggings | stills: guide-gym-01
+SCRIPT 8 good morning | P in bed / couch, no makeup, hoodie | V 60s sit-up, talk to camera, clothes on | stills: guide-morning-01
+SCRIPT 9 just home | P doorway / car | V 60s keys in hand, clothes on | stills: guide-home-01, guide-car-01
+SCRIPT 10 in bed | P fitted tee on the bed, not a bra shot | V 30s tease over clothes | stills: guide-bedroom-01
+SCRIPT extra office | P over-shoulder at the desk | V 20s look back at camera | stills: guide-office-01
+SCRIPT extra balcony | P lean on the rail at golden hour | V 15s turn to camera | stills: guide-balcony-01
+SCRIPT extra cafe | P window table, iced coffee | V 15s sip, look up | stills: guide-cafe-01
+SCRIPT extra bookstore | P knee-length sundress in the aisle | V 15s hold a paperback | stills: guide-bookstore-01
+SCRIPT extra kitchen | P mug at the counter, window in front | V 20s stir, look up | stills: guide-kitchen-01

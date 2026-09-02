@@ -20,6 +20,12 @@ into VEO 3 / Flow at 9:16. The PPV bikini JSON is not a public teaser.
 `teaser_prompts_vol2.txt` is 51 RAW iPhone stills (reference images only,
 handheld or tripod). Generated files: `content_bank/teaser-v2-01.png` … `51`.
 
+`content_secrets_sfw.md` applies the 2022 content-guide rules (window light,
+room swaps, 45° angles, curiosity captions, file names) at Phase 0.
+`script_teaser_map.txt` is the dressed preview half of Scripts 1–10.
+`curiosity_captions.txt` is paste-ready PPV/teaser copy. Stills from this
+pass are `guide-*-01` under `/opt/cursor/artifacts/` — not the public bank.
+
 ## What this agent can and cannot do
 
 This Cloud Agent VM has no NVIDIA GPU. It cannot download or run:
