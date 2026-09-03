@@ -90,3 +90,17 @@ def test_content_secrets_pack_stays_clothed() -> None:
     blob = f"{mapping}\n{captions}".lower()
     for word in _BANNED_TEASER:
         assert word not in blob, word
+
+
+def test_private_now_captions_cover_sixteen_stills() -> None:
+    from pathlib import Path
+
+    rows = [
+        line
+        for line in (Path("prompts") / "private_now_captions.txt").read_text(encoding="utf-8").splitlines()
+        if line.startswith("private-now-")
+    ]
+    assert len(rows) == 16
+    blob = "\n".join(rows).lower()
+    for word in _BANNED_TEASER:
+        assert word not in blob, word

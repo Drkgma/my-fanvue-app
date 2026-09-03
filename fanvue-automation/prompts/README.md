@@ -25,6 +25,7 @@ room swaps, 45° angles, curiosity captions, file names) at Phase 0.
 `script_teaser_map.txt` is the dressed preview half of Scripts 1–10.
 `curiosity_captions.txt` is paste-ready PPV/teaser copy. Stills from this
 pass are `guide-*-01` under `/opt/cursor/artifacts/` — not the public bank.
+`private_now_captions.txt` matches 16 more private stills (`private-now-01` … `16`).
 
 ## What this agent can and cannot do
 
