@@ -92,6 +92,18 @@ def test_content_secrets_pack_stays_clothed() -> None:
         assert word not in blob, word
 
 
+def test_lounge_blue_halter_prompt_stays_clothed() -> None:
+    from pathlib import Path
+
+    text = (Path("prompts") / "lounge_blue_halter.txt").read_text(encoding="utf-8")
+    assert "9:16" in text
+    assert "dusty blue" in text.lower()
+    assert "content_bank" in text
+    blob = text.lower()
+    for word in _BANNED_TEASER:
+        assert word not in blob, word
+
+
 def test_private_now_captions_cover_sixteen_stills() -> None:
     from pathlib import Path
 

@@ -26,6 +26,8 @@ room swaps, 45° angles, curiosity captions, file names) at Phase 0.
 `curiosity_captions.txt` is paste-ready PPV/teaser copy. Stills from this
 pass are `guide-*-01` under `/opt/cursor/artifacts/` — not the public bank.
 `private_now_captions.txt` matches 16 more private stills (`private-now-01` … `16`).
+`lounge_blue_halter.txt` is a private 9:16 indoor wrap-halter still
+(`lounge-blue-halter-01`). Keep it out of `content_bank/`.
 
 ## What this agent can and cannot do
 
