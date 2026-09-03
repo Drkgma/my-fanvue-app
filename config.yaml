@@ -35,6 +35,7 @@ content:
     - A little teaser for later.
     - Fresh set is live for subscribers.
     - Saving the rest for the vault.
+    - No, I don't think you understand. I'm obsessed.
 
 chat:
   enabled: false
@@ -55,6 +56,7 @@ money:
 
 traffic:
   enabled: false
+  public_profile_url: https://www.fanvue.com/funny-kite-83
 
 analytics:
   enabled: true

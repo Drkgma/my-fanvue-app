@@ -1,0 +1,25 @@
+# 20 private stills — uploaded face ONLY
+# Face: datasets/identity/face-source or the white-shirt "this new set" still
+# Do not put in content_bank until you pick SFW teasers.
+# Opaque clothes only.
+
+01 elevator 9:16 — ultra-wide high-angle stainless elevator selfie, harsh flash, charcoal blazer over black crew top, dark mini
+02 beach-flash 3:4 — rocky coast sunset, yellow top, white linen pants, one arm raised, iPhone flash
+03 stool-blazer 3:4 — chrome stool, black blazer dress, look over shoulder
+04 studio-crouch 3:4 — squat, cream fur coat over opaque cream mini dress, gold heels
+05 gym 9:16 — gym mirror lean, white opaque tank + white leggings
+06 pool-night 9:16 — night pool, black crop tee + black shorts
+07 boardwalk 9:16 — yellow sundress boardwalk
+08 linen 9:16 — beach picnic bench, linen shirt + shorts
+09 terrace 9:16 — tropical terrace, olive midi
+10 market 9:16 — tropical market, coral sundress
+11 pier 9:16 — sunset pier, rust midi, look back
+12 kitchen 9:16 — kitchen island, white shirt and jeans
+13 balcony 9:16 — hotel balcony, sage midi
+14 rain 9:16 — rain, navy trench, umbrella
+15 taxi 9:16 — night taxi, leather jacket, white tee, jeans
+16 sofa 9:16 — cream sofa, oatmeal knit
+17 bookstore 9:16 — bookstore, cream sweater
+18 doorway 9:16 — doorway, white shirt and jeans
+19 y2k-flash 9:16 — dim bedroom flash, black Y2K cut-out crop + low-rise black pants
+20 vineyard 9:16 — gingham halter crop + wrap skirt, countryside terrace

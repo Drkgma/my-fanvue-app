@@ -48,6 +48,8 @@ fanvue-automation/logs/*.log
 fanvue-automation/content_bank/*
 !fanvue-automation/content_bank/.gitkeep
 !fanvue-automation/content_bank/README.md
+fanvue-automation/ppv_bank/*
+!fanvue-automation/ppv_bank/README.md
 fanvue-automation/datasets/**
 !fanvue-automation/datasets/README.md
 !fanvue-automation/datasets/rooms/

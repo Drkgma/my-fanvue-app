@@ -48,7 +48,9 @@ rooms live in `datasets/rooms/`. Identity sheets live in
 `datasets/identity/` and are never uploaded.
 
 Prompt lists for a later GPU/ComfyUI run (one prompt per line, CR Prompt
-List compatible) live in `prompts/`. Re-stage new stills with:
+List compatible) live in `prompts/`. The Obsessed With The Outcome lip-sync
+Reel is `prompts/reels/obsessed-outcome.teaser.json` (9:16, VEO 3). Re-stage
+new stills with:
 
 ```
 python scripts/stage_bank.py /path/to/generated-images
