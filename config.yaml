@@ -56,6 +56,7 @@ money:
 
 traffic:
   enabled: false
+  public_profile_url: https://www.fanvue.com/funny-kite-83
 
 analytics:
   enabled: true

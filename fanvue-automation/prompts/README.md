@@ -30,6 +30,8 @@ pass are `guide-*-01` under `/opt/cursor/artifacts/` — not the public bank.
 (`lounge-blue-halter-01`). Keep it out of `content_bank/`.
 `pose_pack_220.txt` is 220 private clothed pose lines for the locked
 face. Generated stills `pose-pack-001` … `024` stay in the private folder.
+`reddit_promo_sfw.txt` is SFW promo copy pointing at
+https://www.fanvue.com/funny-kite-83. TrafficAgent stays off.
 
 ## What this agent can and cannot do
 

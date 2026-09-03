@@ -92,6 +92,17 @@ def test_content_secrets_pack_stays_clothed() -> None:
         assert word not in blob, word
 
 
+def test_reddit_promo_points_at_public_profile() -> None:
+    from pathlib import Path
+
+    text = (Path("prompts") / "reddit_promo_sfw.txt").read_text(encoding="utf-8")
+    assert "https://www.fanvue.com/funny-kite-83" in text
+    assert "free_trial" not in text
+    blob = text.lower()
+    for word in _BANNED_TEASER:
+        assert word not in blob, word
+
+
 def test_pose_pack_has_two_hundred_clothed_lines() -> None:
     from pathlib import Path
 
