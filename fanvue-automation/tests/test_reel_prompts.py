@@ -92,6 +92,20 @@ def test_content_secrets_pack_stays_clothed() -> None:
         assert word not in blob, word
 
 
+def test_pose_pack_has_two_hundred_clothed_lines() -> None:
+    from pathlib import Path
+
+    rows = [
+        line
+        for line in (Path("prompts") / "pose_pack_220.txt").read_text(encoding="utf-8").splitlines()
+        if line.startswith("Use the reference images provided")
+    ]
+    assert len(rows) >= 200
+    blob = "\n".join(rows).lower()
+    for word in _BANNED_TEASER:
+        assert word not in blob, word
+
+
 def test_lounge_blue_halter_prompt_stays_clothed() -> None:
     from pathlib import Path
 
